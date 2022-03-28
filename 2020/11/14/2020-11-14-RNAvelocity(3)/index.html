@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RNA速率：使用Seurat的结果做RNA velocity - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="RNA速率：使用Seurat的结果做RNA velocity - Zhz Blog"/>
+    <meta name="twitter:description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="RNA速率：使用Seurat的结果做RNA velocity - Zhz Blog"/>
+    <meta property="og:description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">RNA速率：使用Seurat的结果做RNA velocity</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">RNA速率：使用Seurat的结果做RNA velocity</h1>
+        <div class="stuff">
+            <span>十一月 14, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/RNA-velocity/" rel="tag">RNA_velocity</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>参考链接:<br><a target="_blank" rel="noopener" href="https://github.com/velocyto-team/velocyto.R">https://github.com/velocyto-team/velocyto.R</a></p>
+<p><a target="_blank" rel="noopener" href="http://velocyto.org/velocyto.py/index.html">http://velocyto.org/velocyto.py/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://pklab.med.harvard.edu/velocyto/notebooks/R/chromaffin2.nb.html">http://pklab.med.harvard.edu/velocyto/notebooks/R/chromaffin2.nb.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://htmlpreview.github.io/?https://github.com/satijalab/seurat-wrappers/blob/master/docs/velocity.html">https://htmlpreview.github.io/?https://github.com/satijalab/seurat-wrappers/blob/master/docs/velocity.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/velocyto-team/velocyto.R/issues/16">https://github.com/velocyto-team/velocyto.R/issues/16</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/raisok/p/12425258.html">https://www.cnblogs.com/raisok/p/12425258.html</a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/10/RNAvelocity(1)/">RNA速率:软件下载与loom文件准备</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/12/RNAvelocity(2)/">RNA速率：数据读入</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/14/RNAvelocity(3)/">RNA速率：使用Seurat的结果做RNA velocity</a></p>
+<h2 id="导入Seurat以及loom对象"><a href="#导入Seurat以及loom对象" class="headerlink" title="导入Seurat以及loom对象"></a>导入Seurat以及loom对象</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;library(Seurat)</span><br><span class="line">## remotes::install_github(&#x27;satijalab/seurat-wrappers&#x27;)</span><br><span class="line">&gt;library(SeuratWrappers)</span><br><span class="line">## 导入Seurat对象,之前分析的结果</span><br><span class="line">&gt;load(&quot;wang.rds&quot;)</span><br><span class="line">&gt;load(&#x27;wang-loom.rds&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="统一loom对象和Seurat的细胞名与基因名"><a href="#统一loom对象和Seurat的细胞名与基因名" class="headerlink" title="统一loom对象和Seurat的细胞名与基因名"></a>统一loom对象和Seurat的细胞名与基因名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; wt$spliced[1:3,1:3]</span><br><span class="line">3 x 3 sparse Matrix of class &quot;dgCMatrix&quot;</span><br><span class="line">          WANG:AAAGTAGAGATGTTAGx WANG:AAACCTGTCAGCATGTx WANG:AAAGCAACATTTGCTTx</span><br><span class="line">AT1G01020                      .                      .                      .</span><br><span class="line">AT1G01030                      .                      .                      .</span><br><span class="line">AT1G03993                      .                      .                      .</span><br><span class="line">&gt; wang@meta.data[1:3,1:3]</span><br><span class="line">                   orig.ident nCount_RNA nFeature_RNA</span><br><span class="line">AAACCTGAGAATTCCC-1        zxz       3756         2158</span><br><span class="line">AAACCTGAGGGCACTA-1        zxz       2774         1669</span><br><span class="line">AAACCTGAGTAATCCC-1        zxz       2463         1290</span><br><span class="line">&gt; colnames(wt$spliced)&lt;-gsub(&quot;x&quot;,&quot;-1&quot;,colnames(wt$spliced))</span><br><span class="line">&gt; colnames(wt$spliced)&lt;-gsub(&quot;WANG:&quot;,&quot;&quot;,colnames(wt$spliced))</span><br><span class="line">&gt; colnames(wt$unspliced)&lt;-colnames(wt$spliced)</span><br><span class="line">&gt; colnames(wt$ambiguous)&lt;-colnames(wt$spliced)</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算velocity"><a href="#计算velocity" class="headerlink" title="计算velocity"></a>计算velocity</h2><p>提取spliced与unspliced文件，并提取原有的Seurat的UAMP图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 由于Seurat的对象筛选了数据，所以两个文件细胞并不相同，以Seurat对象为准</span><br><span class="line">&gt; wt$spliced&lt;-wt$spliced[,rownames(wang@meta.data)]</span><br><span class="line">&gt; wt$unspliced&lt;-wt$unspliced[,rownames(wang@meta.data)]</span><br><span class="line">&gt; wt$ambiguous&lt;-wt$ambiguous[,rownames(wang@meta.data)]</span><br><span class="line">&gt; sp &lt;- wt$spliced</span><br><span class="line">&gt; unsp &lt;- wt$unspliced</span><br><span class="line">&gt; WTumap &lt;- wang@reductions$umap@cell.embeddings</span><br><span class="line">## 估计细胞和细胞的距离</span><br><span class="line">&gt; cell.dist &lt;- as.dist(1-armaCor(t(wang@reductions$umap@cell.embeddings)))</span><br><span class="line">&gt; fit.quantile &lt;- 0.02</span><br><span class="line">&gt; rvel.cd &lt;- gene.relative.velocity.estimates(sp,unsp,deltaT=2,kCells=10, cell.dist=cell.dist,fit.quantile=fit.quantile,n.cores=24)</span><br></pre></td></tr></table></figure>
+
+<h2 id="在UMAP聚类图上绘制RNA-velocity"><a href="#在UMAP聚类图上绘制RNA-velocity" class="headerlink" title="在UMAP聚类图上绘制RNA velocity"></a>在UMAP聚类图上绘制RNA velocity</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">pdf(&quot;cell_velocity.pdf&quot;,height=6,width=8)</span><br><span class="line">gg &lt;- UMAPPlot(wang)</span><br><span class="line">ggplot_build(gg)$data</span><br><span class="line">colors &lt;- as.list(ggplot_build(gg)$data[[1]]$colour)</span><br><span class="line">names(colors) &lt;- rownames(WTumap)</span><br><span class="line"></span><br><span class="line">p1 &lt;- show.velocity.on.embedding.cor(WTumap,rvel.cd,n=30,scale=&#x27;sqrt&#x27;,cell.colors=ac(colors,alpha=0.5),cex=0.8,arrow.scale=2,show.grid.flow=T,min.grid.cell.mass=1.0,grid.n=50,arrow.lwd=1,do.par=F,cell.border.alpha =0.1,USE_OPENMP=1,n.cores=24,main=&quot;Cell Velocity&quot;)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.11.14/image-20201126161636650.png" alt="image-20201126161636650"></p>
+<p>这结果根本看不出啥啊，我选RC试试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id&lt;-c(&#x27;2&#x27;,&#x27;3&#x27;,&#x27;19&#x27;,&#x27;20&#x27;)</span><br><span class="line">Cell.sub &lt;- subset(wang@meta.data,seurat_clusters==id)</span><br><span class="line">scRNAsub &lt;- subset(wang, cells=row.names(Cell.sub))</span><br><span class="line">##后续的操作相同</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.11.14/image-20201126163423850.png" alt="image-20201126163423850"></p>
+<p>倒是有个轨迹，但是并不明显</p>
+<p>换成cluster12.14.19试试</p>
+<p><img src="/img/posts/2020.11.14/image-20201126164447258.png" alt="image-20201126164447258"></p>
+<p>这一次就有一个明显的轨迹了</p>
+<p><img src="/img/posts/2020.11.14/image-20201126165138374.png" alt="image-20201126165138374"></p>
+<p><img src="/img/posts/2020.11.14/image-20201126165159845.png" alt="image-20201126165159845"></p>
+<p>总体来讲，感觉植物做RNA velocity的结果并没有动物的那么好，是自己分析的问题还是其他原因有待商榷。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

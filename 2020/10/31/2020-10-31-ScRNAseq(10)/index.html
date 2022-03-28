@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生信技能树单细胞数据挖掘笔记(4) - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="生信技能树单细胞数据挖掘笔记(4) - Zhz Blog"/>
+    <meta name="twitter:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="生信技能树单细胞数据挖掘笔记(4) - Zhz Blog"/>
+    <meta property="og:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">生信技能树单细胞数据挖掘笔记(4)</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">生信技能树单细胞数据挖掘笔记(4)</h1>
+        <div class="stuff">
+            <span>十月 31, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/24/ScRNAseq(7)/">生信技能树单细胞数据挖掘笔记(1)：数据读入</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/27/ScRNAseq(8)/">生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/29/ScRNAseq(9)/">生信技能树单细胞数据挖掘笔记(3)：降维与聚类</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/31/ScRNAseq(10)/">生信技能树单细胞数据挖掘笔记(4)：其他分析（周期判断、double诊断、细胞类型注释）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/03/ScRNAseq(11)/">生信技能树单细胞数据挖掘笔记(5)：轨迹分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/05/ScRNAseq(12)/">生信技能树单细胞数据挖掘笔记(6)：差异分析(1)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/07/ScRNAseq(13)/">生信技能树单细胞数据挖掘笔记(7)：差异分析(2)</a></p>
+<h2 id="QC之double-droplet和周期判断"><a href="#QC之double-droplet和周期判断" class="headerlink" title="QC之double droplet和周期判断"></a>QC之double droplet和周期判断</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">load(&quot;../scRNA.Rdata&quot;)</span><br><span class="line">library(Seurat)</span><br><span class="line">##1、detect special cells----</span><br><span class="line">#empty droplet</span><br><span class="line">##BiocManager::install(&quot;DropletUtils&quot;)</span><br><span class="line">library(DropletUtils)</span><br><span class="line">e.out &lt;- emptyDrops(GetAssayData(scRNA,slot=&quot;counts&quot;,assay=&quot;RNA&quot;))</span><br><span class="line">#Error in testEmptyDrops(m, lower = lower, ...) :</span><br><span class="line">#no counts available to estimate the ambient profile</span><br><span class="line">##https://support.bioconductor.org/p/123554/#123562</span><br><span class="line">#如上回答所说，empty droplet往往在第一步就已经过滤掉了，而一般上传到GEO的也都是过滤掉空液滴的。</span><br><span class="line"></span><br><span class="line">#double droplet</span><br><span class="line">#https://osca.bioconductor.org/doublet-detection.html</span><br><span class="line">#BiocManager::install(&quot;scran&quot;)</span><br><span class="line">head(scRNA@meta.data)</span><br><span class="line">library(scran)</span><br><span class="line">#GetAssayData(scRNA,slot=&quot;counts&quot;,assay=&quot;RNA&quot;)[1:8,1:4]</span><br><span class="line">?doubletCluster #检查有无double droplet聚在一起的类</span><br><span class="line">db.test &lt;- doubletCluster(GetAssayData(scRNA,slot=&quot;counts&quot;,assay=&quot;RNA&quot;),</span><br><span class="line">                          clusters=scRNA@meta.data$seurat_clusters)</span><br><span class="line">head(db.test)</span><br><span class="line">table(scRNA@meta.data$seurat_clusters)</span><br><span class="line">library(scater)</span><br><span class="line">chosen.doublet &lt;- rownames(db.test)[isOutlier(db.test$N,</span><br><span class="line">                                              type=&quot;lower&quot;, log=TRUE)]</span><br><span class="line">chosen.doublet #结果显示没有</span><br><span class="line">#还有其它多种方法</span><br></pre></td></tr></table></figure>
+
+<h2 id="周期诊断"><a href="#周期诊断" class="headerlink" title="周期诊断"></a>周期诊断</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">##2、周期判断----</span><br><span class="line">#在挑选hvg gene那一步因，可能会找到一些细胞周期相关基因；</span><br><span class="line">#它们会导致细胞聚类发生一定的偏移，即相同类型的细胞在聚类时会因为细胞周期的不同而分开。</span><br><span class="line">#因此有必要查看是否有细胞周期相关基因的存在；若有，则剔除</span><br><span class="line"></span><br><span class="line">#细胞周期有关基因</span><br><span class="line">?cc.genes</span><br><span class="line">head(c(cc.genes$s.genes,cc.genes$g2m.genes))</span><br><span class="line">length(c(cc.genes$s.genes,cc.genes$g2m.genes))</span><br><span class="line"># [1] &quot;MCM5&quot; &quot;PCNA&quot; &quot;TYMS&quot; &quot;FEN1&quot; &quot;MCM2&quot; &quot;MCM4&quot;</span><br><span class="line">#查看我们选择的高变基因中有哪些细胞周期相关基因,及打分</span><br><span class="line">CaseMatch(c(cc.genes$s.genes,cc.genes$g2m.genes),VariableFeatures(scRNA))</span><br><span class="line">#在scRNA@meta.data中添加S.Score、G2M.Score和Phase三列有关细胞周期的信息。</span><br><span class="line">g2m_genes = cc.genes$g2m.genes</span><br><span class="line">g2m_genes = CaseMatch(search = g2m_genes, match = rownames(scRNA))</span><br><span class="line">s_genes = cc.genes$s.genes</span><br><span class="line">s_genes = CaseMatch(search = s_genes, match = rownames(scRNA))</span><br><span class="line">scRNA &lt;- CellCycleScoring(object=scRNA,  g2m.features=g2m_genes,  s.features=s_genes)</span><br><span class="line">head(scRNA@meta.data)</span><br><span class="line">#观察细胞周期相关基因是否影响聚类</span><br><span class="line">scRNA &lt;- RunPCA(scRNA, features = c(s_genes, g2m_genes))</span><br><span class="line">p1 &lt;- DimPlot(scRNA, reduction = &quot;pca&quot;, group.by = &quot;Phase&quot;)</span><br><span class="line">ggsave(&quot;../../out/3.2cell-cycle.pdf&quot;, plot = p1)</span><br><span class="line">#影响不大，基本重合在一起了</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/31/2020-10-31-ScRNAseq(10)/%5Cimg%5Cposts%5C2020.10.29%5Cimage-20201109155517095.png" alt="image-20201109155517095"></p>
+<center>
+    周期的影响并不大
+</center>
+
+<h2 id="单细胞类型注释"><a href="#单细胞类型注释" class="headerlink" title="单细胞类型注释"></a>单细胞类型注释</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">##3、cell annotation-----</span><br><span class="line"># 对肿瘤细胞来说，分群后的细胞亚群注释是不可行的</span><br><span class="line"># 这里仅仅是演示 SingleR 做 cell annotation的流程</span><br><span class="line">library(SingleR)</span><br><span class="line">refdata &lt;- get(load(&quot;../../rawdata/HumanPrimaryCellAtlasData.Rdata&quot;))</span><br><span class="line">assay(refdata)[1:4,1:4]</span><br><span class="line">head(refdata@colData)</span><br><span class="line">head(refdata)</span><br><span class="line">ref &lt;- HumanPrimaryCellAtlasData()</span><br><span class="line">#参考数据库，等待时间较长。建议下载成功后，储存为Rdata，以后方便使用。</span><br><span class="line">testdata &lt;- GetAssayData(scRNA, slot=&quot;data&quot;)</span><br><span class="line">#参考数据库，等待时间较长。建议下载成功后，储存为Rdata，以后方便使用。</span><br><span class="line">testdata &lt;- GetAssayData(scRNA, slot=&quot;data&quot;)</span><br><span class="line">clusters &lt;- scRNA@meta.data$seurat_clusters</span><br><span class="line">cellpred &lt;- SingleR(test = testdata, ref = refdata, labels = refdata$label.fine,</span><br><span class="line">                    # label.fine耗时比较长一点</span><br><span class="line">                    method = &quot;cluster&quot;, clusters = clusters,</span><br><span class="line">                    assay.type.test = &quot;logcounts&quot;, assay.type.ref = &quot;logcounts&quot;)</span><br><span class="line">save(cellpred,file = &quot;../../tmp/cellpred.Rdata&quot;)</span><br><span class="line">load(&quot;../../tmp/cellpred.Rdata&quot;)</span><br><span class="line">rm(refdata, HumanPrimaryCellAtlasData, testdata) #珍惜内存</span><br><span class="line">table(cellpred$labels)</span><br><span class="line">celltype = data.frame(ClusterID=rownames(cellpred), celltype=cellpred$labels, stringsAsFactors = F)</span><br><span class="line">table(celltype$ClusterID,celltype$celltype) #如下为singleR的细胞cluster鉴定结果。</span><br><span class="line">#结合上述结果，给scRNA增添celltype注释信息</span><br><span class="line">scRNA@meta.data$celltype = &quot;NA&quot;</span><br><span class="line">#先新增列celltype，值均为NA，然后利用下一行代码循环填充</span><br><span class="line">for(i in 1:nrow(celltype))&#123;</span><br><span class="line">  scRNA@meta.data[which(scRNA@meta.data$seurat_clusters == celltype$ClusterID[i]),&#x27;celltype&#x27;] &lt;- celltype$celltype[i]&#125;</span><br><span class="line">p1 &lt;- DimPlot(scRNA, group.by=&quot;celltype&quot;, label=F , reduction=&#x27;tsne&#x27;)</span><br><span class="line"></span><br><span class="line">ggsave(&quot;../../out/3.3celltype_anno.pdf&quot;, plot = p1, width = 18, height = 12)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/31/2020-10-31-ScRNAseq(10)/%5Cimg%5Cposts%5C2020.10.29%5Cimage-20201109160114523.png" alt="image-20201109160114523"></p>
+<center>
+    细胞类型注释
+</center>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

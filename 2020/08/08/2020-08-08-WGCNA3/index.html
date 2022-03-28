@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WGCNA学习：WGCNA分析实战 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="WGCNA笔记第三弹
+
+WGCNA分析原理
+WGCNA应用场景
+WGCNA分析实践
+
+本代码借鉴了生信技能树的WGCNA教程以及PlanTech的WGCNA课程编写，转载请注明出处
+1.WGCNA安,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="WGCNA学习：WGCNA分析实战 - Zhz Blog"/>
+    <meta name="twitter:description" content="WGCNA笔记第三弹
+
+WGCNA分析原理
+WGCNA应用场景
+WGCNA分析实践
+
+本代码借鉴了生信技能树的WGCNA教程以及PlanTech的WGCNA课程编写，转载请注明出处
+1.WGCNA安,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="WGCNA学习：WGCNA分析实战 - Zhz Blog"/>
+    <meta property="og:description" content="WGCNA笔记第三弹
+
+WGCNA分析原理
+WGCNA应用场景
+WGCNA分析实践
+
+本代码借鉴了生信技能树的WGCNA教程以及PlanTech的WGCNA课程编写，转载请注明出处
+1.WGCNA安,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">WGCNA学习：WGCNA分析实战</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">WGCNA学习：WGCNA分析实战</h1>
+        <div class="stuff">
+            <span>八月 08, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/WGCNA/" rel="tag">WGCNA</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>WGCNA笔记第三弹</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/03/WGCNA1/">WGCNA分析原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/05/WGCNA2/">WGCNA应用场景</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/08/WGCNA3/">WGCNA分析实践</a></li>
+</ul>
+<p>本代码借鉴了<a target="_blank" rel="noopener" href="https://github.com/jmzeng1314/my_WGCNA">生信技能树的WGCNA教程</a>以及<a target="_blank" rel="noopener" href="https://ke.qq.com/course/430201">PlanTech的WGCNA课程</a>编写，转载请注明出处</p>
+<h1 id="1-WGCNA安装"><a href="#1-WGCNA安装" class="headerlink" title="1.WGCNA安装"></a>1.WGCNA安装</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; install.packages(&quot;BiocManager&quot;)</span><br><span class="line">&gt; BiocManager::install(&quot;WGCNA&quot;)</span><br><span class="line">&gt; library(WGCNA)</span><br><span class="line">载入需要的程辑包：dynamicTreeCut</span><br><span class="line">载入需要的程辑包：fastcluster</span><br><span class="line"></span><br><span class="line">载入程辑包：‘fastcluster’</span><br><span class="line"></span><br><span class="line">The following object is masked from ‘package:stats’:</span><br><span class="line"></span><br><span class="line">    hclust</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">载入程辑包：‘WGCNA’</span><br><span class="line"></span><br><span class="line">The following object is masked from ‘package:stats’:</span><br><span class="line"></span><br><span class="line">    cor</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-数据准备与读入"><a href="#2-数据准备与读入" class="headerlink" title="2.数据准备与读入"></a>2.数据准备与读入</h1><h2 id="2-1数据准备"><a href="#2-1数据准备" class="headerlink" title="2.1数据准备"></a>2.1数据准备</h2><p>需要两个数据</p>
+<ol>
+<li><p>表达矩阵（All_fpkm.list）</p>
+<p><img src="/img/posts/2020.8.8/image-20200802142219001.png" alt="image-20200802142219001"></p>
+</li>
+<li><p>表型文件（pheno.txt）,需要注意表型文件分为两类，连续变量型与分类变量型.</p>
+</li>
+</ol>
+<p><img src="/img/posts/2020.8.8/image-20200802142335624.png" alt="image-20200802142335624"></p>
+<center>
+    连续变量
+</center>
+
+<p><img src="/img/posts/2020.8.8/image-20200803165842485.png" alt="image-20200803165842485"></p>
+<center>
+    分类变量
+</center>
+
+
+<h2 id="2-2-数据读入"><a href="#2-2-数据读入" class="headerlink" title="2.2 数据读入"></a>2.2 数据读入</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">library(WGCNA)</span><br><span class="line">library(reshape2)</span><br><span class="line">library(stringr)</span><br><span class="line">setwd(&#x27;D:/data/wgcna/Categorical&#x27;)</span><br><span class="line">options(stringsAsFactors = FALSE)# 在读入数据时，遇到字符串后，不要将其转换成因子，仍然保留为字符串格式</span><br><span class="line">enableWGCNAThreads()#打开多线程</span><br><span class="line">##====================step 1 :数据读入</span><br><span class="line"></span><br><span class="line">RNAseq_voom &lt;- fpkm</span><br><span class="line"></span><br><span class="line">## 因为WGCNA针对的是基因进行聚类，而一般我们的聚类是针对样本用hclust即可，所以这个时候需要转置</span><br><span class="line">WGCNA_matrix = t(RNAseq_voom[order(apply(RNAseq_voom,1,mad), decreasing = T)[1:5000],])</span><br><span class="line">datExpr &lt;- WGCNA_matrix  ## top 5000 mad genes</span><br><span class="line"></span><br><span class="line">#明确样本数和基因</span><br><span class="line">nGenes = ncol(datExpr)</span><br><span class="line">nSamples = nrow(datExpr)</span><br><span class="line"></span><br><span class="line">#首先针对样本做个系统聚类</span><br><span class="line">datExpr_tree&lt;-hclust(dist(datExpr), method = &quot;average&quot;)</span><br><span class="line">par(mar = c(0,5,2,0))</span><br><span class="line">png(&quot;img/step1-sample-cluster.png&quot;,width = 800,height = 600)</span><br><span class="line">plot(datExpr_tree, main = &quot;Sample clustering&quot;, sub=&quot;&quot;, xlab=&quot;&quot;, cex.lab = 2,</span><br><span class="line">       cex.axis = 1, cex.main = 1,cex.lab=1)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.8.8/step1-sample-cluster.png"></p>
+<h1 id="3-β值估计"><a href="#3-β值估计" class="headerlink" title="3. β值估计"></a>3. β值估计</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">##====================step 2：β值确定====</span><br><span class="line"></span><br><span class="line">datExpr[1:4,1:4]</span><br><span class="line">powers = c(c(1:10), seq(from = 12, to=20, by=2))</span><br><span class="line">#设置beta值的取值范围</span><br><span class="line">sft = pickSoftThreshold(datExpr, RsquaredCut = 0.9,powerVector = powers, verbose = 5)</span><br><span class="line">#设置网络构建参数选择范围，计算无尺度分布拓扑矩阵</span><br><span class="line">png(&quot;img/step2-beta-value.png&quot;,width = 800,height = 600)</span><br><span class="line">par(mfrow = c(1,2));</span><br><span class="line">cex1 = 0.9;</span><br><span class="line"># Scale-free topology fit index as a function of the soft-thresholding power</span><br><span class="line">plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],</span><br><span class="line">       xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Scale Free Topology Model Fit,signed R^2&quot;,type=&quot;n&quot;,</span><br><span class="line">       main = paste(&quot;Scale independence&quot;));</span><br><span class="line">text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],</span><br><span class="line">       labels=powers,cex=cex1,col=&quot;red&quot;);</span><br><span class="line"># this line corresponds to using an R^2 cut-off of h</span><br><span class="line">abline(h=0.90,col=&quot;red&quot;)</span><br><span class="line"># Mean connectivity as a function of the soft-thresholding power</span><br><span class="line">plot(sft$fitIndices[,1], sft$fitIndices[,5],</span><br><span class="line">       xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Mean Connectivity&quot;, type=&quot;n&quot;,</span><br><span class="line">       main = paste(&quot;Mean connectivity&quot;))</span><br><span class="line">text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col=&quot;red&quot;)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.8.8/step2-beta-value.png"></p>
+<p>可以确定最佳β值为6</p>
+<h1 id="4-一步法构建共表达矩阵"><a href="#4-一步法构建共表达矩阵" class="headerlink" title="4. 一步法构建共表达矩阵"></a>4. 一步法构建共表达矩阵</h1><p>最核心的一步，同时也是最耗费计算资源的一步</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">##====================step 3:自动构建WGCNA模型==================</span><br><span class="line"># 首先是一步法完成网络构建</span><br><span class="line">net = blockwiseModules(</span><br><span class="line">  datExpr,</span><br><span class="line">  power = sft$powerEstimate,             #软阈值，前面计算出来的</span><br><span class="line">  maxBlockSize = 6000,                   #最大block大小，将所有基因放在一个block中</span><br><span class="line">  TOMType = &quot;unsigned&quot;,                  #选择unsigned，使用标准TOM矩阵</span><br><span class="line">  deepSplit = 2, minModuleSize = 30,     #剪切树参数，deepSplit取值0-4</span><br><span class="line">  mergeCutHeight = 0.25,                 # 模块合并参数，越大模块越少</span><br><span class="line">  numericLabels = TRUE,                  # T返回数字，F返回颜色</span><br><span class="line">  pamRespectsDendro = FALSE,  </span><br><span class="line">  saveTOMs = TRUE,</span><br><span class="line">  saveTOMFileBase = &quot;FPKM-TOM&quot;,</span><br><span class="line">  loadTOMs = TRUE,</span><br><span class="line">  verbose = 3</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-模块可视化"><a href="#5-模块可视化" class="headerlink" title="5. 模块可视化"></a>5. 模块可视化</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">##===============================step4:模块可视化=========================</span><br><span class="line"># Convert labels to colors for plotting</span><br><span class="line">mergedColors = labels2colors(net$colors)</span><br><span class="line">table(mergedColors)</span><br><span class="line">moduleColors=mergedColors</span><br><span class="line"># Plot the dendrogram and the module colors underneath</span><br><span class="line">png(&quot;img/step4-genes-modules.png&quot;,width = 800,height = 600)</span><br><span class="line">plotDendroAndColors(net$dendrograms[[1]], mergedColors[net$blockGenes[[1]]],</span><br><span class="line">                    &quot;Module colors&quot;,</span><br><span class="line">                    dendroLabels = FALSE, hang = 0.03,</span><br><span class="line">                    addGuide = TRUE, guideHang = 0.05)</span><br><span class="line">dev.off()</span><br><span class="line">## assign all of the gene to their corresponding module</span><br><span class="line">## hclust for the genes.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#明确样本数和基因</span><br><span class="line">nGenes = ncol(datExpr)</span><br><span class="line">nSamples = nrow(datExpr)</span><br><span class="line">#首先针对样本做个系统聚类</span><br><span class="line">datExpr_tree&lt;-hclust(dist(datExpr), method = &quot;average&quot;)</span><br><span class="line">par(mar = c(0,5,2,0))</span><br><span class="line">plot(datExpr_tree, main = &quot;Sample clustering&quot;, sub=&quot;&quot;, xlab=&quot;&quot;, cex.lab = 2,</span><br><span class="line">     cex.axis = 1, cex.main = 1,cex.lab=1)</span><br><span class="line">## 如果这个时候样本是有性状，或者临床表型的，可以加进去看看是否聚类合理</span><br><span class="line">#针对前面构造的样品矩阵添加对应颜色</span><br><span class="line">sample_colors &lt;- numbers2colors(as.numeric(factor(datTraits$subtype)),</span><br><span class="line">                                colors = c(&quot;white&quot;,&quot;blue&quot;,&quot;red&quot;,&quot;green&quot;),signed = FALSE)</span><br><span class="line">## 这个给样品添加对应颜色的代码需要自行修改以适应自己的数据分析项目</span><br><span class="line">#  sample_colors &lt;- numbers2colors( datTraits ,signed = FALSE)</span><br><span class="line">## 如果样品有多种分类情况，而且 datTraits 里面都是分类信息，那么可以直接用上面代码，当然，这样给的颜色不明显，意义不大</span><br><span class="line">#10个样品的系统聚类树及性状热图</span><br><span class="line">par(mar = c(1,4,3,1),cex=0.8)</span><br><span class="line"></span><br><span class="line">png(&quot;img/sample-subtype-cluster.png&quot;,width = 800,height = 600)</span><br><span class="line">plotDendroAndColors(datExpr_tree, sample_colors,</span><br><span class="line">                    groupLabels = colnames(sample),</span><br><span class="line">                    cex.dendroLabels = 0.8,</span><br><span class="line">                    marAll = c(1, 4, 3, 1),</span><br><span class="line">                    cex.rowText = 0.01,</span><br><span class="line">                    main = &quot;Sample dendrogram and trait heatmap&quot;)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p>可以看到模块用不同的颜色来标注，灰色模块是无法归类于任何模块的基因，在后续分析的时候不需要考虑</p>
+<p><img src="/img/posts/2020.8.8/step4-genes-modules.png"></p>
+<p><img src="/img/posts/2020.8.8/sample-subtype-cluster.png"></p>
+<h1 id="6-模块与性状的关系"><a href="#6-模块与性状的关系" class="headerlink" title="6.模块与性状的关系"></a>6.模块与性状的关系</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">##===============================step5:模块与性状的关系===================</span><br><span class="line">table(datTraits$subtype)</span><br><span class="line">nGenes = ncol(datExpr)</span><br><span class="line">nSamples = nrow(datExpr)</span><br><span class="line">design=model.matrix(~0+ datTraits$subtype)</span><br><span class="line">colnames(design)=levels(datTraits$subtype)</span><br><span class="line">moduleColors &lt;- labels2colors(net$colors)</span><br><span class="line"># Recalculate MEs with color labels</span><br><span class="line">MEs0 = moduleEigengenes(datExpr, moduleColors)$eigengenes</span><br><span class="line">MEs = orderMEs(MEs0); ##不同颜色的模块的ME值矩 (样本vs模块)</span><br><span class="line"># 输出每个基因所在的模块，以及与该模块的KME值</span><br><span class="line">file.remove(&#x27;All_Gene_KME.txt&#x27;)</span><br><span class="line">for(module in substring(colnames(MEs),3))&#123;</span><br><span class="line">  if(module == &quot;grey&quot;) next</span><br><span class="line">  ME=as.data.frame(MEs[,paste(&quot;ME&quot;,module,sep=&quot;&quot;)])</span><br><span class="line">  colnames(ME)=module</span><br><span class="line">  datModExpr=datExpr[,moduleColors==module]</span><br><span class="line">  datKME = signedKME(datModExpr, ME)</span><br><span class="line">  datKME=cbind(datKME,rep(module,length(datKME)))</span><br><span class="line">  write.table(datKME,quote = F,row.names = T,append = T,file = &quot;All_Gene_KME.txt&quot;,col.names = F)</span><br><span class="line">&#125;</span><br><span class="line">moduleTraitCor = cor(MEs, design , use = &quot;p&quot;);</span><br><span class="line">moduleTraitPvalue = corPvalueStudent(moduleTraitCor, nSamples)</span><br><span class="line"></span><br><span class="line">sizeGrWindow(10,6)</span><br><span class="line"># Will display correlations and their p-values</span><br><span class="line">textMatrix = paste(signif(moduleTraitCor, 2), &quot;\n(&quot;,</span><br><span class="line">                   signif(moduleTraitPvalue, 1), &quot;)&quot;, sep = &quot;&quot;);</span><br><span class="line">dim(textMatrix) = dim(moduleTraitCor)</span><br><span class="line">png(&quot;img/step5-Module-trait-relationships.png&quot;,width = 800,height = 600)</span><br><span class="line">par(mar = c(6, 8.5, 3, 3));</span><br><span class="line"># Display the correlation values within a heatmap plot</span><br><span class="line">labeledHeatmap(Matrix = moduleTraitCor,</span><br><span class="line">               xLabels = colnames(design),</span><br><span class="line">               yLabels = names(MEs),</span><br><span class="line">               ySymbols = names(MEs),</span><br><span class="line">               colorLabels = FALSE,</span><br><span class="line">               colors = blueWhiteRed(50),</span><br><span class="line">               textMatrix = textMatrix,</span><br><span class="line">               setStdMargins = FALSE,</span><br><span class="line">               cex.text = 0.5,</span><br><span class="line">               zlim = c(-1,1),</span><br><span class="line">               main = paste(&quot;Module-trait relationships&quot;))</span><br><span class="line">dev.off()</span><br><span class="line">#绘制两两模块间的邻接矩阵</span><br><span class="line">png(&quot;img/wgcna.adjacency.heatmap.pdf&quot;,height = 800,width = 600)</span><br><span class="line">plotEigengeneNetworks(MEs, &quot;Eigengene adjacency heatmap&quot;,plotDendrograms = F,</span><br><span class="line">                      marDendro = c(4,4,2,4))</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p>可以看到不同的模块与不同的性状是有不同的相关性的，在后续分析的时候我们可以选择感兴趣的模块进行分析。</p>
+<p><img src="/img/posts/2020.8.8/step5-Module-trait-relationships.png"></p>
+<p>两两模块之间的邻接矩阵，主要看不同模块之间的相关性</p>
+<p><img src="/img/posts/2020.8.8/wgcna.adjacency.heatmap.png"></p>
+<h1 id="7-选择感兴趣的模块进行分析"><a href="#7-选择感兴趣的模块进行分析" class="headerlink" title="7. 选择感兴趣的模块进行分析"></a>7. 选择感兴趣的模块进行分析</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">##===============================step 6：感兴趣性状的模块的具体基因分析=====</span><br><span class="line"># 查看第五步出图：step5-Module-trait-relationships.png</span><br><span class="line"># 发现跟 Luminal 亚型 最相关的是  pink 模块</span><br><span class="line"># 所以接下来就分析这两个</span><br><span class="line">Luminal = as.data.frame(design[,3])</span><br><span class="line">names(Luminal) = &quot;Luminal&quot;</span><br><span class="line">module = &quot;pink&quot;</span><br><span class="line"># names (colors) of the modules</span><br><span class="line">modNames = substring(names(MEs), 3)</span><br><span class="line">geneModuleMembership = as.data.frame(cor(datExpr, MEs, use = &quot;p&quot;))</span><br><span class="line">## 算出每个模块跟基因的皮尔森相关系数矩阵</span><br><span class="line">## MEs是每个模块在每个样本里面的</span><br><span class="line">## datExpr是每个基因在每个样本的表达量</span><br><span class="line">MMPvalue = as.data.frame(corPvalueStudent(as.matrix(geneModuleMembership), nSamples))</span><br><span class="line">names(geneModuleMembership) = paste(&quot;MM&quot;, modNames, sep=&quot;&quot;)</span><br><span class="line">names(MMPvalue) = paste(&quot;p.MM&quot;, modNames, sep=&quot;&quot;)</span><br><span class="line">geneModuleMembership[1:4,1:4]</span><br><span class="line">## 只有连续型性状才能只有计算</span><br><span class="line">## 这里把是否属 Luminal 表型这个变量0,1进行数值化</span><br><span class="line">Luminal = as.data.frame(design[,3])</span><br><span class="line">names(Luminal) = &quot;Luminal&quot;</span><br><span class="line">geneTraitSignificance = as.data.frame(cor(datExpr, Luminal, use = &quot;p&quot;))</span><br><span class="line">GSPvalue = as.data.frame(corPvalueStudent(as.matrix(geneTraitSignificance), nSamples))</span><br><span class="line">names(geneTraitSignificance) = paste(&quot;GS.&quot;, names(Luminal), sep=&quot;&quot;)</span><br><span class="line">names(GSPvalue) = paste(&quot;p.GS.&quot;, names(Luminal), sep=&quot;&quot;)</span><br><span class="line"></span><br><span class="line">module = &quot;pink&quot;</span><br><span class="line">column = match(module, modNames)</span><br><span class="line">moduleGenes = moduleColors==module</span><br><span class="line">png(&quot;step6-Module_membership-gene_significance.png&quot;,width = 800,height = 600)</span><br><span class="line">#sizeGrWindow(7, 7)</span><br><span class="line">par(mfrow = c(1,1))</span><br><span class="line">verboseScatterplot(abs(geneModuleMembership[moduleGenes, column]),</span><br><span class="line">                     abs(geneTraitSignificance[moduleGenes, 1]),</span><br><span class="line">                     xlab = paste(&quot;Module Membership in&quot;, module, &quot;module&quot;),</span><br><span class="line">                     ylab = &quot;Gene significance for Luminal&quot;,</span><br><span class="line">                     main = paste(&quot;Module membership vs. gene significance\n&quot;),</span><br><span class="line">                     cex.main = 1.2, cex.lab = 1.2, cex.axis = 1.2, col =module)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p>由于是分类变量，只能按照0至1量化，可以看出模块内的基因与表型有很好的线性关系</p>
+<p><img src="/img/posts/2020.8.8/step6-Module_membership-gene_significance.png"></p>
+<p>然后再绘制性状与模块的关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"># Recalculate module eigengenes</span><br><span class="line">MEs = moduleEigengenes(datExpr, moduleColors)$eigengenes</span><br><span class="line">## 只有连续型性状才能只有计算</span><br><span class="line">## 这里把是否属 Luminal 表型这个变量0,1进行数值化</span><br><span class="line">Luminal = as.data.frame(design[,3]);</span><br><span class="line">names(Luminal) = &quot;Luminal&quot;</span><br><span class="line"># Add the weight to existing module eigengenes</span><br><span class="line">MET = orderMEs(cbind(MEs, Luminal))</span><br><span class="line"># Plot the relationships among the eigengenes and the trait</span><br><span class="line">sizeGrWindow(5,7.5);</span><br><span class="line"></span><br><span class="line">par(cex = 0.9)</span><br><span class="line">png(&quot;img/step6-Eigengene-dendrogram.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;&quot;, marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2), cex.lab = 0.8, xLabelsAngle</span><br><span class="line">                        = 90)</span><br><span class="line">dev.off()</span><br><span class="line"></span><br><span class="line"># Plot the dendrogram</span><br><span class="line">sizeGrWindow(6,6);</span><br><span class="line">par(cex = 1.0)</span><br><span class="line">## 模块的进化树</span><br><span class="line">png(&quot;img/step6-Eigengene-dendrogram-hclust.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;Eigengene dendrogram&quot;, marDendro = c(0,4,2,0),</span><br><span class="line">                        plotHeatmaps = FALSE)</span><br><span class="line">dev.off()</span><br><span class="line"># Plot the heatmap matrix (note: this plot will overwrite the dendrogram plot)</span><br><span class="line">par(cex = 1.0)</span><br><span class="line">## 性状与模块热</span><br><span class="line"></span><br><span class="line">png(&quot;img/step6-Eigengene-adjacency-heatmap.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;Eigengene adjacency heatmap&quot;, marHeatmap = c(3,4,2,2),</span><br><span class="line">                        plotDendrograms = FALSE, xLabelsAngle = 90)</span><br><span class="line">dev.off()# Recalculate module eigengenes</span><br><span class="line">MEs = moduleEigengenes(datExpr, moduleColors)$eigengenes</span><br><span class="line">## 只有连续型性状才能只有计算</span><br><span class="line">## 这里把是否属 Luminal 表型这个变量0,1进行数值化</span><br><span class="line">Luminal = as.data.frame(design[,3]);</span><br><span class="line">names(Luminal) = &quot;Luminal&quot;</span><br><span class="line"># Add the weight to existing module eigengenes</span><br><span class="line">MET = orderMEs(cbind(MEs, Luminal))</span><br><span class="line"># Plot the relationships among the eigengenes and the trait</span><br><span class="line">sizeGrWindow(5,7.5);</span><br><span class="line"></span><br><span class="line">par(cex = 0.9)</span><br><span class="line">png(&quot;img/step6-Eigengene-dendrogram.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;&quot;, marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2), cex.lab = 0.8, xLabelsAngle</span><br><span class="line">                        = 90)</span><br><span class="line">dev.off()</span><br><span class="line"></span><br><span class="line"># Plot the dendrogram</span><br><span class="line">sizeGrWindow(6,6);</span><br><span class="line">par(cex = 1.0)</span><br><span class="line">## 模块的进化树</span><br><span class="line">png(&quot;img/step6-Eigengene-dendrogram-hclust.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;Eigengene dendrogram&quot;, marDendro = c(0,4,2,0),</span><br><span class="line">                        plotHeatmaps = FALSE)</span><br><span class="line">dev.off()</span><br><span class="line"># Plot the heatmap matrix (note: this plot will overwrite the dendrogram plot)</span><br><span class="line">par(cex = 1.0)</span><br><span class="line">## 性状与模块热</span><br><span class="line"></span><br><span class="line">png(&quot;img/step6-Eigengene-adjacency-heatmap.png&quot;,width = 800,height = 600)</span><br><span class="line">plotEigengeneNetworks(MET, &quot;Eigengene adjacency heatmap&quot;, marHeatmap = c(3,4,2,2),</span><br><span class="line">                        plotDendrograms = FALSE, xLabelsAngle = 90)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.8.8/step6-Eigengene-dendrogram.png"></p>
+<h1 id="8-网络的可视化"><a href="#8-网络的可视化" class="headerlink" title="8.网络的可视化"></a>8.网络的可视化</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 主要是可视化 TOM矩阵，WGCNA的标准配图</span><br><span class="line"># 然后可视化不同 模块 的相关性 热图</span><br><span class="line"># 不同模块的层次聚类图</span><br><span class="line"># 还有模块诊断，主要是 intramodular connectivity</span><br><span class="line"></span><br><span class="line">nGenes = ncol(datExpr)</span><br><span class="line">nSamples = nrow(datExpr)</span><br><span class="line">geneTree = net$dendrograms[[1]];</span><br><span class="line">dissTOM = 1-TOMsimilarityFromExpr(datExpr, power = 6);</span><br><span class="line">plotTOM = dissTOM^7;</span><br><span class="line">diag(plotTOM) = NA;</span><br><span class="line">#TOMplot(plotTOM, geneTree, moduleColors, main = &quot;Network heatmap plot, all genes&quot;)</span><br><span class="line">nSelect = 400</span><br><span class="line"># For reproducibility, we set the random seed</span><br><span class="line">set.seed(10);</span><br><span class="line">select = sample(nGenes, size = nSelect);</span><br><span class="line">selectTOM = dissTOM[select, select];</span><br><span class="line"># There’s no simple way of restricting a clustering tree to a subset of genes, so we must re-cluster.</span><br><span class="line">selectTree = hclust(as.dist(selectTOM), method = &quot;average&quot;)</span><br><span class="line">selectColors = moduleColors[select];</span><br><span class="line"># Open a graphical window</span><br><span class="line">sizeGrWindow(9,9)</span><br><span class="line"># Taking the dissimilarity to a power, say 10, makes the plot more informative by effectively changing</span><br><span class="line"># the color palette; setting the diagonal to NA also improves the clarity of the plot</span><br><span class="line">plotDiss = selectTOM^7;</span><br><span class="line">diag(plotDiss) = NA;</span><br><span class="line"></span><br><span class="line">png(&quot;img/step7-Network-heatmap.png&quot;,width = 800,height = 600)</span><br><span class="line">  TOMplot(plotDiss, selectTree, selectColors, main = &quot;Network heatmap plot, selected genes&quot;)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p>不知道为啥，这张图有点奇怪</p>
+<p><img src="/img/posts/2020.8.8/step7-Network-heatmap.png"></p>
+<h1 id="9-模块的导出"><a href="#9-模块的导出" class="headerlink" title="9. 模块的导出"></a>9. 模块的导出</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">##===============================step 8：模块导出 =========</span><br><span class="line"># 导出模块内部基因的连接关系，进入其它可视化软件</span><br><span class="line"># 比如 cytoscape软件等等。</span><br><span class="line"># Recalculate topological overlap</span><br><span class="line">TOM = TOMsimilarityFromExpr(datExpr, power = 6);</span><br><span class="line"># Select module</span><br><span class="line">module = &quot;pink&quot;;</span><br><span class="line"># Select module probes</span><br><span class="line">probes = colnames(datExpr) ## 我们例子里面的probe就是基因</span><br><span class="line">inModule = (moduleColors==module)</span><br><span class="line">modProbes = probes[inModule]</span><br><span class="line">## 也是提取指定模块的基因名</span><br><span class="line"># Select the corresponding Topological Overlap</span><br><span class="line">modTOM = TOM[inModule, inModule]</span><br><span class="line">dimnames(modTOM) = list(modProbes, modProbes)</span><br><span class="line">## 模块对应的基因关系矩</span><br><span class="line">cyt = exportNetworkToCytoscape(</span><br><span class="line">    modTOM,</span><br><span class="line">    edgeFile = paste(&quot;CytoscapeInput-edges-&quot;, paste(module, collapse=&quot;-&quot;), &quot;.txt&quot;, sep=&quot;&quot;),</span><br><span class="line">    nodeFile = paste(&quot;CytoscapeInput-nodes-&quot;, paste(module, collapse=&quot;-&quot;), &quot;.txt&quot;, sep=&quot;&quot;),</span><br><span class="line">    weighted = TRUE,</span><br><span class="line">    threshold = 0.02,</span><br><span class="line">    nodeNames = modProbes,</span><br><span class="line">    nodeAttr = moduleColors[inModule]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>模块导出后可以用cytoscape构建网络，后面的教程会教大家利用这个文件构建网络图</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>本次WGCNA的代码结合了<a target="_blank" rel="noopener" href="https://github.com/jmzeng1314/my_WGCNA">生信技能树</a>和<a target="_blank" rel="noopener" href="https://plantech.ke.qq.com/">PlantTech</a>的WGCNA教程，原始数据也来自这两个教程，我将代码和原始数据上传到自己的<a target="_blank" rel="noopener" href="https://github.com/Bioinformatics-rookie/WGCNA">github</a>中，其中PlantTech课程是收费课程，我已将其下载，大家有需要可以去<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/114dcfZho2t6pt3XOhkYXtg">百度云</a>下载（提取码：es41）</p>
+<p>视频压缩包解压密码是我博客about界面下的一行小字（出自《蒲公英女孩》，标点是英文），如果链接炸了去博客找我联系方式。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

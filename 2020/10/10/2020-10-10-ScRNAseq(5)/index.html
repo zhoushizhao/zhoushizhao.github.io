@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单细胞实战(5)：复现文章中的聚类图（1） - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="前言目前我的课题是植物方面的单细胞测序，所以打算选择植物类的单细胞测序数据进行复现，目前选择了王佳伟老师的《A Single-Cell RNA Sequencing Profiles the Dev,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="单细胞实战(5)：复现文章中的聚类图（1） - Zhz Blog"/>
+    <meta name="twitter:description" content="前言目前我的课题是植物方面的单细胞测序，所以打算选择植物类的单细胞测序数据进行复现，目前选择了王佳伟老师的《A Single-Cell RNA Sequencing Profiles the Dev,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="单细胞实战(5)：复现文章中的聚类图（1） - Zhz Blog"/>
+    <meta property="og:description" content="前言目前我的课题是植物方面的单细胞测序，所以打算选择植物类的单细胞测序数据进行复现，目前选择了王佳伟老师的《A Single-Cell RNA Sequencing Profiles the Dev,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">单细胞实战(5)：复现文章中的聚类图（1）</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">单细胞实战(5)：复现文章中的聚类图（1）</h1>
+        <div class="stuff">
+            <span>十月 10, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前我的课题是植物方面的单细胞测序，所以打算选择植物类的单细胞测序数据进行复现，目前选择了王佳伟老师的<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1674205219301339">《A Single-Cell RNA Sequencing Profiles the Developmental Landscape of Arabidopsis Root》</a>，希望能够得到好的结果</p>
+<h2 id="原始数据的下载"><a href="#原始数据的下载" class="headerlink" title="原始数据的下载"></a>原始数据的下载</h2><p>首先下载测序数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">prefetch SRR8485805 -O wang/</span><br><span class="line">fastq-dump --split-files SRR8485805</span><br><span class="line">mv SRR8485805_1.fastq data/WT_S1_L001_I1_001.fastq</span><br><span class="line">mv SRR8485805_2.fastq data/WT_S1_L001_R1_001.fastq</span><br><span class="line">mv SRR8485805_3.fastq data/WT_S1_L001_R2_001.fastq</span><br></pre></td></tr></table></figure>
+
+<p>下载基因组与注释文件，需要注意文献中基因组使用的是<a target="_blank" rel="noopener" href="https://genome.jgi.doe.gov/portal/pages/dynamicOrganismDownload.jsf?organism=Athaliana#">TAIR10</a>，注释文件是<a target="_blank" rel="noopener" href="https://genome.jgi.doe.gov/portal/pages/dynamicOrganismDownload.jsf?organism=Athaliana#">Araport11</a>。</p>
+<p>将gff转为gtf文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gffread Araport11.gff3 -T -o Araport11.gtf</span><br></pre></td></tr></table></figure>
+
+<h2 id="cellranger进行比对"><a href="#cellranger进行比对" class="headerlink" title="cellranger进行比对"></a>cellranger进行比对</h2><p>下载cellranger2.2版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -o cellranger-2.2.0.tar.gz &quot;https://cf.10xgenomics.com/releases/cell-exp/cellranger-2.2.0.tar.gz?Expires=1603141363&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci0yLjIuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2MDMxNDEzNjN9fX1dfQ__&amp;Signature=en6P4Wedmwc2aSEitfKsQp2PITVYKgRPZdzR-fEmjBl4R9yQY5QBQY05--1v8AzRD9WqfoCnddSzFvngrlwxzeCJtFyfHLa2a7ONnUT6NtrzU6RkIj1jwXpaN4NpixnCbEF-Ubj9UZX63W1rEreM0AMNdWiVneGx4bcTajl1KRWaoTNS970DSJ1wrw0g70JFQ0BAltou-qPAeZpD9Xe9EM35EdWRT6eFq~zOaCMRLTxlBjZaMItyDRH~Qecz-B5tLWcAjCKfy4o2hAWTopRRpy93LVV-x1ykxCiHpej5AuAODvUx0V73rZOkRlijcpA5d1rHV~eEdPiM1uoCOJMiSw__&amp;Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&quot;</span><br><span class="line">tar -zxvf cellranger-2.2.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>建立索引并比对</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/datadisk02/ScRNAseq_data/cellranger-2.2.0/cellranger  mkref --genome=ref --fasta=TAIR10.fa --genes=Araport11.gtf</span><br><span class="line"></span><br><span class="line">/datadisk02/ScRNAseq_data/cellranger-2.2.0/cellranger count --id=WANG --transcriptome=ref --fastqs=data/ --sample=WT --force-cells=8000</span><br></pre></td></tr></table></figure>
+
+<p>比对结果还是可以的，与原文献中差距很小</p>
+<p><img src="/img/posts/2020.10.10/image-20201020160510164.png" alt="image-20201020160510164"></p>
+<p><img src="/img/posts/2020.10.10/image-20201020160549086.png" alt="image-20201020160549086"></p>
+<h2 id="使用Seurat对数据进行分析"><a href="#使用Seurat对数据进行分析" class="headerlink" title="使用Seurat对数据进行分析"></a>使用Seurat对数据进行分析</h2><p>文献中使用到的Seurat为V3版本，要注意cellrangeV2在filtered_gene_bc_matrices生成的文件是genes、barcodes以及matrix，但Seurat识别的是features，我们需要自行对genes文件改名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd WANG/outs/filtered_gene_bc_matrices/ref</span><br><span class="line">gzip genes.tsv</span><br><span class="line">gzip matrix.mtx</span><br><span class="line">gzip barcodes.tsv</span><br><span class="line">mv genes.tsv.gz features.tsv.gz</span><br></pre></td></tr></table></figure>
+<h3 id="创建Seurat对象"><a href="#创建Seurat对象" class="headerlink" title="创建Seurat对象"></a>创建Seurat对象</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">library(Seurat)</span><br><span class="line">library(dplyr)</span><br><span class="line">library(ggplot2)</span><br><span class="line">library(magrittr)</span><br><span class="line">library(gtools)</span><br><span class="line">library(stringr)</span><br><span class="line">library(Matrix)</span><br><span class="line">library(tidyverse)</span><br><span class="line">library(patchwork)</span><br><span class="line">setwd(&quot;D://data/ScRNAcode/wang/&quot;)</span><br><span class="line">##=======================1.创建Seurat对象========================</span><br><span class="line">dir &lt;- &#x27;filtered_gene_bc_matrices/ref/&#x27;</span><br><span class="line">counts &lt;- Read10X(dir)</span><br><span class="line">wang = CreateSeuratObject(counts, project = &quot;zxz&quot;, min.cells=3, min.features = 200)</span><br><span class="line">dim(wang)</span><br><span class="line">[1] 23228  8000</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据质控与标准化"><a href="#数据质控与标准化" class="headerlink" title="数据质控与标准化"></a>数据质控与标准化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">##=======================2.数据质控与标准化================================</span><br><span class="line">##dir.create(&#x27;QC&#x27;)</span><br><span class="line">##提取线粒体基因</span><br><span class="line">wang[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(wang, pattern=&#x27;^ATMG&#x27;)</span><br><span class="line">violin &lt;- VlnPlot(wang,</span><br><span class="line">                  features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;),</span><br><span class="line">                  pt.size = 0.1, #不需要显示点，可以设置pt.size = 0</span><br><span class="line">                  ncol = 3)</span><br><span class="line">ggsave(&quot;QC/vlnplot-before-qc.pdf&quot;, plot = violin, width = 15, height = 6)</span><br><span class="line">ggsave(&quot;QC/vlnplot-before-qc.png&quot;, plot = violin, width = 15, height = 6)</span><br><span class="line">plot1 &lt;- FeatureScatter(wang, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.mt&quot;)</span><br><span class="line">plot2 &lt;- FeatureScatter(wang, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;)</span><br><span class="line">pearplot &lt;- CombinePlots(plots = list(plot1, plot2), nrow=1, legend=&quot;none&quot;)</span><br><span class="line">ggsave(&quot;QC/pearplot-before-qc.pdf&quot;, plot = pearplot, width = 12, height = 5)</span><br><span class="line">ggsave(&quot;QC/pearplot-before-qc.png&quot;, plot = pearplot, width = 12, height = 5)</span><br><span class="line">##设置质控标准</span><br><span class="line">wang&lt;-subset(wang,subset=nFeature_RNA&gt;500 &amp; nFeature_RNA&lt;5000 &amp;percent.mt&lt;0.5)</span><br><span class="line">dim(wang)</span><br><span class="line">[1] 23228  7626</span><br><span class="line">## 绘制质量控制后的图</span><br><span class="line">violin &lt;-VlnPlot(wang,</span><br><span class="line">                 features = c(&quot;nFeature_RNA&quot;, &quot;nCount_RNA&quot;, &quot;percent.mt&quot;),</span><br><span class="line">                 pt.size = 0.1,</span><br><span class="line">                 ncol = 3)</span><br><span class="line">ggsave(&quot;QC/vlnplot-after-qc.pdf&quot;, plot = violin, width = 15, height = 6)</span><br><span class="line">ggsave(&quot;QC/vlnplot-after-qc.png&quot;, plot = violin, width = 15, height = 6)</span><br><span class="line">## 基因表达量标准化</span><br><span class="line">## 它的作用是让测序数据量不同的细胞的基因表达量具有可比性。计算公式如下：</span><br><span class="line">## 标准化后基因表达量 = log1p（10000*基因counts/细胞总counts）</span><br><span class="line">wang &lt;- NormalizeData(wang, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</span><br></pre></td></tr></table></figure>
+
+<p>质控后细胞数目为7626，基因数为23228，原文献中两者的数据分别是7695与23161</p>
+<h3 id="数据降维与聚类"><a href="#数据降维与聚类" class="headerlink" title="数据降维与聚类"></a>数据降维与聚类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">##=======================3.数据降维与聚类==================================</span><br><span class="line">## 寻找高变基因</span><br><span class="line">## dir.create(&quot;cluster&quot;)</span><br><span class="line">wang &lt;- FindVariableFeatures(wang,mean.cutoff=c(0.0125,3),dispersion.cutoff =c(1.5,Inf) )</span><br><span class="line">top10 &lt;- head(VariableFeatures(wang), 10)</span><br><span class="line">plot1 &lt;- VariableFeaturePlot(wang)</span><br><span class="line">plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE, size=2.5)</span><br><span class="line">plot &lt;- CombinePlots(plots = list(plot1, plot2),legend=&quot;bottom&quot;)</span><br><span class="line">## 横坐标是某基因在所有细胞中的平均表达值，纵坐标是此基因的方差。</span><br><span class="line">## 红色的点是被选中的高变基因，黑色的点是未被选中的基因，变异程度最高的10个基因在如图中标注了基因名称。</span><br><span class="line">ggsave(&quot;cluster/VariableFeatures.pdf&quot;, plot = plot, width = 8, height = 6)</span><br><span class="line">ggsave(&quot;cluster/VariableFeatures.png&quot;, plot = plot, width = 8, height = 6)</span><br><span class="line">## 数据缩放</span><br><span class="line">scale.genes &lt;-  rownames(wang)</span><br><span class="line">wang &lt;- ScaleData(wang, features = scale.genes)</span><br><span class="line">## PCA降维并提取主成分</span><br><span class="line">wang &lt;- RunPCA(wang, features = VariableFeatures(wang),npcs = 100)</span><br><span class="line">plot1 &lt;- DimPlot(wang, reduction = &quot;pca&quot;)</span><br><span class="line">plot2 &lt;- ElbowPlot(wang, ndims=40, reduction=&quot;pca&quot;)</span><br><span class="line">plotc &lt;- plot1+plot2</span><br><span class="line">ggsave(&quot;cluster/pca.pdf&quot;, plot = plotc, width = 8, height = 4)</span><br><span class="line">ggsave(&quot;cluster/pca.png&quot;, plot = plotc, width = 8, height = 4)</span><br><span class="line">## 细胞聚类</span><br><span class="line">## 此步利用 细胞-PC值 矩阵计算细胞之间的距离，</span><br><span class="line">## 然后利用距离矩阵来聚类。其中有两个参数需要人工选择，</span><br><span class="line">## 第一个是FindNeighbors()函数中的dims参数，需要指定哪些pc轴用于分析，选择依据是之前介绍的cluster/pca.png文件中的右图。</span><br><span class="line">## 第二个是FindClusters()函数中的resolution参数，需要指定0.1-1.0之间的一个数值，用于决定clusters的相对数量，数值越大cluters越多。</span><br><span class="line">wang &lt;- FindNeighbors(object = wang, dims = 1:100)</span><br><span class="line">wang &lt;- FindClusters(object = wang, resolution = 1.0)</span><br><span class="line">table(wang@meta.data$seurat_clusters)</span><br><span class="line">## 非线性降维</span><br><span class="line">## tsne</span><br><span class="line">wang &lt;- RunTSNE(wang, dims =1:40)</span><br><span class="line">embed_tsne &lt;- Embeddings(wang, &#x27;tsne&#x27;)</span><br><span class="line">write.csv(embed_tsne,&#x27;cluster/embed_tsne_new.csv&#x27;)</span><br><span class="line">plot1 = DimPlot(wang, reduction = &quot;tsne&quot; ,label = &quot;T&quot;, pt.size = 1,label.size = 4)</span><br><span class="line">ggsave(&quot;cluster/tSNE_cluster.pdf&quot;, plot = plot1, width = 8, height = 7)</span><br><span class="line">ggsave(&quot;cluster/tSNE_cluster.png&quot;, plot = plot1, width = 8, height = 7)</span><br><span class="line"></span><br><span class="line">## UMAP&#x27;</span><br><span class="line">wang &lt;- RunUMAP(wang,n.neighbors = 30,metric = &#x27;correlation&#x27;,min.dist = 0.3,dims = 1:40)</span><br><span class="line">embed_umap &lt;- Embeddings(wang, &#x27;umap&#x27;)</span><br><span class="line">write.csv(embed_umap,&#x27;cluster/embed_umap_new.csv&#x27;)</span><br><span class="line">plot2 = DimPlot(wang, reduction = &quot;umap&quot;,label = &quot;T&quot;, pt.size = 1,label.size = 4)</span><br><span class="line">ggsave(&quot;cluster/UMAP_cluster_new.pdf&quot;, plot = plot2, width = 8, height = 7)</span><br><span class="line">ggsave(&quot;cluster/UMAP_cluster_new.png&quot;, plot = plot2, width = 8, height = 7)</span><br></pre></td></tr></table></figure>
+
+<p>结果是有区别的，我的聚类比原文献中要多一个，而且数字不对应，所以我要用文献中列出的某些基因的小提琴图确定我的聚类</p>
+<p><img src="/img/posts/2020.10.10/image-20201020202858168.png" alt="image-20201020202858168"></p>
+<p><img src="/img/posts/2020.10.10/image-20201020185644210.png" alt="image-20201020185644210"></p>
+<h3 id="根据文献对应自己数据聚类"><a href="#根据文献对应自己数据聚类" class="headerlink" title="根据文献对应自己数据聚类"></a>根据文献对应自己数据聚类</h3><p>原文献中有所有聚类的特异基因，所以我根据列出的基因去匹配我的聚类结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">##==============================5.修改聚类标号=====================</span><br><span class="line">##修改聚类号重新做图</span><br><span class="line">new.cluster.ids&lt;-c(&quot;2&quot;,&#x27;1&#x27;,&#x27;4&#x27;,&#x27;5&#x27;,&#x27;13&#x27;,&#x27;3&#x27;,&#x27;12&#x27;,&#x27;21&#x27;,&#x27;8&#x27;,&#x27;6&#x27;,&#x27;11&#x27;,</span><br><span class="line">                   &#x27;9&#x27;,&#x27;7&#x27;,&#x27;10&#x27;,&#x27;6&#x27;,&#x27;15&#x27;,&#x27;22&#x27;,&#x27;14&#x27;,&#x27;17&#x27;,&#x27;19&#x27;,&#x27;16&#x27;,</span><br><span class="line">                   &#x27;20&#x27;,&#x27;18&#x27;,&#x27;23&#x27;,&#x27;24&#x27;)</span><br><span class="line">names(new.cluster.ids) &lt;- levels(wang)</span><br><span class="line">wang &lt;- RenameIdents(wang, new.cluster.ids)</span><br><span class="line">Idents(wang)&lt;-factor(Idents(wang),levels=mixedsort(levels(Idents(wang))))</span><br><span class="line">wang &lt;- RunTSNE(wang, dims =1:40)</span><br><span class="line">embed_tsne &lt;- Embeddings(wang, &#x27;tsne&#x27;)</span><br><span class="line">write.csv(embed_tsne,&#x27;cluster/embed_tsne-new.csv&#x27;)</span><br><span class="line">plot1 = DimPlot(wang, reduction = &quot;tsne&quot; ,label = &quot;T&quot;, pt.size = 1,label.size = 4)</span><br><span class="line">ggsave(&quot;cluster/tSNE_cluster-new.pdf&quot;, plot = plot1, width = 8, height = 7)</span><br><span class="line">ggsave(&quot;cluster/tSNE_cluster-new.png&quot;, plot = plot1, width = 8, height = 7)</span><br><span class="line"></span><br><span class="line">## UMAP</span><br><span class="line">wang &lt;- RunUMAP(wang,n.neighbors = 30,metric = &#x27;correlation&#x27;,min.dist = 0.3,dims = 1:40)</span><br><span class="line">embed_umap &lt;- Embeddings(wang, &#x27;umap&#x27;)</span><br><span class="line">write.csv(embed_umap,&#x27;cluster/embed_umap-new.csv&#x27;)</span><br><span class="line">plot2 = DimPlot(wang, reduction = &quot;umap&quot;,label = &quot;T&quot;, pt.size = 1,label.size = 4)</span><br><span class="line">ggsave(&quot;cluster/UMAP_cluster.pdf&quot;, plot = plot2, width = 8, height = 7)</span><br><span class="line">ggsave(&quot;cluster/UMAP_cluster.png&quot;, plot = plot2, width = 8, height = 7)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.10.10/image-20201020185818669.png" alt="image-20201020185818669"></p>
+<p>修改之后的聚类结果</p>
+<p><img src="/img/posts/2020.10.10/%E5%9B%BE%E7%89%871.png"></p>
+<p>一些基因的小提琴图对应效果</p>
+<p><img src="/img/posts/2020.10.10/image-20201021092654590.png" alt="image-20201021092654590"></p>
+<p><img src="/img/posts/2020.10.10/image-20201021092710599.png" alt="image-20201021092710599"></p>
+<p><img src="/img/posts/2020.10.10/image-20201021092725458.png" alt="image-20201021092725458"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>对于这次的数据重复，基本符合预期结果，和文章的结果有点差距，需要自己进一步研究问题出在哪里，下一次将继续这篇文献的数据复现，主要是伪时间分析，目前的数据与代码我已上传<a target="_blank" rel="noopener" href="https://github.com/Bioinformatics-rookie/ScRNAseq_code">github</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

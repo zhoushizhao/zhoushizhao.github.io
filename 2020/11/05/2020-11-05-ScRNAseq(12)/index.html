@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生信技能树单细胞数据挖掘笔记(6) - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="生信技能树单细胞数据挖掘笔记(6) - Zhz Blog"/>
+    <meta name="twitter:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="生信技能树单细胞数据挖掘笔记(6) - Zhz Blog"/>
+    <meta property="og:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">生信技能树单细胞数据挖掘笔记(6)</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">生信技能树单细胞数据挖掘笔记(6)</h1>
+        <div class="stuff">
+            <span>十一月 05, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/24/ScRNAseq(7)/">生信技能树单细胞数据挖掘笔记(1)：数据读入</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/27/ScRNAseq(8)/">生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/29/ScRNAseq(9)/">生信技能树单细胞数据挖掘笔记(3)：降维与聚类</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/31/ScRNAseq(10)/">生信技能树单细胞数据挖掘笔记(4)：其他分析（周期判断、double诊断、细胞类型注释）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/03/ScRNAseq(11)/">生信技能树单细胞数据挖掘笔记(5)：轨迹分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/05/ScRNAseq(12)/">生信技能树单细胞数据挖掘笔记(6)：差异分析(1)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/07/ScRNAseq(13)/">生信技能树单细胞数据挖掘笔记(7)：差异分析(2)</a></p>
+<p>前言：使用GSE81861提供的数据，比较CRC肿瘤上皮细胞与正常上皮细胞的差异。GEO提供了count与fpkm两种数据。笔记内容先用官方的fpkm数据做差异分析，再利用counts数据手动计算fpkm矩阵，完成差异分析。最后比较两种方法的结果是否存在差异。</p>
+<p><a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE81861">https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE81861</a></p>
+<p><img src="/img/posts/2020.11.05/image-20201116101851386.png" alt="image-20201116101851386"></p>
+<p>注：因为有不少重复的步骤，故设置较多的函数。</p>
+<h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h2><h3 id="1-1-单细胞差异分析pipeline"><a href="#1-1-单细胞差异分析pipeline" class="headerlink" title="1.1 单细胞差异分析pipeline"></a>1.1 单细胞差异分析pipeline</h3><p>简单来说分为三步：首先导入、制备规范的表达矩阵以及分组信息；然后利用Seurat包构建seurat对象，归一化；最后进行差异分析，以及结果的可视化。</p>
+<h3 id="1-2-count标准化"><a href="#1-2-count标准化" class="headerlink" title="1.2 count标准化"></a>1.2 count标准化</h3><p>主要受测序文库(样本总read数)与基因长度的影响，测序的counts数据不能直接进行差异分析，需要进行标准化处理。常见的几种标准化方法简单介绍如下–</p>
+<ul>
+<li>rpkm：counts先对测序文库标准化，再对基因长度标准化；</li>
+<li>fpkm：FPKM同RPKM是一样的，只是RPKM用于单末端测序，而FPKM用于双末端测序；</li>
+<li>tpm：counts先对基因长度标准化，再对测序文库标准化；</li>
+<li>cpm：counts只对测序文库标准化。</li>
+</ul>
+<p>测序文库相对容易计算，直接使用<code>colSums()</code>函数即可；而基因长度则比较难求，首先要了解基因长度有不同的定义标准，其次要知道哪些R包提供相关生物数据。目前有以下三种方法，以及根据与官方fpkm验证，最终选择第三种方法用于后续的分析。</p>
+<h3 id="计算基因长度"><a href="#计算基因长度" class="headerlink" title="计算基因长度"></a>计算基因长度</h3><h3 id="1-TxDb-Hsapiens-UCSC-hg19-knownGene包"><a href="#1-TxDb-Hsapiens-UCSC-hg19-knownGene包" class="headerlink" title="(1)TxDb.Hsapiens.UCSC.hg19.knownGene包"></a>(1)TxDb.Hsapiens.UCSC.hg19.knownGene包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (!require(&quot;TxDb.Hsapiens.UCSC.hg19.knownGene&quot;, quietly = TRUE))</span><br><span class="line">  BiocManager::install(&quot;TxDb.Hsapiens.UCSC.hg19.knownGene&quot;)</span><br><span class="line">library(TxDb.Hsapiens.UCSC.hg19.knownGene)</span><br><span class="line">txdb &lt;- TxDb.Hsapiens.UCSC.hg19.knownGene</span><br><span class="line">exon_txdb=exons(txdb)</span><br><span class="line">genes_txdb=genes(txdb)</span><br></pre></td></tr></table></figure>
+
+<h3 id="g-l-1–根据非冗余外显子之和定义"><a href="#g-l-1–根据非冗余外显子之和定义" class="headerlink" title="g_l.1–根据非冗余外显子之和定义"></a>g_l.1–根据非冗余外显子之和定义</h3><figure class="highlight plaintext"><figcaption><span>message</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">g_l_1 &lt;- function()&#123;</span><br><span class="line">  o &lt;- findOverlaps(exon_txdb,genes_txdb)</span><br><span class="line">  t1=exon_txdb[queryHits(o)]</span><br><span class="line">  t2=genes_txdb[subjectHits(o)]</span><br><span class="line">  t1=as.data.frame(t1)</span><br><span class="line">  t1$geneid=mcols(t2)[,1]</span><br><span class="line">  # 得到exon_id与geneid的对应关系</span><br><span class="line">  g_l.1 &lt;- lapply(split(t1,t1$geneid),function(x)&#123;</span><br><span class="line">    #按gene id拆分表格</span><br><span class="line">    head(x)</span><br><span class="line">    tmp=apply(x,1,function(y)&#123;</span><br><span class="line">      y[2]:y[3]</span><br><span class="line">    &#125;) #根据每一个gene所有exon的区间，生成区间内的整数，返回的为list。</span><br><span class="line">    length(unique(unlist(tmp)))</span><br><span class="line">    #计算共有多少种整数，即为最终的非冗余exon长度之和</span><br><span class="line">  &#125;)</span><br><span class="line">  head(g_l.1) #为一个list</span><br><span class="line">  g_l.1=data.frame(gene_id=names(g_l.1),length=as.numeric(g_l.1))</span><br><span class="line">  dim(g_l.1)</span><br><span class="line">  head(g_l.1)</span><br><span class="line">  #为基因ID增添ENSEMBLE ID</span><br><span class="line">  if (!require(&quot;org.Hs.eg.db&quot;, quietly = TRUE))</span><br><span class="line">  BiocManager::install(&quot;org.Hs.eg.db&quot;)</span><br><span class="line">  library(org.Hs.eg.db)</span><br><span class="line">  s2g=toTable(org.Hs.egENSEMBL)</span><br><span class="line">  head(s2g)</span><br><span class="line">  g_l.1=merge(g_l.1,s2g,by=&#x27;gene_id&#x27;)</span><br><span class="line">  #把g_l,s2g两个数据框以&#x27;gene_id&#x27;为连接进行拼接</span><br><span class="line">  head(g_l.1)</span><br><span class="line">  return(g_l.1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">g_l.1 &lt;- g_l_1()</span><br><span class="line">head(g_l.1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="g-l-2—-根据最长转录本定义"><a href="#g-l-2—-根据最长转录本定义" class="headerlink" title="g_l.2—-根据最长转录本定义"></a>g_l.2—-根据最长转录本定义</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">g_l_2 &lt;- function()&#123;</span><br><span class="line">  t_l=transcriptLengths(txdb)</span><br><span class="line">  head(t_l)</span><br><span class="line">  t_l=na.omit(t_l)</span><br><span class="line">  #先按基因ID，再按转录本长度从大到小排序</span><br><span class="line">  t_l=t_l[order(t_l$gene_id,t_l$tx_len,decreasing = T),]</span><br><span class="line">  head(t_l);dim(t_l)</span><br><span class="line">  #根据gene_id去重，选择第一个，也就是最长的那个</span><br><span class="line">  t_l=t_l[!duplicated(t_l$gene_id),]</span><br><span class="line">  head(t_l);dim(t_l)</span><br><span class="line">  g_l.2=t_l[,c(3,5)]</span><br><span class="line">  library(org.Hs.eg.db)</span><br><span class="line">  s2g=toTable(org.Hs.egENSEMBL)</span><br><span class="line">  g_l.2=merge(g_l.2,s2g,by=&#x27;gene_id&#x27;)</span><br><span class="line">  head(g_l.2)</span><br><span class="line">  return(g_l.2)</span><br><span class="line">&#125;</span><br><span class="line">g_l.2 &lt;- g_l_2()</span><br><span class="line">head(g_l.2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-biomaRt包"><a href="#2-biomaRt包" class="headerlink" title="(2)biomaRt包"></a>(2)biomaRt包</h3><h3 id="g-l-3–根据最长转录本定义"><a href="#g-l-3–根据最长转录本定义" class="headerlink" title="g_l.3–根据最长转录本定义"></a>g_l.3–根据最长转录本定义</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">g_l_3 &lt;- function()&#123;</span><br><span class="line">  if (!require(&quot;biomaRt&quot;, quietly = TRUE))</span><br><span class="line">    BiocManager::install(&quot;biomaRt&quot;)</span><br><span class="line">  library(biomaRt)</span><br><span class="line">  ensembl &lt;- useMart(&quot;ensembl&quot;) #connect to a specified BioMart database</span><br><span class="line">  ensembl = useDataset(&quot;hsapiens_gene_ensembl&quot;,mart=ensembl)</span><br><span class="line">  #use the hsapiens(人类) dataset.或者直接如下设置</span><br><span class="line">  #ensembl = useMart(&quot;ensembl&quot;,dataset=&quot;hsapiens_gene_ensembl&quot;)</span><br><span class="line">  #BiocManager::install(&#x27;grimbough/biomaRt&#x27;)</span><br><span class="line">  #library(biomaRt)</span><br><span class="line">  #packageVersion(&#x27;biomaRt&#x27;)</span><br><span class="line">  test &lt;- getBM(attributes=c(&#x27;ensembl_gene_id&#x27;, &#x27;start_position&#x27;,</span><br><span class="line">                             &#x27;end_position&#x27;,&#x27;ensembl_transcript_id&#x27;,</span><br><span class="line">                             &#x27;transcript_length&#x27;),</span><br><span class="line">                mart = ensembl)</span><br><span class="line">  test &lt;- test[order(test$ensembl_gene_id,test$transcript_length,</span><br><span class="line">                     decreasing = T),]</span><br><span class="line">  g_l.3 &lt;- test[!duplicated(test$ensembl_gene_id),]</span><br><span class="line">  g_l.3 &lt;- g_l.3[,c(1,5)]</span><br><span class="line">  head(g_l.3)</span><br><span class="line">  return(g_l.3)</span><br><span class="line">&#125;</span><br><span class="line">g_l.3 &lt;- g_l_3()</span><br></pre></td></tr></table></figure>
+
+<h3 id="比较三种结果的差异"><a href="#比较三种结果的差异" class="headerlink" title="比较三种结果的差异"></a>比较三种结果的差异</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dim(g_l.1);dim(g_l.2);dim(g_l.3)</span><br><span class="line"></span><br><span class="line">g_l.1 &lt;- g_l.1[,-1]</span><br><span class="line">colnames(g_l.1) &lt;- c(&quot;g_l.1&quot;,&quot;ensembl_id&quot;)</span><br><span class="line">g_l.2 &lt;- g_l.2[,-1]</span><br><span class="line">colnames(g_l.2) &lt;- c(&quot;g_l.2&quot;,&quot;ensembl_id&quot;)</span><br><span class="line">colnames(g_l.3) &lt;- c(&quot;ensembl_id&quot;,&quot;g_l.3&quot;)</span><br><span class="line">g_l_all &lt;- merge(g_l.1, g_l.2, by=&quot;ensembl_id&quot;)</span><br><span class="line">g_l_all &lt;- merge(g_l_all, g_l.3, by=&quot;ensembl_id&quot;)</span><br><span class="line">head(g_l_all,10)</span><br><span class="line">summary(g_l_all)</span><br><span class="line"></span><br><span class="line">#最终选择第三种结果，即biomaR包</span><br><span class="line">g_l &lt;- g_l.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-官方fpkm数据差异分析"><a href="#2-官方fpkm数据差异分析" class="headerlink" title="2.官方fpkm数据差异分析"></a>2.官方fpkm数据差异分析</h2><h3 id="2-1-表达矩阵与分组信息"><a href="#2-1-表达矩阵与分组信息" class="headerlink" title="2.1 表达矩阵与分组信息"></a>2.1 表达矩阵与分组信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">#表达矩阵</span><br><span class="line">nm_FPKM &lt;- read.csv(&quot;GSE81861_CRC_NM_epithelial_cells_FPKM.csv/GSE81861_CRC_NM_epithelial_cells_FPKM.csv&quot;)</span><br><span class="line">data_input &lt;- function(data)&#123;</span><br><span class="line">  #data &lt;- nm_FPKM</span><br><span class="line">  row.names(data) &lt;- data[,1]</span><br><span class="line">  data &lt;- data[,-1]</span><br><span class="line">  data &lt;- as.matrix(data)</span><br><span class="line">  rownames(data) &lt;- sapply(strsplit(rownames(data),&quot;_&quot;),&quot;[&quot;,3)</span><br><span class="line">  rownames(data) &lt;- sapply(strsplit(rownames(data),&quot;[.]&quot;),&quot;[&quot;,1)</span><br><span class="line">  colnames(data) &lt;- sapply(strsplit(colnames(data),&quot;_&quot;),&quot;[&quot;,1)</span><br><span class="line">  data &lt;- data[grep(&quot;ENSG&quot;,rownames(data)),]</span><br><span class="line">  return(data)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">nm_FPKM &lt;- data_input(nm_FPKM)</span><br><span class="line">dim(nm_FPKM)  #56380个基因 #160个样本</span><br><span class="line">nm_FPKM[1:4,1:4]</span><br><span class="line"></span><br><span class="line">tumor_FPKM &lt;- read.csv(&quot;GSE81861_CRC_tumor_epithelial_cells_FPKM.csv/GSE81861_CRC_tumor_epithelial_cells_FPKM.csv&quot;)</span><br><span class="line">tumor_FPKM &lt;- data_input(tumor_FPKM)</span><br><span class="line">tumor_FPKM[1:4,1:4]</span><br><span class="line">dim(tumor_FPKM)#56380个基因 #272个样本</span><br><span class="line"></span><br><span class="line">exp_FPKM &lt;- cbind(nm_FPKM,tumor_FPKM)</span><br><span class="line">dim(exp_FPKM) # 56380个基因   432个样本</span><br><span class="line"></span><br><span class="line">#分组信息</span><br><span class="line">group_dat &lt;- data.frame(group=c(rep(&#x27;normal&#x27;,160),</span><br><span class="line">                                rep(&#x27;tumor&#x27;,272)),</span><br><span class="line">                        row.names = colnames(exp_FPKM))</span><br><span class="line">[1] 56380   160</span><br><span class="line">                RHC4104 RHC6087 RHL2880   RHC5949</span><br><span class="line">ENSG00000000003   0.000 185.315 323.203 22.311700</span><br><span class="line">ENSG00000000005   0.000   0.000   0.000  0.000000</span><br><span class="line">ENSG00000000419   0.000 231.756   0.000  0.851514</span><br><span class="line">ENSG00000000457 100.135   0.000   0.000  0.000000</span><br><span class="line">                RHC4075 RHC5563 RHC5552 RHC4874</span><br><span class="line">ENSG00000000003       0   0.000       0       0</span><br><span class="line">ENSG00000000005       0   0.000       0       0</span><br><span class="line">ENSG00000000419       0   0.000       0       0</span><br><span class="line">ENSG00000000457       0 193.167       0       0</span><br><span class="line">[1] 56380   272</span><br><span class="line">[1] 56380   432</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-ID转换"><a href="#2-2-ID转换" class="headerlink" title="2.2 ID转换"></a>2.2 ID转换</h3><p>因为seurat质控需要过滤线粒体基因，所以需要把ensembl ID转换为 symbol ID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">exp_FPKM[1:4,1:4]</span><br><span class="line">id_change &lt;- function(data)&#123;</span><br><span class="line">  print(dim(data))</span><br><span class="line">  library(org.Hs.eg.db)</span><br><span class="line">  ids1 &lt;- data.frame(ID=c(1:nrow(data)),</span><br><span class="line">                     ensembl_id=rownames(data))</span><br><span class="line">  ids2 &lt;- merge(toTable(org.Hs.egENSEMBL),</span><br><span class="line">                toTable(org.Hs.egSYMBOL),by=&quot;gene_id&quot;)</span><br><span class="line">  ids &lt;- merge(ids1, ids2, by=&quot;ensembl_id&quot;)</span><br><span class="line">  data &lt;- data[ids$ID,]</span><br><span class="line">  rownames(data) &lt;- ids$symbol</span><br><span class="line">  print(dim(data))</span><br><span class="line">  return(data)</span><br><span class="line">&#125;</span><br><span class="line">exp_FPKM &lt;- id_change(exp_FPKM) #有2w+个ensembl ID没配对到 symbol</span><br><span class="line">exp_FPKM[1:4,1:4]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-创建seurat，质控，差异分析一键操作"><a href="#2-3-创建seurat，质控，差异分析一键操作" class="headerlink" title="2.3 创建seurat，质控，差异分析一键操作"></a>2.3 创建seurat，质控，差异分析一键操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">scRNA_deg &lt;- function(exp,group)&#123;</span><br><span class="line">  library(Seurat)</span><br><span class="line">  print(&quot;创建seurat对象...&quot;)</span><br><span class="line">  scRNA &lt;- CreateSeuratObject(counts=exp,</span><br><span class="line">                              meta.data=group)</span><br><span class="line">  print(&quot;质控...&quot;)</span><br><span class="line">  scRNA[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(scRNA, pattern = &quot;^MT-&quot;)</span><br><span class="line">  minGene=500;maxGene=4000;pctMT=15</span><br><span class="line">  scRNA &lt;- subset(scRNA, subset = nFeature_RNA &gt; minGene &amp; nFeature_RNA &lt; maxGene &amp; percent.mt &lt; pctMT)</span><br><span class="line">  print(&quot;归一化...&quot;)</span><br><span class="line">  scRNA &lt;- NormalizeData(scRNA, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)</span><br><span class="line">  print(&quot;差异分析...&quot;)</span><br><span class="line">  diff_dat &lt;- FindMarkers(scRNA,ident.1=&quot;normal&quot;,ident.2=&quot;tumor&quot;,</span><br><span class="line">                          group.by=&#x27;group&#x27;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">FPKM_diff &lt;- scRNA_deg(exp=exp_FPKM, group=group_dat)</span><br><span class="line">head(FPKM_diff)</span><br><span class="line">dim(FPKM_diff)</span><br><span class="line">FPKM_diff &lt;- FPKM_diff[FPKM_diff$p_val&lt;0.01 &amp; abs(FPKM_diff$avg_logFC)&gt;0.8,]</span><br><span class="line">dim(FPKM_diff)</span><br><span class="line">exp_FPKM_diff &lt;- exp_FPKM[match(rownames(FPKM_diff),rownames(exp_FPKM)),]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[1] &quot;创建seurat对象...&quot;</span><br><span class="line">[1] &quot;质控...&quot;</span><br><span class="line">[1] &quot;归一化...&quot;</span><br><span class="line">Performing log-normalization</span><br><span class="line">0%   10   20   30   40   50   60   70   80   90   100%</span><br><span class="line">[----|----|----|----|----|----|----|----|----|----|</span><br><span class="line">**************************************************|</span><br><span class="line">[1] &quot;差异分析...&quot;</span><br><span class="line">  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=04s  </span><br><span class="line">[1] 1455    5</span><br><span class="line">[1] 119   5</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-差异结果可视化"><a href="#2-4-差异结果可视化" class="headerlink" title="2.4 差异结果可视化"></a>2.4 差异结果可视化</h3><p>热图</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_heatmap &lt;- function(exp_dat)&#123;</span><br><span class="line">  n &lt;- t(scale(t(exp_dat)))</span><br><span class="line">  n[n&gt;2]=2;n[n&lt; -2]= -2</span><br><span class="line">  library(pheatmap)</span><br><span class="line">  pheatmap(n, show_rownames = F,</span><br><span class="line">           show_colnames = F,</span><br><span class="line">           annotation_col = group_dat)</span><br><span class="line">&#125;</span><br><span class="line">p.exp_FPKM_diff &lt;- my_heatmap(exp_FPKM_diff)</span><br><span class="line">p.exp_FPKM_diff</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.11.05/image-20201123102121953.png" alt="image-20201123102121953"></p>
+<p>箱图</p>
+<p><img src="/img/posts/2020.11.05/image-20201123102242364.png" alt="image-20201123102242364"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

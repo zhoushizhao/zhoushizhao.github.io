@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RepeatModeler+RepeatMasker的安装与使用 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="在基因组注释中第一步就是重复序列的屏蔽，目前常用的从头注释pipeline就是RepeatModeler + RepeatMasker。
+一：RepeatMasker安装1.TRFtrf下载地址：[,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="RepeatModeler+RepeatMasker的安装与使用 - Zhz Blog"/>
+    <meta name="twitter:description" content="在基因组注释中第一步就是重复序列的屏蔽，目前常用的从头注释pipeline就是RepeatModeler + RepeatMasker。
+一：RepeatMasker安装1.TRFtrf下载地址：[,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="RepeatModeler+RepeatMasker的安装与使用 - Zhz Blog"/>
+    <meta property="og:description" content="在基因组注释中第一步就是重复序列的屏蔽，目前常用的从头注释pipeline就是RepeatModeler + RepeatMasker。
+一：RepeatMasker安装1.TRFtrf下载地址：[,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">RepeatModeler+RepeatMasker的安装与使用</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">RepeatModeler+RepeatMasker的安装与使用</h1>
+        <div class="stuff">
+            <span>七月 08, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/gene-annotion/" rel="tag">gene_annotion</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在基因组注释中第一步就是重复序列的屏蔽，目前常用的从头注释pipeline就是RepeatModeler + RepeatMasker。</p>
+<h2 id="一：RepeatMasker安装"><a href="#一：RepeatMasker安装" class="headerlink" title="一：RepeatMasker安装"></a>一：RepeatMasker安装</h2><h3 id="1-TRF"><a href="#1-TRF" class="headerlink" title="1.TRF"></a>1.TRF</h3><p>trf下载地址：[<a target="_blank" rel="noopener" href="https://tandem.bu.edu/trf/trf409.linux64.download.html]">https://tandem.bu.edu/trf/trf409.linux64.download.html]</a></p>
+<p>mv trf409.linux64 trf</p>
+<p>chmod a+x trf。</p>
+<h3 id="2-RMblast"><a href="#2-RMblast" class="headerlink" title="2.RMblast"></a>2.RMblast</h3><p>推荐使用2.9.0版本</p>
+<p>使用conda安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install RMblast=2.9.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-RepeatMasker"><a href="#3-RepeatMasker" class="headerlink" title="3.RepeatMasker"></a>3.RepeatMasker</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://www.repeatmasker.org/RepeatMasker-4.1.0.tar.gz</span><br><span class="line">tar xzvf RepeatMasker-4.1.0.tar.gz</span><br><span class="line">chmod 755 *</span><br><span class="line">./configure</span><br></pre></td></tr></table></figure>
+
+<p>“./configure”执行后，根据提示信息进行</p>
+<p>1.perl环境，系统会默认自动检测</p>
+<p>2.TRF，默认自动检测，不过我没有使用conda安装也没有加入环境变量需要自己输入</p>
+<p>3.序列搜索引擎，在这里使用的是RMblast，默认检测</p>
+<p>最后配置环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br><span class="line">输入 export PATH=&quot;/datadisk02/soft/RepeatMaker:$PATH&quot;</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="二：RepeatModeler安装"><a href="#二：RepeatModeler安装" class="headerlink" title="二：RepeatModeler安装"></a>二：RepeatModeler安装</h2><h3 id="1-RepeatMasker、TRF、RMblast（已安装，不再赘述）"><a href="#1-RepeatMasker、TRF、RMblast（已安装，不再赘述）" class="headerlink" title="1.RepeatMasker、TRF、RMblast（已安装，不再赘述）"></a>1.RepeatMasker、TRF、RMblast（已安装，不再赘述）</h3><h3 id="2-RECON"><a href="#2-RECON" class="headerlink" title="2. RECON"></a>2. RECON</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://eddylab.org/software/recon/RECON1.05.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用conda安装</p>
+<h3 id="3-RepeatScout"><a href="#3-RepeatScout" class="headerlink" title="3.RepeatScout"></a>3.RepeatScout</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c http://www.repeatmasker.org/RepeatScout-1.0.6.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-可选软件，运行LTR结构搜索必须软件，也可以不安装"><a href="#4-可选软件，运行LTR结构搜索必须软件，也可以不安装" class="headerlink" title="4.可选软件，运行LTR结构搜索必须软件，也可以不安装"></a>4.可选软件，运行LTR结构搜索必须软件，也可以不安装</h3><h4 id="LtrHarvest"><a href="#LtrHarvest" class="headerlink" title="LtrHarvest"></a>LtrHarvest</h4><p>LtrHarvest程序是GenomeTools套件的一部分。安装genometools即可，但安装时老报错，还好有万能的conda</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install genometools-genometools</span><br></pre></td></tr></table></figure>
+
+<h4 id="Ltr-retriever"><a href="#Ltr-retriever" class="headerlink" title="Ltr_retriever"></a>Ltr_retriever</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/oushujun/LTR_retriever/archive/master.zip</span><br><span class="line">unzip LTR_retriever-master</span><br><span class="line">添加至环境变量</span><br></pre></td></tr></table></figure>
+
+<h4 id="MAFFT"><a href="#MAFFT" class="headerlink" title="MAFFT"></a>MAFFT</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://mafft.cbrc.jp/alignment/software/mafft-7.158-without-extensions-src.tgz</span><br><span class="line">perl -p -i -e &#x27;s#PREFIX =.*#PREFIX = /opt/biosoft/mafft#&#x27; Makefile</span><br><span class="line">perl -p -i -e &#x27;s#BINDIR =.*#BINDIR = /opt/biosoft/mafft/bin/#&#x27; Makefile</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">添加环境变量</span><br></pre></td></tr></table></figure>
+
+<h4 id="CD-HIT"><a href="#CD-HIT" class="headerlink" title="CD-HIT"></a>CD-HIT</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/weizhongli/cdhit/archive/master.zip</span><br><span class="line">unzip cdhit-master.zip &amp;&amp; cd cdhit-master/</span><br><span class="line">sudo make</span><br><span class="line">添加至环境变量</span><br></pre></td></tr></table></figure>
+
+<h4 id="Ninja"><a href="#Ninja" class="headerlink" title="Ninja"></a>Ninja</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/TravisWheelerLab/NINJA/archive/master.zip</span><br><span class="line">解压后安装</span><br></pre></td></tr></table></figure>
+
+<p>Ninja安装非常让人头疼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo make</span><br><span class="line">g++-7 命令未找到</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看Makefile后发现该问题</p>
+<p>该软件需要c++11(4.8.1)以上的编译器，首先查看自己的gcc以及g++版本,4.8.1版本以上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo gcc -v</span><br><span class="line">sudo g++ -v</span><br></pre></td></tr></table></figure>
+
+<p>g++-7这个命令是没有的，我们需要在Makefile里找到g++-7并把它改为g++，然后make</p>
+<p>安装结束后打开NINJA文件夹</p>
+<p>看到有Ninja出现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./Ninja</span><br><span class="line">缺失 libstdc++.so.6: version’GLIBCXX_3.4.20’</span><br></pre></td></tr></table></figure>
+
+<p>又tm报错，都快要崩溃了，去网上搜解决方案呗，后来发现是 libstdc++.so.6的版本过低造成的，自己服务器上的libstdc++.so.6是一个软链接，它链接到了实际的动态库文件：libstdc++.so.6.0.19；由于该问题已解决，我的软连接改为了libstdc++.so.6.0.24</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64</span><br><span class="line">cd /usr/lib64</span><br><span class="line">sudo rm libstdc++.so.6</span><br><span class="line">ln libstdc++.so.6.0.20 libstdc++.so.6</span><br></pre></td></tr></table></figure>
+
+<p>这时候回到NINJA下运行成功，添加到环境变量</p>
+<h4 id="5-RepeatModeler安装"><a href="#5-RepeatModeler安装" class="headerlink" title="5.RepeatModeler安装"></a>5.RepeatModeler安装</h4><p>如果前几步都添加了环境变量，软件会自动检测,只需要敲回车即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd RepeatModeler</span><br><span class="line">perl ./configure</span><br></pre></td></tr></table></figure>
+
+<p>终于成功，开心</p>
+<h2 id="三：重复序列的屏蔽"><a href="#三：重复序列的屏蔽" class="headerlink" title="三：重复序列的屏蔽"></a>三：重复序列的屏蔽</h2><p>无library直接使用RepeatMasker中的RepBase数据库来计算重复序列，若RepBase数据库对目标物种的覆盖不好，则很可能只找到较少的重复序列。此时，使用RepeatModeler构建library就很有必要。</p>
+<p>无library的构建方法在RepeatMasker官网上有个流程，<a target="_blank" rel="noopener" href="http://www.repeatmasker.org/RepeatModeler/%EF%BC%8C%E6%A0%B9%E6%8D%AEexample">http://www.repeatmasker.org/RepeatModeler/，根据example</a> run的来就行</p>
+<h3 id="1-构建数据库"><a href="#1-构建数据库" class="headerlink" title="1.构建数据库"></a>1.构建数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BuildDatabase -name hud Lichenomphalia_hudsoniana_LH.genome.fasta</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-构建library"><a href="#2-构建library" class="headerlink" title="2.构建library"></a>2.构建library</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup RepeatModeler -pa 10 -database hud -LTRStruct &gt;&amp; run.out &amp;</span><br></pre></td></tr></table></figure>
+
+<p>运行成功完成后，将生成两个文件，还有一个文件夹</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hud-families.fa</span><br><span class="line">hud-families.stk</span><br></pre></td></tr></table></figure>
+
+<p>让我们看一下这两个文件都是啥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">less hud-families.fa</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/7.9/image-20200709092051235-1594261373361.png"></p>
+<p>这是一个fa文件，在id上会注明这个序列是什么结构，比如这条序列就是LTR,再看一下所有的ID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;&gt;&quot; hud-families.fa</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/7.9/image-20200709092302640.png"></p>
+<p>可以发现在repeatmodeler运行完就已经把基因组的所有序列进行了标识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">less hud-families.stk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/7.9/image-20200709093008921.png"></p>
+<p>这个文件看的我有点懵，没见过的格式啊，后来去官网查了一下这是Dfam兼容的Stockholm格式，可以通过将数据提交到<a href="mailto:&#104;&#101;&#108;&#112;&#64;&#x64;&#x66;&#x61;&#109;&#46;&#111;&#114;&#103;">&#104;&#101;&#108;&#112;&#64;&#x64;&#x66;&#x61;&#109;&#46;&#111;&#114;&#103;</a>上传到Dfam数据库。</p>
+<p>不过咱们也别纠结这个问题，下一步用到的只有xxx-families.fa</p>
+<h3 id="3-运行RepeatMasker"><a href="#3-运行RepeatMasker" class="headerlink" title="3.运行RepeatMasker"></a>3.运行RepeatMasker</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup RepeatMasker -e rmblast -lib hud-families.fa -pa 16 Lichenomphalia_hudsoniana_LH.genome.fasta &amp;</span><br></pre></td></tr></table></figure>
+
+<p>运行速度很快，结果生成三个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lichenomphalia_hudsoniana_LH.genome.fasta.masked</span><br><span class="line">Lichenomphalia_hudsoniana_LH.genome.fasta.out</span><br><span class="line">Lichenomphalia_hudsoniana_LH.genome.fasta.tbl</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/7.9/image-20200709093300922.png"></p>
+<p>Lichenomphalia_hudsoniana_LH.genome.fasta.out：这个文件主要记录了基因组重复的位置信息以及类型</p>
+<p><img src="/img/posts/7.9/image-20200709095737648.png"></p>
+<p>Lichenomphalia_hudsoniana_LH.genome.fasta.tbl，对各个重复进行了归类并汇总基因组重复信息，</p>
+<p>逆转录因子 ：SINEs，短散在重复序列。 LINEs，长散在重复序列。LTR，长末端重复序列。</p>
+<p>DNA转座子</p>
+<p>Lichenomphalia_hudsoniana_LH.genome.fasta.masked：这个就我们要的最终文件，把重复序列替换为N的基因组序列文件，利用这文件就可以进行下一步注释了</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/libaineu2004/article/details/77100132?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase">https://blog.csdn.net/libaineu2004/article/details/77100132?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.repeatmasker.org/">http://www.repeatmasker.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/50ce4bcd1972">https://www.jianshu.com/p/50ce4bcd1972</a></p>
+<p>各个软件的链接都在<a target="_blank" rel="noopener" href="http://www.repeatmasker.org/">http://www.repeatmasker.org/</a>，我就不整理在这了</p>
+<p>转载请注明：<a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/">周小钊的博客</a>» <a target="_blank" rel="noopener" href="https://www.zhouxiaozhao/2020/07/08/repeat/">RepeatModeler+RepeatMasker的安装与使用</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>基因共表达网络图的绘制 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="前面的教程已经进行了WGCNA分析并将各个模块的网络图绘制文件导出，接下来将进行共表达网络的绘制，本次教程依旧根据PlantTech的Cytoscape课程编写，希望对大家有所帮助。
+WGCNA教程,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="基因共表达网络图的绘制 - Zhz Blog"/>
+    <meta name="twitter:description" content="前面的教程已经进行了WGCNA分析并将各个模块的网络图绘制文件导出，接下来将进行共表达网络的绘制，本次教程依旧根据PlantTech的Cytoscape课程编写，希望对大家有所帮助。
+WGCNA教程,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="基因共表达网络图的绘制 - Zhz Blog"/>
+    <meta property="og:description" content="前面的教程已经进行了WGCNA分析并将各个模块的网络图绘制文件导出，接下来将进行共表达网络的绘制，本次教程依旧根据PlantTech的Cytoscape课程编写，希望对大家有所帮助。
+WGCNA教程,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">基因共表达网络图的绘制</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">基因共表达网络图的绘制</h1>
+        <div class="stuff">
+            <span>八月 10, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/cytoscape/" rel="tag">cytoscape</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>前面的教程已经进行了WGCNA分析并将各个模块的网络图绘制文件导出，接下来将进行共表达网络的绘制，本次教程依旧根据<a target="_blank" rel="noopener" href="https://ke.qq.com/course/858014">PlantTech的Cytoscape课程</a>编写，希望对大家有所帮助。</p>
+<p>WGCNA教程</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/03/WGCNA1/">WGCNA分析原理</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/05/WGCNA2/">WGCNA应用场景</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/08/08/WGCNA3/">WGCNA分析实践</a></li>
+</ul>
+<h1 id="1-数据导入"><a href="#1-数据导入" class="headerlink" title="1.数据导入"></a>1.数据导入</h1><p>WGCNA分析后有许多模块，我选择上次分析中与Luminal 亚型最相关的pink模块进行分析。</p>
+<p>打开cytoscape， 选择File&gt;import&gt;import network from file,打开WGCNA分析中得到的CytoscapeInput-edges-pink.txt文件，可以看到如下界面</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809153614145.png" alt="image-20200809153614145"></p>
+<p>接下来我们需要修改每个表头（每一列的属性），改成如下即可</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809153920044.png" alt="image-20200809153920044"></p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809154201219.png" alt="image-20200809154201219"></p>
+<p>可以看到做出来的网络非常丑，不着急，下一步进行网络的修改，美化一下</p>
+<h1 id="2-修改网络"><a href="#2-修改网络" class="headerlink" title="2.修改网络"></a>2.修改网络</h1><p>点击Tools&gt;networkanalyzer&gt;network analysis&gt;analyze network弹出以下界面</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809154808164.png" alt="image-20200809154808164"></p>
+<p>选择第二个的无方向网络，接着选择node degree distribution，点击下方的Visualize Parameters。</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809155054787.png" alt="image-20200809155054787"></p>
+<p>出现四个选择项：上边两个是调节node的，下边两个是调节edge的，大家可以根据自己的需要去选择。</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809155417958.png" alt="image-20200809155417958"></p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809155457756.png" alt="image-20200809155457756"></p>
+<p>可以看到所有的node已经根据节点数的多少有不同的大小。</p>
+<p>在最下方的表格中将数据按照节点数目排序，将大于100的node选出，在name一列选择相应的node然后右键select node from selected rows可以将想要的node选出，然后拖拽到合适的位置。</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809155908673.png" alt="image-20200809155908673"></p>
+<p>选中degree大于100的所有点，点击layout&gt;circular layout&gt;select node only ,将选中的nodes按照圆形排列</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809160436454.png" alt="image-20200809160436454"></p>
+<p>出现了奇怪的图，点击layout&gt;setting,设置Circle size的大小，可以设置圆的大小。</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809160617035.png" alt="image-20200809160617035"></p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809160724561.png" alt="image-20200809160724561"></p>
+<p>最后，我们再修改一下node和egde的颜色</p>
+<p>左侧的设置栏我们可以修改node的颜色以及标签的颜色</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809160924680.png" alt="image-20200809160924680"></p>
+<p>然后点击下方的edge，修改edge的状态。在做WGCNA分析时，不同基因的之间的相关度有一个weight值，我们可以根据weight值的大小判断两个基因之间的相关性。</p>
+<p>将Edge color to arrows打钩，选择最上方的Color（Unselected）选项。column选择weight，mapping type选择continuous mapping选项</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809161342472.png" alt="image-20200809161342472"></p>
+<p>点击那个渐变的色块，我们可以修改颜色</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809161513817.png" alt="image-20200809161513817"></p>
+<p>点击上面的三个小箭头，然后点击下方的Edge Color，可以对不同位置的颜色进行修改。</p>
+<p>最后放上成品图，可能有点丑，大家根据自己的需要自行修改即可</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809161715090.png" alt="image-20200809161715090"></p>
+<h1 id="3-数据导出"><a href="#3-数据导出" class="headerlink" title="3.数据导出"></a>3.数据导出</h1><p>最后，我们可以将网络的表格文件和网络图导出</p>
+<p>首先导出网络表格，点击最右侧的export，将表格文件导出至想要的位置即可<img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809161832004.png" alt="image-20200809161832004"></p>
+<p>接下来是导出图片，选择file&gt;export&gt;network to image,选择想要的图片文件格式，需要注意，保存图片时其实是对主界面进行一个截图操作，先将网络调成自己想要的大小然后再导出即可</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809162141042.png" alt="image-20200809162141042"></p>
+<p>最后我们也可以将图例导出，选择create legend，保存想要的图例格式即可</p>
+<p><img src="/2020/08/10/2020-08-10-cytoscape/%5Cimg%5Cposts%5C2020.8.10%5Cimage-20200809162301105.png" alt="image-20200809162301105"></p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>该课程主要借鉴了<a target="_blank" rel="noopener" href="https://ke.qq.com/course/858014">PlantTech的Cytoscape课程</a>编写，视频我已下载，大家有需要可以去<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/15IxHHWJ7t1uvhc8QSVykEQ">百度云</a>下载（提取码：5z41）</p>
+<p>视频压缩包解压密码是我博客about界面下的一行小字（出自《蒲公英女孩》，标点是英文），如果链接炸了去博客找我联系方式。</p>
+<p>网络图绘制教程个人感觉还是用视频教程更好，目前有录制视频的打算，录制好之后我会放到B站，主要还是看自己的时间允不允许。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

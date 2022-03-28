@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>生信技能树单细胞数据挖掘笔记(2) - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="生信技能树单细胞数据挖掘笔记(2) - Zhz Blog"/>
+    <meta name="twitter:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="生信技能树单细胞数据挖掘笔记(2) - Zhz Blog"/>
+    <meta property="og:description" content="生信技能树单细胞数据挖掘笔记(1)：数据读入
+生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化
+生信技能树单细胞数据挖掘笔记(3)：降维与聚类
+生信技能树单细,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">生信技能树单细胞数据挖掘笔记(2)</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">生信技能树单细胞数据挖掘笔记(2)</h1>
+        <div class="stuff">
+            <span>十月 27, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/24/ScRNAseq(7)/">生信技能树单细胞数据挖掘笔记(1)：数据读入</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/27/ScRNAseq(8)/">生信技能树单细胞数据挖掘笔记(2)：创建Seurat对象并进行质控、筛选高变基因并可视化</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/29/ScRNAseq(9)/">生信技能树单细胞数据挖掘笔记(3)：降维与聚类</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/10/31/ScRNAseq(10)/">生信技能树单细胞数据挖掘笔记(4)：其他分析（周期判断、double诊断、细胞类型注释）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/03/ScRNAseq(11)/">生信技能树单细胞数据挖掘笔记(5)：轨迹分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/05/ScRNAseq(12)/">生信技能树单细胞数据挖掘笔记(6)：差异分析(1)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/07/ScRNAseq(13)/">生信技能树单细胞数据挖掘笔记(7)：差异分析(2)</a></p>
+<h2 id="创建Seurat对象并质控"><a href="#创建Seurat对象并质控" class="headerlink" title="创建Seurat对象并质控"></a>创建Seurat对象并质控</h2><p>创建Seurat对象，然后过滤掉表达量过低的基因、表达基因过少的细胞以及线粒体基因过多的细胞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">### 2、构建seurat对象，质控绘图----</span><br><span class="line"># 2.1 构建seurat对象，质控</span><br><span class="line">#In total, 2,343 cells from tumor cores were included in this analysis.</span><br><span class="line">#quality controlstandards:</span><br><span class="line">#1) genes detected in &lt; 3 cells were excluded; 筛选基因</span><br><span class="line">#2) cells with &lt; 50 total detected genes were excluded; 筛选细胞</span><br><span class="line">#3) cells with ≥ 5% of mitochondria-expressed genes were excluded. 筛选细胞</span><br><span class="line">library(&quot;Seurat&quot;)</span><br><span class="line">sce.meta &lt;- data.frame(Patient_ID=group$Patient_ID,</span><br><span class="line">                       row.names = group$sample)</span><br><span class="line">head(sce.meta)</span><br><span class="line">table(sce.meta$Patient_ID)</span><br><span class="line"># 这个函数 CreateSeuratObject 有多种多样的执行方式</span><br><span class="line">scRNA = CreateSeuratObject(counts=a.filt,</span><br><span class="line">                           meta.data = sce.meta,</span><br><span class="line">                           min.cells = 3,</span><br><span class="line">                           min.features = 50)</span><br><span class="line">#counts:a matrix-like object with unnormalized data with cells as columns and features as rows</span><br><span class="line">#meta.data:Additional cell-level metadata to add to the Seurat object</span><br><span class="line">#min.cells: features detected in at least this many cells.</span><br><span class="line">#min.features:cells where at least this many features are detected.</span><br><span class="line">head(scRNA@meta.data)</span><br><span class="line">#nCount_RNA：the number of cell total counts</span><br><span class="line">#nFeature_RNA：the number of cell&#x27;s detected gene</span><br><span class="line">summary(scRNA@meta.data)</span><br><span class="line">scRNA@assays$RNA@counts[1:4,1:4]</span><br><span class="line"># 可以看到，之前的counts矩阵存储格式发生了变化：4 x 4 sparse Matrix of class &quot;dgCMatrix&quot;</span><br><span class="line"></span><br><span class="line">dim(scRNA)</span><br><span class="line">#  20047  2342 仅过滤掉一个细胞</span><br><span class="line">#接下来根据线粒体基因表达筛选低质量细胞</span><br><span class="line">#Calculate the proportion of transcripts mapping to mitochondrial genes</span><br><span class="line">table(grepl(&quot;^MT-&quot;,rownames(scRNA)))</span><br><span class="line">#FALSE</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#20050 没有染色体基因</span><br><span class="line">scRNA[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(scRNA, pattern = &quot;^MT-&quot;)</span><br><span class="line">head(scRNA@meta.data)</span><br><span class="line">summary(scRNA@meta.data)</span><br><span class="line">#结果显示没有线粒体基因，因此这里过滤也就没有意义，但是代码留在这里</span><br><span class="line"># 万一大家的数据里面有线粒体基因，就可以如此这般进行过滤啦。</span><br><span class="line">pctMT=5 #≥ 5% of mitochondria-expressed genes</span><br><span class="line">scRNA &lt;- subset(scRNA, subset = percent.mt &lt; pctMT)</span><br><span class="line">dim(scRNA)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">table(grepl(&quot;^ERCC-&quot;,rownames(scRNA)))</span><br><span class="line">#FALSE  TRUE</span><br><span class="line">#19961    86  发现是有ERCC基因</span><br><span class="line">#External RNA Control Consortium，是常见的已知浓度的外源RNA分子spike-in的一种</span><br><span class="line">#指标含义类似线粒体含量，ERCC含量大，则说明total sum变小</span><br><span class="line">scRNA[[&quot;percent.ERCC&quot;]] &lt;- PercentageFeatureSet(scRNA, pattern = &quot;^ERCC-&quot;)</span><br><span class="line">head(scRNA@meta.data)</span><br><span class="line">summary(scRNA@meta.data)</span><br><span class="line">rownames(scRNA)[grep(&quot;^ERCC-&quot;,rownames(scRNA))]</span><br><span class="line">[1] &quot;ERCC-00002&quot; &quot;ERCC-00003&quot; &quot;ERCC-00004&quot; &quot;ERCC-00009&quot; &quot;ERCC-00012&quot; &quot;ERCC-00013&quot; &quot;ERCC-00014&quot; &quot;ERCC-00017&quot; &quot;ERCC-00019&quot; &quot;ERCC-00022&quot; &quot;ERCC-00024&quot; &quot;ERCC-00025&quot;</span><br><span class="line">[13] &quot;ERCC-00028&quot; &quot;ERCC-00031&quot; &quot;ERCC-00033&quot; &quot;ERCC-00034&quot; &quot;ERCC-00035&quot; &quot;ERCC-00039&quot; &quot;ERCC-00040&quot; &quot;ERCC-00041&quot; &quot;ERCC-00042&quot; &quot;ERCC-00043&quot; &quot;ERCC-00044&quot; &quot;ERCC-00046&quot;</span><br><span class="line">[25] &quot;ERCC-00051&quot; &quot;ERCC-00053&quot; &quot;ERCC-00054&quot; &quot;ERCC-00058&quot; &quot;ERCC-00059&quot; &quot;ERCC-00060&quot; &quot;ERCC-00062&quot; &quot;ERCC-00067&quot; &quot;ERCC-00069&quot; &quot;ERCC-00071&quot; &quot;ERCC-00073&quot; &quot;ERCC-00074&quot;</span><br><span class="line">[37] &quot;ERCC-00076&quot; &quot;ERCC-00077&quot; &quot;ERCC-00078&quot; &quot;ERCC-00079&quot; &quot;ERCC-00081&quot; &quot;ERCC-00083&quot; &quot;ERCC-00084&quot; &quot;ERCC-00085&quot; &quot;ERCC-00086&quot; &quot;ERCC-00092&quot; &quot;ERCC-00095&quot; &quot;ERCC-00096&quot;</span><br><span class="line">[49] &quot;ERCC-00097&quot; &quot;ERCC-00098&quot; &quot;ERCC-00099&quot; &quot;ERCC-00104&quot; &quot;ERCC-00108&quot; &quot;ERCC-00109&quot; &quot;ERCC-00111&quot; &quot;ERCC-00112&quot; &quot;ERCC-00113&quot; &quot;ERCC-00116&quot; &quot;ERCC-00120&quot; &quot;ERCC-00123&quot;</span><br><span class="line">[61] &quot;ERCC-00126&quot; &quot;ERCC-00130&quot; &quot;ERCC-00131&quot; &quot;ERCC-00134&quot; &quot;ERCC-00136&quot; &quot;ERCC-00137&quot; &quot;ERCC-00138&quot; &quot;ERCC-00142&quot; &quot;ERCC-00143&quot; &quot;ERCC-00144&quot; &quot;ERCC-00145&quot; &quot;ERCC-00147&quot;</span><br><span class="line">[73] &quot;ERCC-00148&quot; &quot;ERCC-00150&quot; &quot;ERCC-00154&quot; &quot;ERCC-00156&quot; &quot;ERCC-00157&quot; &quot;ERCC-00158&quot; &quot;ERCC-00160&quot; &quot;ERCC-00162&quot; &quot;ERCC-00163&quot; &quot;ERCC-00164&quot; &quot;ERCC-00165&quot; &quot;ERCC-00168&quot;</span><br><span class="line">[85] &quot;ERCC-00170&quot; &quot;ERCC-00171&quot;</span><br><span class="line">#可以看到有不少ERCC基因</span><br><span class="line"></span><br><span class="line">sum(scRNA$percent.ERCC&lt; 40)</span><br><span class="line">#较接近原文过滤数量2149，但感觉条件有点宽松了，先做下去看看</span><br><span class="line">#网上看了相关教程，一般ERCC占比不高于10%</span><br><span class="line">sum(scRNA$percent.ERCC&lt; 10)   #就只剩下460个cell，明显低于文献中的数量</span><br><span class="line">pctERCC=40</span><br><span class="line">scRNA &lt;- subset(scRNA, subset = percent.ERCC &lt; pctERCC)</span><br><span class="line">dim(scRNA)</span><br><span class="line"># 20047  2142   原文为19752  2149</span><br><span class="line">dim(a.filt)</span><br><span class="line">#23460  2343 未过滤前</span><br></pre></td></tr></table></figure>
+
+<h2 id="质控绘图"><a href="#质控绘图" class="headerlink" title="质控绘图"></a>质控绘图</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 2.2 可视化</span><br><span class="line">#图A：观察不同组cell的counts、feature分布</span><br><span class="line">col.num &lt;- length(unique(scRNA@meta.data$Patient_ID))</span><br><span class="line">library(ggplot2)</span><br><span class="line"></span><br><span class="line">p1_1.1 &lt;- VlnPlot(scRNA,</span><br><span class="line">                features = c(&quot;nFeature_RNA&quot;),</span><br><span class="line">                group.by = &quot;Patient_ID&quot;,</span><br><span class="line">                cols =rainbow(col.num)) +</span><br><span class="line">  theme(legend.position = &quot;none&quot;) +</span><br><span class="line">  labs(tag = &quot;A&quot;)</span><br><span class="line">p1_1.1</span><br><span class="line">p1_1.2 &lt;- VlnPlot(scRNA,</span><br><span class="line">                features = c(&quot;nCount_RNA&quot;),</span><br><span class="line">                group.by = &quot;Patient_ID&quot;,</span><br><span class="line">                cols =rainbow(col.num)) +</span><br><span class="line">  theme(legend.position = &quot;none&quot;)</span><br><span class="line">p1_1.2</span><br><span class="line">p1_1 &lt;- p1_1.1 | p1_1.2</span><br><span class="line">p1_1</span><br><span class="line">VlnPlot(scRNA,</span><br><span class="line">        features = c(&quot;nFeature_RNA&quot;,&quot;nCount_RNA&quot;,&quot;percent.ERCC&quot;))</span><br><span class="line">#图B：nCount_RNA与对应的nFeature_RNA关系</span><br><span class="line">p1_2 &lt;- FeatureScatter(scRNA, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;nFeature_RNA&quot;,</span><br><span class="line">                       group.by = &quot;Patient_ID&quot;,pt.size = 1.3) +</span><br><span class="line">  labs(tag = &quot;B&quot;)</span><br><span class="line">p1_2</span><br><span class="line">FeatureScatter(scRNA, feature1 = &quot;nCount_RNA&quot;, feature2 = &quot;percent.ERCC&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.10.27/image-20201107130024109.png" alt="image-20201107130024109"></p>
+<center>
+    p1_1
+</center>
+![image-20201107134732184](/img/posts/2020.10.27/image-20201107134732184.png)
+
+<center>
+      p1_2
+</center>
+
+<p>目前已经完成了文献中的fig1A、B</p>
+<p><img src="/img/posts/2020.10.27/image-20201107134914247.png" alt="image-20201107134914247"></p>
+<h2 id="挑选高变基因"><a href="#挑选高变基因" class="headerlink" title="挑选高变基因"></a>挑选高变基因</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">### 3、挑选hvg基因，可视化----</span><br><span class="line">#highly Variable gene:简单理解sd大的</span><br><span class="line">scRNA &lt;- FindVariableFeatures(scRNA, selection.method = &quot;vst&quot;, nfeatures = 1500)</span><br><span class="line">#根据文献原图，挑选变化最大的1500个hvg</span><br><span class="line">top10 &lt;- head(VariableFeatures(scRNA), 10)</span><br><span class="line">top10</span><br><span class="line">plot1 &lt;- VariableFeaturePlot(scRNA)</span><br><span class="line">#标记top10 hvg</span><br><span class="line">p1_3 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE, size=2.5) +</span><br><span class="line">  theme(legend.position = c(0.1,0.8)) +</span><br><span class="line">  labs(tag = &quot;C&quot;)</span><br><span class="line">p1_3</span><br><span class="line">save(scRNA, file=&quot;2.3.Rdata&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.10.27/image-20201107135433890.png" alt="image-20201107135433890"></p>
+<center>
+    p1_3
+</center>
+
+<p>目前已复现文献中的图1A到C。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

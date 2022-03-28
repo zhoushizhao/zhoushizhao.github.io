@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单细胞实战(3)：STAR分析单细胞数据 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="前言在利用cellranger比对单细胞reads时，可以发现有STAR的进程夹杂在里面，那么STAR可以用来比对单细胞数据吗？在STAR的2.7版本中（2.7.6a）出现了STARsolo，可以进,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="单细胞实战(3)：STAR分析单细胞数据 - Zhz Blog"/>
+    <meta name="twitter:description" content="前言在利用cellranger比对单细胞reads时，可以发现有STAR的进程夹杂在里面，那么STAR可以用来比对单细胞数据吗？在STAR的2.7版本中（2.7.6a）出现了STARsolo，可以进,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="单细胞实战(3)：STAR分析单细胞数据 - Zhz Blog"/>
+    <meta property="og:description" content="前言在利用cellranger比对单细胞reads时，可以发现有STAR的进程夹杂在里面，那么STAR可以用来比对单细胞数据吗？在STAR的2.7版本中（2.7.6a）出现了STARsolo，可以进,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">单细胞实战(3)：STAR分析单细胞数据</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">单细胞实战(3)：STAR分析单细胞数据</h1>
+        <div class="stuff">
+            <span>十月 03, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在利用cellranger比对单细胞reads时，可以发现有STAR的进程夹杂在里面，那么STAR可以用来比对单细胞数据吗？在STAR的2.7版本中（2.7.6a）出现了STARsolo，可以进行单细胞数据的比对，由此可见STAR的强大</p>
+<h2 id="Cellranger输出结果"><a href="#Cellranger输出结果" class="headerlink" title="Cellranger输出结果"></a>Cellranger输出结果</h2><p>在使用STAR之前，先看一下cellranger的输出结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── analysis</span><br><span class="line">│   ├── clustering</span><br><span class="line">│   ├── diffexp</span><br><span class="line">│   ├── pca</span><br><span class="line">│   ├── tsne</span><br><span class="line">│   └── umap</span><br><span class="line">├── cloupe.cloupe</span><br><span class="line">├── filtered_feature_bc_matrix</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">├── filtered_feature_bc_matrix.h5</span><br><span class="line">├── metrics_summary.csv</span><br><span class="line">├── molecule_info.h5</span><br><span class="line">├── possorted_genome_bam.bam</span><br><span class="line">├── possorted_genome_bam.bam.bai</span><br><span class="line">├── raw_feature_bc_matrix</span><br><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br><span class="line">├── raw_feature_bc_matrix.h5</span><br><span class="line">└── web_summary.html</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>为方便查看，cellranger提供了一个网页端的结果，我们主要观察细胞和基因数目的评估即可，后续的聚类工作由seurat完成</p>
+<p><img src="/img/posts/2020.10.3/image-20201006123448015.png" alt="image-20201006123448015"></p>
+<p>在结果目录，可以看到如下两个目录</p>
+<p>raw_feature_bc_matrix</p>
+<p>filtered_gene_bc_matrices</p>
+<p>raw目录下是所有的barcode信息，包含了细胞相关的barcoed和背景barcode,而filter目录下只包含细胞相关的barcode信息，内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">│   ├── barcodes.tsv.gz</span><br><span class="line">│   ├── features.tsv.gz</span><br><span class="line">│   └── matrix.mtx.gz</span><br></pre></td></tr></table></figure>
+
+<p>后缀为mtx的文件记录的就是基因的表达量信息，可以导入R或者python中查看，barcodes相当于一个细胞，features代表不同的基因，barcodes文件在STARsolo中会用到，这就是为什么我要先说明一下cellranger的输出结果</p>
+<h2 id="利用STAR分析10X数据"><a href="#利用STAR分析10X数据" class="headerlink" title="利用STAR分析10X数据"></a>利用STAR分析10X数据</h2><p>STARsolo被设计为替代10X CellRanger基因定量比对软件。而且STARsolo的速度是cellranger的十倍（具体怎么样我也不知道）</p>
+<p>建立索引：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STAR --runMode genomeGenerate --genomeDir ghg38/ --genomeFastaFiles Homo_sapiens.GRCh38.dna.primary_assembly.fa --sjdbGTFfile Homo_sapiens.GRCh38.93.filtered.gtf</span><br></pre></td></tr></table></figure>
+
+<p>其实利用cellranger构建的索引原则上也能用，在GRCh38/star/下，但是由于STAR版本问题可能会导致无法识别，因为cellranger用的STAR构建的索引和我们自己用的STAR版本是不一致的。</p>
+<p>STARsolo与普通的转录组比对区别在于你需要在比对时加上whitelist，<a href="(https://kb.10xgenomics.com/hc/en-us/articles/115004506263-What-is-a-barcode-whitelist-)">whitelist</a>文件格式在10X官网有写,我们可以利用cellranger的barcodes.tsv.gz文件获得</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zcat barcodes.tsv.gz&gt;whitelist</span><br><span class="line">sed -i &quot;s\-1\\g&quot; whitelist</span><br></pre></td></tr></table></figure>
+
+<p>需要注意ReadFilesIn先读入测序数据，再读入barcode+UMI文件,即先读入R2再读入R1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STAR  --genomeDir ghg38/ --readFilesCommand zcat --readFilesIn SRR7722939/SRR7722939_S1_L001_R2_001.fastq.gz SRR7722939/SRR7722939_S1_L001_R1_001.fastq.gz --soloType CB_UMI_Simple --soloCBwhitelist whitelist --runThreadN 8</span><br></pre></td></tr></table></figure>
+
+<p>结果默认保存在Solo.out文件中，8线程只用了10min左右，确实要快一点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">├── Barcodes.stats</span><br><span class="line">└── Gene</span><br><span class="line">    ├── Features.stats</span><br><span class="line">    ├── filtered</span><br><span class="line">    │   ├── barcodes.tsv</span><br><span class="line">    │   ├── features.tsv</span><br><span class="line">    │   └── matrix.mtx</span><br><span class="line">    ├── raw</span><br><span class="line">    │   ├── barcodes.tsv</span><br><span class="line">    │   ├── features.tsv</span><br><span class="line">    │   └── matrix.mtx</span><br><span class="line">    ├── Summary.csv</span><br><span class="line">    └── UMIperCellSorted.txt</span><br></pre></td></tr></table></figure>
+
+<p>看一下Summary里是啥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Number of Reads,23095815</span><br><span class="line">Reads With Valid Barcodes,0.979732</span><br><span class="line">Sequencing Saturation,0.529367</span><br><span class="line">Q30 Bases in CB+UMI,0.991351</span><br><span class="line">Q30 Bases in RNA read,0.842989</span><br><span class="line">Reads Mapped to Genome: Unique+Multiple,0.959769</span><br><span class="line">Reads Mapped to Genome: Unique,0.874368</span><br><span class="line">Reads Mapped to Transcriptome: Unique+Multipe Genes,0.63797</span><br><span class="line">Reads Mapped to Transcriptome: Unique Genes,0.613655</span><br><span class="line">Estimated Number of Cells,2048</span><br><span class="line">Reads in Cells Mapped to Unique Genes,12815372</span><br><span class="line">Fraction of Reads in Cells,0.904219</span><br><span class="line">Mean Reads per Cell,6257</span><br><span class="line">Median Reads per Cell,5544</span><br><span class="line">UMIs in Cells,5978718</span><br><span class="line">Mean UMI per Cell,2919</span><br><span class="line">Median UMI per Cell,2577</span><br><span class="line">Mean Genes per Cell,915</span><br><span class="line">Median Genes per Cell,873</span><br><span class="line">Total Genes Detected,16265</span><br></pre></td></tr></table></figure>
+
+<p>可以看到比起cellranger，STAR捕获到的细胞数少一点，而且每个细胞的reads要低一点，其他差不多，后续将使用Seurat包对两组数据进行比较</p>
+<h2 id="STARsolo其他命令"><a href="#STARsolo其他命令" class="headerlink" title="STARsolo其他命令"></a>STARsolo其他命令</h2><p><strong>–soloType</strong><br>default: None<br>string(s): type of single-cell RNA-seq<br><code>CB_UMI_Simple</code><br>(a.k.a. Droplet) one UMI and one Cell Barcode ofxed length in<br>read2, e.g. Drop-seq and 10X Chromium.<br><code>CB_UMI_Complex</code><br>one UMI ofxed length, but multiple Cell Barcodes of varying length,<br>as well as adapters sequences are allowed in read2 only, e.g. inDrop.<br><code>CB_samTagOut</code><br>output Cell Barcode as CR and/or CB SAm tag. No UMI counting.<br>{readFilesIn cDNA read1 [cDNA read2 if paired-end]<br>CellBarcode read . Requires {outSAMtype BAM Unsorted [and/or<br>SortedByCoordinate]<br><code>SmartSeq</code><br>Smart-seq: each cell in a separate FASTQ (paired- or single-end),<br>barcodes are corresponding read-groups, no UMI sequences,<br>alignments deduplicated according to alignment start and end (after<br>extending soft-clipped bases)</p>
+<p><strong>–soloCBwhitelist</strong><br>default: -<br>string(s):le(s) with whitelist(s) of cell barcodes. Only {soloType<br>CB UMI Complex allows more than one whitelistle.<br>None<br>no whitelist: all cell barcodes are allowed</p>
+<p><strong>–soloCBstart</strong><br>default: 1<br>int&gt;0: cell barcode start base</p>
+<p><strong>–soloCBlen</strong><br>default: 16<br>int&gt;0: cell barcode length<br><strong>–soloUMIstart</strong><br>default: 17<br>int&gt;0: UMI start base</p>
+<p><strong>–soloUMIlen</strong><br>default: 10<br>int&gt;0: UMI length</p>
+<p><strong>–soloBarcodeReadLength</strong><br>default: 1<br>int: length of the barcode read<br>1<br>equal to sum of soloCBlen+soloUMIlen<br>0<br>not dened, do not check<br><strong>–soloCBposition</strong><br>default: -<br>strings(s) position of Cell Barcode(s) on the barcode read.<br>Presently only works with {soloType CB UMI Complex, and barcodes are<br>assumed to be on Read2.<br>Format for each barcode: startAnchor startPosition endAnchor endPosition<br>start(end)Anchor denes the Anchor Base for the CB: 0: read start; 1: read<br>end; 2: adapter start; 3: adapter end<br>start(end)Position is the 0-based position with of the CB start(end) with<br>respect to the Anchor Base<br>String for dierent barcodes are separated by space.<br>Example: inDrop (Zilionis et al, Nat. Protocols, 2017):<br>{soloCBposition 0 0 2 -1 3 1 3 8<br><strong>–soloUMIposition</strong><br>default: -<br>string position of the UMI on the barcode read, same as soloCBposition<br><strong>–soloAdapterSequence</strong><br>default: -<br>string: adapter sequence to anchor barcodes.<br>–<strong>soloAdapterMismatchesNmax</strong></p>
+<p>default: 1<br>int&gt;0: maximum number of mismatches allowed in adapter sequence.<br><strong>–soloCBmatchWLtype</strong><br>default: 1MM multi<br>string: matching the Cell Barcodes to the WhiteList<br>Exact<br>only exact matches allowed<br><code>1MM</code><br>only one match in whitelist with 1 mismatched base allowed. Allowed<br>CBs have to have at least one read with exact match.<br><code>1MM_multi</code><br>multiple matches in whitelist with 1 mismatched base allowed,<br>posterior probability calculation is used choose one of the matches.<br>Allowed CBs have to have at least one read with exact match. Similar to<br>CellRanger 2.2.0<br><code>1MM_multi_pseudocounts</code><br>same as 1MM Multi, but pseudocounts of 1 are added to all whitelist<br>barcodes.<br>Similar to CellRanger 3.x.x<br><strong>–soloStrand</strong><br>default: Forward<br>string: strandedness of the solo libraries:<br>Unstranded<br>no strand information<br>Forward<br>read strand same as the original RNA molecule<br>Reverse<br>read strand opposite to the original RNA molecule<br><strong>–soloFeatures</strong><br>default: Gene<br>string(s): genomic features for which the UMI counts per Cell Barcode are<br>collected</p>
+<p><code>Gene</code><br>genes: reads match the gene transcript<br><code>SJ</code><br>splice junctions: reported in SJ.out.tab<br><code>GeneFull</code><br>full genes: count all reads overlapping genes’ exons and introns<br><strong>–soloUMIdedup</strong><br>default: 1MM_All<br>string(s): type of UMI deduplication (collapsing) algorithm<br><code>1MM_All</code><br>all UMIs with 1 mismatch distance to each other are collapsed (i.e.<br>counted once)<br><code>1MM_Directional</code><br>follows the “directional” method from the UMI-tools by Smith, Heger<br>and Sudbery (Genome Research 2017).<br><code>Exact</code><br>only exactly matching UMIs are collapsed<br><code>NoDedup</code><br>no deduplication of UMIs, count all reads. Allowed for –soloType<br>SmartSeq</p>
+<p><strong>–soloUMIfiltering</strong><br>default: -<br>string(s) type of UMIltering<br><code>-</code></p>
+<p>basicltering: remove UMIs with N and homopolymers (similar to<br>CellRanger 2.2.0)<br><code>MultiGeneUMI</code><br>remove lower-count UMIs that map to more than one gene<br>(introduced in CellRanger 3.x.x)</p>
+<p><strong>–soloOutFileNames</strong><br>default: Solo.out/ features.tsv barcodes.tsv matrix.mtx<br>string(s)le names for STARsolo output:<br>le name prex gene names barcode sequences cell feature count matrix</p>
+<p><strong>–soloCellFilter</strong><br>default: CellRanger2.2 3000 0.99 10</p>
+<p>string(s): cellltering type and parameters<br><code>CellRanger2.2</code><br>simpleltering of CellRanger 2.2, followed by three numbers: number<br>of expected cells, robust maximum percentile for UMI count,<br>maximum to minimum ratio for UMI count<br><code>TopCells</code><br>only report top cells by UMI count, followed by the exact number of<br>cells<br><code>None</code><br>do not outputltered cells</p>
+<p><strong>–soloOutFormatFeaturesGeneField3</strong><br>default: “Gene Expression”<br>string(s):eld 3 in the Gene features.tsv le. If “-“, then no 3rd ld is output.</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

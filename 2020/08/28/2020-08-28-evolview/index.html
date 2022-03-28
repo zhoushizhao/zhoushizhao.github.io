@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>进化树美化之Evolview--热图（2） - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="上个教程中已经修改了进化树的分支颜色和标签颜色，接下来进行热图绘制
+数据准备我们可以从help界面查看我们需要输入的数据类型
+123456789101112131415161718#heatmap!,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="进化树美化之Evolview--热图（2） - Zhz Blog"/>
+    <meta name="twitter:description" content="上个教程中已经修改了进化树的分支颜色和标签颜色，接下来进行热图绘制
+数据准备我们可以从help界面查看我们需要输入的数据类型
+123456789101112131415161718#heatmap!,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="进化树美化之Evolview--热图（2） - Zhz Blog"/>
+    <meta property="og:description" content="上个教程中已经修改了进化树的分支颜色和标签颜色，接下来进行热图绘制
+数据准备我们可以从help界面查看我们需要输入的数据类型
+123456789101112131415161718#heatmap!,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">进化树美化之Evolview--热图（2）</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">进化树美化之Evolview--热图（2）</h1>
+        <div class="stuff">
+            <span>八月 28, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Evolview/" rel="tag">Evolview</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/phylogenetic-tree/" rel="tag">phylogenetic_tree</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>上个教程中已经修改了进化树的分支颜色和标签颜色，接下来进行热图绘制</p>
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>我们可以从help界面查看我们需要输入的数据类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#heatmap</span><br><span class="line">!title	Example of heatmap  图例标题</span><br><span class="line">!showLegends	1           是否显示图例，1：显示，0：不显示</span><br><span class="line">!defaultStrokeColor	gold</span><br><span class="line">!defaultStrokeWidth	2</span><br><span class="line">!colorgradient	blue, yellow,red  热图配色</span><br><span class="line">!colorgradientMarkLabel	0,5,10,15,20,25  颜色梯度值</span><br><span class="line"># -- heatmap column labels --</span><br><span class="line">!showHeatMapColumnLabel	1  热图表头显示</span><br><span class="line">!heatmapColumnLabels	e1,e2,e3,control  表头内容</span><br><span class="line"># -- heatmap --</span><br><span class="line">!heatmap	margin=2,colwidth=30,roundedcorner=2  热图内部信息</span><br><span class="line"># -- show data value</span><br><span class="line">!showdataValue	show=1,fontsize=12</span><br><span class="line">A	-2,3,5,0</span><br><span class="line">B	7,9,10,23</span><br><span class="line">C	13,15,19,8</span><br><span class="line">D	20,22,25,4</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.8.28/image-20200908201751084.png" alt="image-20200908201751084"></p>
+<p>根据示例数据将我们的数据修改好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#heatmap</span><br><span class="line">!title	Expression of heatmap</span><br><span class="line">!showLegends	0</span><br><span class="line">#!defaultStrokeColor	gold</span><br><span class="line">#!defaultStrokeWidth	2</span><br><span class="line">!colorgradient	red,white,blue</span><br><span class="line">!showHeatMapColumnLabel	1</span><br><span class="line"># -- heatmap column labels --</span><br><span class="line">!showHeatMapColumnLabel	1</span><br><span class="line">!heatmapColumnLabels	HS1,HS2,HS3,HS4</span><br><span class="line"># -- heatmap --</span><br><span class="line">!heatmap	margin=1,colwidth=30,roundedcorner=5</span><br><span class="line"># -- show data value</span><br><span class="line">!showdataValue	show=0,fontsize=12,fontitalic=0,fontbold=1,textangle=-60,fontcolor=red</span><br><span class="line">AT1G03160.1	138.2662,119.4188,117.5653,131.9267</span><br><span class="line">AT4G17540.1	190.04398,130.73198,140.72378,150.41085</span><br><span class="line">Os06t0247800-01	22.3589,20.9118,19.7673,25.1028</span><br><span class="line">Os02t0738900-01	93.544,21.6591,18.8547,31.3205</span><br><span class="line">Os03t0732200-01	5.52722,4.83038,4.29929,3.81299</span><br><span class="line">Os10t0185200-00	83.1737,83.2791,71.5573,69.86103</span><br><span class="line">AT1G59610.1	40.8104,19.7877,21.998,34.7177</span><br><span class="line">AT1G10290.1	140.8104,119.7877,121.998,134.7177</span><br><span class="line">Os08t0425100-01	20.41115,39.6234,47.14298,63.02084</span><br><span class="line">Os12t0178700-01	48.51467,52.1542,52.7949,62.7378</span><br><span class="line">AT3G19720.1	124.4894,129.6265,127.352,132.6961</span><br><span class="line">Os01t0748000-00	103.341,352.318,236.861,293.542</span><br><span class="line">Os04t0129900-01	1.89585,8.67967,6.65843,2.84205</span><br><span class="line">Os03t0260000-01	131.2451,61.22141,49.86475,97.78848</span><br><span class="line">AT1G60500.1	29.84108,119.9479,125.1772,140.0944</span><br><span class="line">Os01t0920400-01	152.695,113.472,74.9321,61.9664</span><br><span class="line">AT2G14120.3	118.5393,229.62,230.3712,223.395</span><br><span class="line">AT4G33650.2	15.4361,255.7039,138.4035,133.0883</span><br><span class="line">Os04t0381000-01	1.81532,2.71541,4.09116,7.76133</span><br><span class="line">Os05t0556100-01	322.122,217.55541,18.8402,15.2791</span><br><span class="line">Os01t0681100-01	229.41612,249.59223,245.90516,125.5316</span><br><span class="line">AT3G61760.1	232.8752,251.1922,136.812,117.087</span><br><span class="line">AT5G42080.1	7.60426,3.105,8.66416,6.68762</span><br><span class="line">Os09t0572900-01	27.5529,94.32025,40.786299,40.476955</span><br><span class="line">AT1G14830.1	233.5316,235.4096,155.9334,164.4508</span><br><span class="line">Os03t0713100-01	5.59436,3.86999,5.44011,4.85916</span><br><span class="line">Os10t0567800-01	213.2103,218.9935,290.9288,225.216</span><br><span class="line">AT2G44590.3	29.6786,52.4297,272.53,278.289</span><br></pre></td></tr></table></figure>
+
+<p>成品图：</p>
+<p><img src="/img/posts/2020.8.28/image-20200908202653281.png" alt="image-20200908202653281"></p>
+<p>可以看到三个dataset已经在右边显示了，可以选择是否显示或者删除，也可以点笔的形状进行修改</p>
+<h2 id="结果导出"><a href="#结果导出" class="headerlink" title="结果导出"></a>结果导出</h2><p><img src="/img/posts/2020.8.28/image-20200908202847228.png" alt="image-20200908202847228"></p>
+<p>在上方有三个按钮，可以保存为png格式、pdf格式以及nwk格式</p>
+<p><img src="/img/posts/2020.8.28/image-20200908203114253.png" alt="image-20200908203114253"></p>
+<p>左侧也有一个按钮，可以保存为多种格式</p>
+<p><img src="/img/posts/2020.8.28/image-20200908203158755.png" alt="image-20200908203158755"></p>
+<p>将png格式保存到本地，可以看看效果</p>
+<p><img src="/img/posts/2020.8.28/image-20200908203401589.png" alt="image-20200908203401589"></p>
+<p>fine！！！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

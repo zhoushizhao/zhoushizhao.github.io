@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单细胞实战(5)：复现文章中的聚类图（2） - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="前言之前对拟南芥单细胞测序的文献数据进行复现，数据结果有点微妙，接下来进行拟时间分析
+分生组织伪时间分析作者首先查看了分生组织相关基因（WOX5,PIN1,RGF3,PLT1）在聚类中的表达情况，W,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="单细胞实战(5)：复现文章中的聚类图（2） - Zhz Blog"/>
+    <meta name="twitter:description" content="前言之前对拟南芥单细胞测序的文献数据进行复现，数据结果有点微妙，接下来进行拟时间分析
+分生组织伪时间分析作者首先查看了分生组织相关基因（WOX5,PIN1,RGF3,PLT1）在聚类中的表达情况，W,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="单细胞实战(5)：复现文章中的聚类图（2） - Zhz Blog"/>
+    <meta property="og:description" content="前言之前对拟南芥单细胞测序的文献数据进行复现，数据结果有点微妙，接下来进行拟时间分析
+分生组织伪时间分析作者首先查看了分生组织相关基因（WOX5,PIN1,RGF3,PLT1）在聚类中的表达情况，W,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">单细胞实战(5)：复现文章中的聚类图（2）</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">单细胞实战(5)：复现文章中的聚类图（2）</h1>
+        <div class="stuff">
+            <span>十月 13, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前对拟南芥单细胞测序的文献数据进行复现，数据结果有点微妙，接下来进行拟时间分析</p>
+<h2 id="分生组织伪时间分析"><a href="#分生组织伪时间分析" class="headerlink" title="分生组织伪时间分析"></a>分生组织伪时间分析</h2><p>作者首先查看了分生组织相关基因（WOX5,PIN1,RGF3,PLT1）在聚类中的表达情况，WOX5和PIN1主要在cluster12中表达，RGF3以及PLT1主要在cluster19中表达，对应到自己的数据中查看效果</p>
+<p><img src="/2020/10/13/2020-10-13-ScRNAseq(6)/%5Cimg%5Cposts%5C2020.10.13%5Cimage-20201023152740641.png" alt="image-20201023152740641"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pdf(&quot;cell_identify/meristematic.pdf&quot;,height = 14,width = 14)</span><br><span class="line">FeaturePlot(wang,features=c(&#x27;AT3G11260&#x27;,&#x27;AT1G73590&#x27;,&#x27;AT2G04025&#x27;,&#x27;AT3G20840&#x27;),cols=c(&quot;grey&quot;,&quot;yellow&quot;,&quot;red&quot;,&quot;brown&quot;)</span><br><span class="line">            ,reduction = &#x27;umap&#x27;,pt.size = 1,label.size = 4)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/13/2020-10-13-ScRNAseq(6)/%5Cimg%5Cposts%5C2020.10.13%5Cimage-20201023153024449.png" alt="image-20201023153024449"></p>
+<p><img src="/img/posts/2020.10.13/image-20201023153253155.png" alt="image-20201023153253155"></p>
+<p>可以看到对应效果还是不错的，接下来选择cluster12.14.19进行伪时间分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">id&lt;-c(&quot;12&quot;,&quot;14&quot;,&quot;19&quot;)</span><br><span class="line">cell.sub &lt;- subset(wang@meta.data,seurat_clusters==id)</span><br><span class="line">scRNAsub &lt;- subset(wang, cells=row.names(cell.sub))</span><br><span class="line">dim(scRNAsub)</span><br><span class="line">library(monocle)</span><br><span class="line">dir.create(&quot;pseudotime121419&quot;)</span><br><span class="line">data &lt;- as(as.matrix(scRNAsub@assays$RNA@counts), &#x27;sparseMatrix&#x27;)</span><br><span class="line">pd &lt;- new(&#x27;AnnotatedDataFrame&#x27;, data = scRNAsub@meta.data)</span><br><span class="line">fData &lt;- data.frame(gene_short_name = row.names(data), row.names = row.names(data))</span><br><span class="line">fd &lt;- new(&#x27;AnnotatedDataFrame&#x27;, data = fData)</span><br><span class="line">mycds &lt;- newCellDataSet(data,</span><br><span class="line">                        phenoData = pd,</span><br><span class="line">                        featureData = fd,</span><br><span class="line">                        expressionFamily = negbinomial.size())</span><br><span class="line">mycds &lt;- estimateSizeFactors(mycds)</span><br><span class="line">mycds &lt;- estimateDispersions(mycds, cores=4, relative_expr = TRUE)</span><br><span class="line">## 选择代表性基因</span><br><span class="line">##使用monocle选择的高变基因</span><br><span class="line">disp_table &lt;- dispersionTable(mycds)</span><br><span class="line">disp.genes &lt;- subset(disp_table, mean_expression &gt;= 0.1 &amp; dispersion_empirical &gt;= 1 * dispersion_fit)$gene_id</span><br><span class="line">mycds &lt;- setOrderingFilter(mycds, disp.genes)</span><br><span class="line">## 降维以及细胞排序</span><br><span class="line">#降维</span><br><span class="line">mycds &lt;- reduceDimension(mycds, max_components = 2, method = &#x27;DDRTree&#x27;)</span><br><span class="line">#排序</span><br><span class="line">mycds &lt;- orderCells(mycds)</span><br><span class="line">#State轨迹分布图</span><br><span class="line">plot1 &lt;- plot_cell_trajectory(mycds, color_by = &quot;State&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/State.pdf&quot;, plot = plot1, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/State.png&quot;, plot = plot1, width = 6, height = 5)</span><br><span class="line">##Cluster轨迹分布图</span><br><span class="line">plot2 &lt;- plot_cell_trajectory(mycds, color_by = &quot;seurat_clusters&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/Cluster.pdf&quot;, plot = plot2, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/Cluster.png&quot;, plot = plot2, width = 6, height = 5)</span><br><span class="line">##Pseudotime轨迹图</span><br><span class="line">plot3 &lt;- plot_cell_trajectory(mycds, color_by = &quot;Pseudotime&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/Pseudotime.pdf&quot;, plot = plot3, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/Pseudotime.png&quot;, plot = plot3, width = 6, height = 5)</span><br><span class="line">##合并作图</span><br><span class="line">plotc &lt;- plot1|plot2|plot3</span><br><span class="line">ggsave(&quot;pseudotime121419/Combination.pdf&quot;, plot = plotc, width = 10, height = 3.5)</span><br><span class="line">ggsave(&quot;pseudotime121419/Combination.png&quot;, plot = plotc, width = 10, height = 3.5)</span><br><span class="line">##保存结果</span><br><span class="line"></span><br><span class="line">write.csv(pData(mycds), &quot;pseudotime121419/pseudotime.csv&quot;)</span><br><span class="line">p1 &lt;- plot_cell_trajectory(mycds, color_by = &quot;State&quot;) + facet_wrap(~State, nrow = 1)</span><br><span class="line">p2 &lt;- plot_cell_trajectory(mycds, color_by = &quot;seurat_clusters&quot;) + facet_wrap(~seurat_clusters, nrow = 1)</span><br><span class="line">plotc &lt;- p1/p2</span><br><span class="line">ggsave(&quot;pseudotime121419/trajectory_facet.png&quot;, plot = plotc, width = 6, height = 5)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.10.13/image-20201023153724516.png" alt="image-20201023153724516"></p>
+<p>结果也与文献中的有点出入，接下来查看一下BEAM热图和一些基因在轨迹中的表达情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">##BEAM分析</span><br><span class="line">disp_table &lt;- dispersionTable(mycds)</span><br><span class="line">disp.genes &lt;- subset(disp_table, mean_expression &gt;= 0.5&amp;dispersion_empirical &gt;= 1*dispersion_fit)</span><br><span class="line">disp.genes &lt;- as.character(disp.genes$gene_id)</span><br><span class="line">mycds_sub &lt;- mycds[disp.genes,]</span><br><span class="line">#State轨迹分布图</span><br><span class="line">plot1 &lt;- plot_cell_trajectory(mycds_sub, color_by = &quot;State&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_State.pdf&quot;, plot = plot1, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_State.png&quot;, plot = plot1, width = 6, height = 5)</span><br><span class="line">##Cluster轨迹分布图</span><br><span class="line">plot2 &lt;- plot_cell_trajectory(mycds_sub, color_by = &quot;seurat_clusters&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Cluster.pdf&quot;, plot = plot2, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Cluster.png&quot;, plot = plot2, width = 6, height = 5)</span><br><span class="line">##Pseudotime轨迹图</span><br><span class="line">plot3 &lt;- plot_cell_trajectory(mycds_sub, color_by = &quot;Pseudotime&quot;)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Pseudotime.pdf&quot;, plot = plot3, width = 6, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Pseudotime.png&quot;, plot = plot3, width = 6, height = 5)</span><br><span class="line"></span><br><span class="line">##合并作图</span><br><span class="line">plotc &lt;- plot1|plot2|plot3</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Combination.pdf&quot;, plot = plotc, width = 10, height = 3.5)</span><br><span class="line">ggsave(&quot;pseudotime121419/BEAM_Combination.png&quot;, plot = plotc, width = 10, height = 3.5)</span><br><span class="line">##保存结果</span><br><span class="line">beam_res &lt;- BEAM(mycds_sub, branch_point = 1, cores = 8)</span><br><span class="line">beam_res &lt;- beam_res[order(beam_res$qval),]</span><br><span class="line">beam_res &lt;- beam_res[,c(&quot;gene_short_name&quot;, &quot;pval&quot;, &quot;qval&quot;)]</span><br><span class="line">mycds_sub_beam &lt;- mycds_sub[row.names(subset(beam_res, qval &lt; 1e-4)),]</span><br><span class="line">pdf(&quot;pseudotime121419/BEAM_pseudotime_heatmap2.pdf&quot;,width = 10, height = 10)</span><br><span class="line">plot_genes_branched_heatmap(mycds_sub_beam,  branch_point = 1,</span><br><span class="line">                            num_clusters = 5, show_rownames = F)</span><br><span class="line">dev.off()</span><br><span class="line">##寻找相应的基因绘制轨迹图</span><br><span class="line">matrix_dir=&quot;filtered_gene_bc_matrices/ref/&quot;</span><br><span class="line">barcode.path &lt;- paste0(matrix_dir,&quot;barcodes.tsv&quot;)</span><br><span class="line">features.path &lt;- paste0(matrix_dir,&quot;genes.tsv&quot;)</span><br><span class="line">matrix.path &lt;- paste0(matrix_dir, &quot;matrix.mtx&quot;)</span><br><span class="line">mat1 &lt;- readMM(file = matrix.path)</span><br><span class="line">feature.names = read.delim(features.path,</span><br><span class="line">                           header = FALSE,</span><br><span class="line">                           stringsAsFactors = FALSE)</span><br><span class="line">barcode.names = read.delim(barcode.path,</span><br><span class="line">                           header = FALSE,</span><br><span class="line">                           stringsAsFactors = FALSE)</span><br><span class="line">colnames(mat1) = barcode.names$V1</span><br><span class="line">rownames(mat1) = feature.names$V1</span><br><span class="line">mat1&lt;-as.matrix(mat1)</span><br><span class="line">gene&lt;-t(as.matrix(mat1[c(&#x27;AT3G11260&#x27;,&#x27;AT1G73590&#x27;,</span><br><span class="line">       &#x27;AT2G04025&#x27;,&#x27;AT3G20840&#x27;,&#x27;AT1G50490&#x27;),</span><br><span class="line">     colnames(scRNAsub@assays$RNA@counts)]))</span><br><span class="line">colnames(gene)&lt;-c(&quot;WOX5&quot;,&quot;PIN1&quot;,&quot;RGF3&quot;,&quot;PLT1&quot;,&quot;UBC20&quot;)</span><br><span class="line">mycds_sub@phenoData@data&lt;-cbind(mycds_sub@phenoData@data,gene)</span><br><span class="line">mycds_sub@phenoData@data[mycds_sub@phenoData@data == 0] &lt;- NA</span><br><span class="line">p1&lt;-plot_cell_trajectory(mycds_sub, color_by = &quot;WOX5&quot;)+scale_color_gradient(na.value = &quot;grey&quot;,low=&quot;yellow&quot;,high=&quot;red&quot;)</span><br><span class="line">p2&lt;-plot_cell_trajectory(mycds_sub, color_by = &quot;PIN1&quot;)+scale_color_gradient(na.value = &quot;grey&quot;,low=&quot;yellow&quot;,high=&quot;red&quot;)</span><br><span class="line">p3&lt;-plot_cell_trajectory(mycds_sub, color_by = &quot;RGF3&quot;)+scale_color_gradient(na.value = &quot;grey&quot;,low=&quot;yellow&quot;,high=&quot;red&quot;)</span><br><span class="line">p4&lt;-plot_cell_trajectory(mycds_sub, color_by = &quot;PLT1&quot;)+scale_color_gradient(na.value = &quot;grey&quot;,low=&quot;yellow&quot;,high=&quot;red&quot;)</span><br><span class="line">p5&lt;-plot_cell_trajectory(mycds_sub, color_by = &quot;UBC20&quot;)+scale_color_gradient(na.value = &quot;grey&quot;,low=&quot;yellow&quot;,high=&quot;red&quot;)</span><br><span class="line">plotc &lt;- p1|p2|p3|p4|p5</span><br><span class="line">ggsave(&quot;pseudotime121419/meristematic.pdf&quot;, plot = plotc, width = 18, height = 5)</span><br><span class="line">ggsave(&quot;pseudotime121419/meristematic.png&quot;, plot = plotc, width = 18, height = 5)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.10.13/image-20201023154034058.png" alt="image-20201023154034058"></p>
+<p><img src="/img/posts/2020.10.13/image-20201023154314895.png" alt="image-20201023154314895"></p>
+<p><img src="/img/posts/2020.10.13/image-20201023154346431.png" alt="image-20201023154346431"></p>
+<p>文献中没有给出相应的参数，结果还是与文献的结果有点差距</p>
+<h2 id="root-cap伪时间分析"><a href="#root-cap伪时间分析" class="headerlink" title="root cap伪时间分析"></a>root cap伪时间分析</h2><p>按照相同的方式对root cap组织进行伪时间分析</p>
+<p><img src="/img/posts/2020.10.13/image-20201023154946765.png" alt="image-20201023154946765"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>对于此次的数据复现，前面的聚类步骤还是能与文献对应，但是后续的伪时间分析差距就有点大了，主要是因为拟时间分析我才刚刚入门学习，对一些分析过程中的参数不太了解，目前的数据与代码我已上传<a target="_blank" rel="noopener" href="https://github.com/Bioinformatics-rookie/ScRNAseq_code">github</a></p>
+<p>，欢迎大家批评指正</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

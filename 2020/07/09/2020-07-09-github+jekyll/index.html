@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>利用github和jekyll构建个人博客 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="我们知道，一个网站要能够在任何地方都能够被访问，那么需要部署到服务器上，但是对于我们来说，构建服务器的花销是巨大的。幸运的是，github就提供了这样的功能，只要按照github格式要求，新建一个仓,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="利用github和jekyll构建个人博客 - Zhz Blog"/>
+    <meta name="twitter:description" content="我们知道，一个网站要能够在任何地方都能够被访问，那么需要部署到服务器上，但是对于我们来说，构建服务器的花销是巨大的。幸运的是，github就提供了这样的功能，只要按照github格式要求，新建一个仓,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="利用github和jekyll构建个人博客 - Zhz Blog"/>
+    <meta property="og:description" content="我们知道，一个网站要能够在任何地方都能够被访问，那么需要部署到服务器上，但是对于我们来说，构建服务器的花销是巨大的。幸运的是，github就提供了这样的功能，只要按照github格式要求，新建一个仓,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">利用github和jekyll构建个人博客</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">利用github和jekyll构建个人博客</h1>
+        <div class="stuff">
+            <span>七月 09, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>我们知道，一个网站要能够在任何地方都能够被访问，那么需要部署到服务器上，但是对于我们来说，构建服务器的花销是巨大的。幸运的是，github就提供了这样的功能，只要按照github格式要求，新建一个仓库，把你的网站代码上传到里面，你就有一个自己的免费网站了。</p>
+<p>废话不多说，让我们利用jekyll和github来构建自己的博客吧！！</p>
+<hr>
+<h1 id="一：软件下载"><a href="#一：软件下载" class="headerlink" title="一：软件下载"></a>一：软件下载</h1><p>jekyll支持mac、linux、windows等，鉴于大部分童鞋使用的是windows系统，那我就用windows构建</p>
+<h2 id="1-下载安装ruby-installer"><a href="#1-下载安装ruby-installer" class="headerlink" title="1.下载安装ruby installer"></a>1.下载安装ruby installer</h2><p><a target="_blank" rel="noopener" href="https://rubyinstaller.org/">https://rubyinstaller.org/</a> ，点击相应的版本进入下载页面即可下载</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709153231758.png" alt="image-20200709153231758"></p>
+<h2 id="2-下载rubygems"><a href="#2-下载rubygems" class="headerlink" title="2.下载rubygems"></a>2.下载rubygems</h2><p><a target="_blank" rel="noopener" href="https://rubygems.org/pages/download">https://rubygems.org/pages/download</a> ，可以选择相应版本下载</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709154144808.png" alt="image-20200709154144808"></p>
+<p>下载完成后解压到你想放的位置，比如我放在了“D:/soft/rubygems3-1.4”下,打开cmd用命令执行</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D<span class="operator">:</span></span><br><span class="line">cd soft<span class="operator">/</span>rubygems3<span class="operator">-</span><span class="number">1.4</span></span><br><span class="line">ruby setup.rb</span><br><span class="line">gem install jekyll</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二：网站构建"><a href="#二：网站构建" class="headerlink" title="二：网站构建"></a>二：网站构建</h2><p>软件下载有点耗时，在此期间我们可以挑选一个自己喜欢的主题来构建自己的博客</p>
+<p>首先你要到<a target="_blank" rel="noopener" href="http://github.com/">GitHub</a>上注册一个账号,例如jungleblack007（用户名可以在设置里改），创建完成后可以去<a target="_blank" rel="noopener" href="http://jekyllthemes.org/">jekyll主题网站</a>选择自己喜欢的主题，然后在这个主题基础上修改到满足自己需求的博客.</p>
+<p>我选择的是<a target="_blank" rel="noopener" href="https://github.com/leopardpan/leopardpan.github.io">潘柏信</a>的博客主题，因为这个主题有中文说明，而且有个B站up主对该主题进行了详细的操作，适合我们入门，先让我们看一下该博客的外貌！</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709170946728.png" alt="image-20200709170946728"></p>
+<p>我们找到作者的<a target="_blank" rel="noopener" href="https://github.com/leopardpan/leopardpan.github.io">源代码块</a>,点击右上角的fork可以将它拷到我们自己的github中，顺便star一下支持作者</p>
+<p>拷到自己的github后，我们点击setting，先进行改名，推荐：你的用户名.github.io</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709212928730.png" alt="image-20200709212928730"></p>
+<p>然后下拉找到GitHub Pages，source选择master branch，我已经点了所以看不到，然后上方出现一个网址，这个就是你的域名了，可以先看看和原博客有没有区别</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709213017466.png" alt="image-20200709213017466"></p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709213344986.png" alt="image-20200709213344986"></p>
+<hr>
+<h2 id="三：运行jekyll生成静态网页"><a href="#三：运行jekyll生成静态网页" class="headerlink" title="三：运行jekyll生成静态网页"></a>三：运行jekyll生成静态网页</h2><p>把别人的主题fork以后，我们可以利用<a target="_blank" rel="noopener" href="https://atom.io/">atom</a>把主题代码转到自己的电脑上</p>
+<p>打开atom，按ctrl+shift+p，输入github clone，选择要克隆的网址和要保存的路径。点clone即可</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200709211103034.png" alt="image-20200709211103034"></p>
+<p>clone完成后，就会有如下界面</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713145237970.png" alt="image-20200713145237970"></p>
+<p>修改_config.xml,把一些信息修改为自己的</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713150055386.png" alt="image-20200713150055386"></p>
+<p>图像也可以换，根据img的文件夹的图片名称可以换成你想要的，名字要一致，img/posts主要放置的是笔记中的图片，可以删掉，以后写笔记的时候想插入图片需要把图片路径设置成img/posts/XXXX。赞赏功能的图片在paying里，需要赞赏就改成自己的二维码，不需要赞赏就删掉new-old.html里的所有内容</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713150830556.png" alt="image-20200713150830556"></p>
+<p>此时，我们可以用jekyll来生成一个静态网页查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D</span><br><span class="line">cd data/git</span><br><span class="line">bundler install</span><br><span class="line">bundle exec jekyll serve</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://127.0.0.1:4000/">http://127.0.0.1:4000</a> 这是我们生成的一个静态页面，浏览器输入即可查看</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713151505404.png" alt="image-20200713151505404"></p>
+<p>可以看到背景和个人信息都已经改为了自己的，说明修改成功！</p>
+<hr>
+<h2 id="四，写一篇自己的博客"><a href="#四，写一篇自己的博客" class="headerlink" title="四，写一篇自己的博客"></a>四，写一篇自己的博客</h2><p>jekyll比较好的一点是可以识别笔记文件，我们可以把写好的文件放到_post文件夹下，然后在md文件前面加一串代码。</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713152310147.png" alt="image-20200713152310147"></p>
+<p>写好后可以再运行bundle exec jekyll serve查看自己写的博客是否已经能在静态网页上查看</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713152501584.png" alt="image-20200713152501584"></p>
+<hr>
+<h2 id="五：添加网站统计功能"><a href="#五：添加网站统计功能" class="headerlink" title="五：添加网站统计功能"></a>五：添加网站统计功能</h2><p>我们可以给自己的网站添加统计功能，在这个主题中也支持该功能，推荐使用百度统计，首先注册账号</p>
+<p>注册结束后添加新的域名统计</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713152912413.png" alt="image-20200713152912413"></p>
+<p>添加结束后点击管理—代码获取，会看到一串代码，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">var _hmt = _hmt || [];</span><br><span class="line">(function() &#123;</span><br><span class="line">  var hm = document.createElement(&quot;script&quot;);</span><br><span class="line">  hm.src = &quot;https://hm.baidu.com/hm.js?60e2d4433f4c77b3ae5db5cac1b62829&quot;;</span><br><span class="line">  var s = document.getElementsByTagName(&quot;script&quot;)[0];</span><br><span class="line">  s.parentNode.insertBefore(hm, s);</span><br><span class="line">&#125;)();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>?后面的60e2d4433f4c77b3ae5db5cac1b62829可以粘贴替换掉_config.yml文件中的百度统计</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713153259817.png" alt="image-20200713153259817"></p>
+<p>这样统计功能就添加上了</p>
+<hr>
+<h2 id="六：添加评论功能"><a href="#六：添加评论功能" class="headerlink" title="六：添加评论功能"></a>六：添加评论功能</h2><p>评论功能也可以根据自己的喜好添加，我添加评论功能使用的是<a target="_blank" rel="noopener" href="http://livere.com/">来必力</a></p>
+<p>注册账号后添加网页，与百度统计类似，添加结束后点击管理界面-代码管理，可以看到一串代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 来必力City版安装代码 --&gt;</span><br><span class="line">&lt;div id=&quot;lv-container&quot; data-id=&quot;city&quot; data-uid=&quot;MTAyMC81MDkzOC8yNzQyMA==&quot;&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">   (function(d, s) &#123;</span><br><span class="line">       var j, e = d.getElementsByTagName(s)[0];</span><br><span class="line"></span><br><span class="line">       if (typeof LivereTower === &#x27;function&#x27;) &#123; return; &#125;</span><br><span class="line"></span><br><span class="line">       j = d.createElement(s);</span><br><span class="line">       j.src = &#x27;https://cdn-city.livere.com/js/embed.dist.js&#x27;;</span><br><span class="line">       j.async = true;</span><br><span class="line"></span><br><span class="line">       e.parentNode.insertBefore(j, e);</span><br><span class="line">   &#125;)(document, &#x27;script&#x27;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;noscript&gt;为正常使用来必力评论功能请激活JavaScript&lt;/noscript&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;!-- City版安装代码已完成 --&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>将该代码复制，替换掉_include/comments.html中的全部内容即可（这里的bioinformatics-rookie.github.io是我自己的博客，文中出现的jungleblack007.github.io是我用来做试验的账号）</p>
+<hr>
+<h2 id="七：上传到github"><a href="#七：上传到github" class="headerlink" title="七：上传到github"></a>七：上传到github</h2><p>所有内容修改完成后可以将自己的代码上传到github，atom也提供此功能。</p>
+<p>当你所有的内容修改完毕后，atom右侧unstaged changes会显示你修改了什么内容,点击stage all,所有的会移动到下方的staged changes.</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713164302396.png" alt="image-20200713164302396"></p>
+<p>在 commit message中随便写点东西点击下方按钮，在push出会出现一个待上传的指令</p>
+<p><img src="/img/posts/7.9-jekyll/image-20200713164434895.png" alt="image-20200713164434895"></p>
+<p>ctrl+左键点击push，使用force push功能可以将自己修改过的内容传到github服务器上，这样输入你的github域名就可以打开自己的网页了，后续的更改同样采取此操作。</p>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://github.com/leopardpan/leopardpan.github.io">https://github.com/leopardpan/leopardpan.github.io</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9f71e260925d">https://www.jianshu.com/p/9f71e260925d</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14x411t7ZU?t=537">https://www.bilibili.com/video/BV14x411t7ZU?t=537</a></p>
+<hr>
+<p>转载请注明转载请注明：<a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/">周小钊的博客</a>- <a target="_blank" rel="noopener" href="https://www.zhouxiaozhao/2020/07/09/github+jekyll/">利用github和jekyll构建个人博客</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

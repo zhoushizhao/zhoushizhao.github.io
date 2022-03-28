@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>利用orthofinder寻找单拷贝基因构建系统发育树 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="1.orthofinder介绍 OrthoFinder是一种快速、准确和全面的比较基因组学分析工具。它可以找到直系和正群，为所有的正群推断基因树，并为所分析的物种推断一个有根的物种树。OrthoFi,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="利用orthofinder寻找单拷贝基因构建系统发育树 - Zhz Blog"/>
+    <meta name="twitter:description" content="1.orthofinder介绍 OrthoFinder是一种快速、准确和全面的比较基因组学分析工具。它可以找到直系和正群，为所有的正群推断基因树，并为所分析的物种推断一个有根的物种树。OrthoFi,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="利用orthofinder寻找单拷贝基因构建系统发育树 - Zhz Blog"/>
+    <meta property="og:description" content="1.orthofinder介绍 OrthoFinder是一种快速、准确和全面的比较基因组学分析工具。它可以找到直系和正群，为所有的正群推断基因树，并为所分析的物种推断一个有根的物种树。OrthoFi,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">利用orthofinder寻找单拷贝基因构建系统发育树</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">利用orthofinder寻找单拷贝基因构建系统发育树</h1>
+        <div class="stuff">
+            <span>七月 18, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Comparative-Genomics/" rel="tag">Comparative_Genomics</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="1-orthofinder介绍"><a href="#1-orthofinder介绍" class="headerlink" title="1.orthofinder介绍"></a>1.orthofinder介绍</h2><p> OrthoFinder是一种快速、准确和全面的比较基因组学分析工具。它可以找到直系和正群，为所有的正群推断基因树，并为所分析的物种推断一个有根的物种树。OrthoFinder还为比较基因组分析提供全面的统计数据。OrthoFinder使用简单，只需运行一组FASTA格式的蛋白质序列文件（每个物种一个）。</p>
+<h2 id="2-基础知识介绍"><a href="#2-基础知识介绍" class="headerlink" title="2.基础知识介绍"></a>2.基础知识介绍</h2><p>Orthologue（直系同源基因）指的是来自两个物种的基因。Orthologue是由两个物种的最后共同祖先(LCA)上的单个基因进化而来的成对基因(图1A和B)。正群是同源概念在物种群中的自然延伸。一个Orthogroup（正交群）是由一个物种的LCA中的单个基因进化而来的一组基因(图1A)。当观察基因树时，一个邻位群体中基因的第一次分化是一个物种形成事件，对同源基因来说也是如此。</p>
+<p>作为基因复制事件的结果，当观察直系同源基因和正交群时，可能会有来自同一物种的多个基因。在这个例子中(图1A和B)，人类和老鼠的HuA基因是鸡中ChA1和ChA2的同源基因。再看一下正交群，我们发现有两个鸡的基因(图1A)，但是只有一个来自老鼠和人类的基因。一些作者将ChA1和ChA2基因作为HuA的共同源基因，以强调存在多个同源基因的事实。由于基因重复和丢失在进化中经常发生，一对一的直系同源物很少见，通过分析正交群所有直系同源的情况（一对一，多对一，多对多），我们可以分析数据的所有情况。</p>
+<p>paralogues (旁系同源基因)是指在基因复制事件中从单个基因中分离出来的成对基因，鸡的两个基因ChA1和ChA2是旁系同源基因(图1C)。来自不同物种的两个基因如果在基因重复事件中彼此分离，也可能是同源的。由于基因树中所有的分支事件要么是物种形成事件(产生直系同源基因)，要么是重复事件(产生旁系同源基因)，因此同一正交群中任何不是直系同源基因的基因必然是旁系同源基因。</p>
+<p><img src="/img/posts/7.17/image-20200717203420289.png" alt="图1"></p>
+<center>图1</center>
+
+<p>直系同源物是同源性基因，是物种形成事件的结果。Paralogs（旁系同源物)是同源基因，是重复事件的结果。可以看到(图2)，不同物种间的α-chain gene互为Orthologs(直系同源物)。正交群用来形容自一组物种的LCA中的单个基因的基因组（α-chain gene）。然后同一物种间α 和β chain gene互为Paralogs(旁系同源物)。最后所有这些关系都可以由OrthoFinder来识别。</p>
+<p><img src="/img/posts/7.17/image-20200717202824867.png" alt="图2"></p>
+<center>图2</center>
+## 3.安装
+
+<p>在这里推荐大家使用conda来安装，简单明了，不用担心其他Dependencies的安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$conda</span> install orthofinder</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-运行orthofinder"><a href="#4-运行orthofinder" class="headerlink" title="4.运行orthofinder"></a>4.运行orthofinder</h2><p>运行Orthofinder，相当简单的操作, “-f”输入目录，里面包含你需要运行的蛋白质fasta文件，“-t”所用到的CPU数目，“-S”选择的比对模式（默认diamod，可选blast）。</p>
+<p>我使用的物种有九个：大豆（<em>G.max</em>）、菠萝（<em>A.comosus</em>）、柑橘（<em>C.sinensis</em>）、无油樟（<em>A.trichopoda</em>）、拟南芥（<em>A.thaliana</em>）、黄瓜（<em>C.sativus</em>）、水稻（<em>O.sativa</em>）、小立碗藓（<em>P.patens</em>）、江南卷柏（<em>S.moellendorffii</em>）</p>
+<p>将所有物种的蛋白文件放到Angiospermae文件夹下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nohup</span> orthofinder -t 16 -f Angiospermae/ -S blast &amp;</span><br></pre></td></tr></table></figure>
+
+<p>生成的结果会存储于Orthofinder/Results_XXX文件中，现在简单看看里面有啥。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Citation.txt                     Orthologues</span><br><span class="line">Comparative_Genomics_Statistics  Phylogenetically_Misplaced_Genes</span><br><span class="line">Gene_Duplication_Events          Putative_Xenologs</span><br><span class="line">Gene_Trees                       Resolved_Gene_Trees</span><br><span class="line">Log.txt                          Single_Copy_Orthologue_Sequences</span><br><span class="line">Orthogroups                      Species_Tree</span><br><span class="line">Orthogroup_Sequences             WorkingDirectory</span><br></pre></td></tr></table></figure>
+
+<p>我们主要使用Orthoogroups查看正交群的基因和使用 Single_Copy_Orthologue_Sequences里的单拷贝基因构建系统发育树</p>
+<p>WorkingDirectory其中包含运算过程的中间文件，例如blast结果，如果我们想去掉某一物种，在SpeciesIDs.txt中将该物种注释掉</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$vi</span> SpeciesIDs.txt</span><br><span class="line"><span class="comment">#0: Acomosus.pro.fa</span></span><br><span class="line">1: Athaliana.pro.fa</span><br><span class="line">2: Atrichopoda.pro.fa</span><br><span class="line">3: Csativus.pro.fa</span><br><span class="line">4: Csinensis.pro.fa</span><br><span class="line">5: Gmax.pro.fa</span><br><span class="line">6: Osativa.pro.fa</span><br><span class="line">7: Ppatens.pro.fa</span><br><span class="line">8: Smoellendorffii.pro.fa</span><br><span class="line">~                          </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nohup</span> orthofinder -b WorkingDirectory</span><br></pre></td></tr></table></figure>
+
+<p>如果我们想增加额外的物种进行分析，可以按照如下方式运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nohup</span> orthofinder -b WorkingDirectory -f new_fasta_directory</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-利用单拷贝基因构建系统发育树"><a href="#5-利用单拷贝基因构建系统发育树" class="headerlink" title="5.利用单拷贝基因构建系统发育树"></a>5.利用单拷贝基因构建系统发育树</h2><p>Orthofinder的 Single_Copy_Orthologue_Sequences下存放着单拷贝同源基因的序列，我们可以利用这些序列构建系统发育树</p>
+<h3 id="5-1-多序列比对"><a href="#5-1-多序列比对" class="headerlink" title="5.1.多序列比对"></a>5.1.多序列比对</h3><p>多序列比对推荐使用muscle</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$wget</span> http://www.drive5.com/muscle/downloads3.8.31/muscle3.8.31_i86linux64.tar.gz</span><br><span class="line"><span class="variable">$tar</span> xzvf muscle3.8.31_i86linux64.tar.gz</span><br><span class="line"><span class="variable">$chmod</span> +x muscle</span><br><span class="line">将muscle添加至环境变量</span><br></pre></td></tr></table></figure>
+
+<p>单拷贝的序列较多，所以使用shell批量运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$vi</span> bash.sh</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> *.fa</span><br><span class="line"><span class="keyword">do</span> muscle -<span class="keyword">in</span> <span class="variable">$i</span> -out <span class="variable">$i</span>.1</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$sh</span> bash.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-提取保守序列"><a href="#5-2-提取保守序列" class="headerlink" title="5.2.提取保守序列"></a>5.2.提取保守序列</h3><p>.1文件是比对好的序列文件，接下来使用Gblocks提取保守序列</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$wget</span> http://molevol.cmima.csic.es/castresana/Gblocks/Gblocks_Linux64_0.91b.tar.Z</span><br><span class="line"><span class="variable">$tar</span> Zxf Gblocks_Linux64_0.91b.tar.Z</span><br><span class="line">添加至环境变量</span><br><span class="line"><span class="variable">$vi</span> bash2.sh</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> *.1</span><br><span class="line"><span class="keyword">do</span> Gblocks <span class="variable">$i</span> -b4=5 -b5=h -t=p -e=.2</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="variable">$sh</span> bash2.sh</span><br></pre></td></tr></table></figure>
+<p>-t= default:p设置序列的类型，可选的值是 p,d,c 分别代表 protein， DNA， Codons 。<br>-b1= default:（ 序列条数的 50% + 1 ）,设定保守性位点必须有 &gt;= 该值的序列数。该参数后接一个 integer 数，默认下比序列条数的 50% 大 1.<br>-b2= default: 序列条数的 85%,确定保守位点的侧翼位点时，其位点必须有 &gt;= 该值的序列数。该值必须要比 -b1 的值要大。<br>-b3= default: 8,最大连续非保守位点的长度。<br>-b4= default: 10,保守位点区块的最小长度。该值必须 &gt;=2 。<br>-b5= default: n, 设置允许含有 Gap 位点。可选的值有 n,h,a 分别代表 None, With Half, All 。 当为 h 时，表示<br>-e= default: .2, 设置输出结果的后缀。</p>
+<h3 id="5-3-序列合并"><a href="#5-3-序列合并" class="headerlink" title="5.3.序列合并"></a>5.3.序列合并</h3><p>比对好之后我们需要将所有文件合并，在合并之前，需要对每个序列文件进行排序，并将多行序列转换为一行序列，此时用到的工具是seqkit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$conda</span> install seqkit</span><br><span class="line"><span class="variable">$vi</span> bash3.sh</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> *.2</span><br><span class="line"><span class="keyword">do</span> seqkit <span class="built_in">sort</span> <span class="variable">$i</span> &gt;<span class="variable">$i</span>.3</span><br><span class="line">seqkit <span class="built_in">seq</span> <span class="variable">$i</span>.3 -w 0 &gt; <span class="variable">$i</span>.3.4</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="variable">$sh</span> bash3.sh</span><br><span class="line"><span class="variable">$mkdir</span> new</span><br><span class="line"><span class="variable">$mv</span> *.4 new/</span><br><span class="line"><span class="variable">$cd</span> new</span><br><span class="line"><span class="variable">$paste</span> -d <span class="string">&quot; &quot;</span> *.4 &gt; all.fa</span><br><span class="line"><span class="variable">$sed</span> -i <span class="string">&quot;s\ \\g&quot;</span> all.fa</span><br></pre></td></tr></table></figure>
+
+<p>此时我们已经把所有的单拷贝序列合并，接下来使用notepad++把所有的ID更改</p>
+<p><img src="/img/posts/7.17/image-20200719144342741.png" alt="修改前"></p>
+<p><img src="/img/posts/7.17/image-20200719144359750.png" alt="修改后"></p>
+<h3 id="5-4-选择合适的替代模型"><a href="#5-4-选择合适的替代模型" class="headerlink" title="5.4.选择合适的替代模型"></a>5.4.选择合适的替代模型</h3><p>修改结束后选择合适的氨基酸替代模型准备构建系统发育树，在这里我使用prottest预测合适的模型，prottest使用phy格式文件，所以用python脚本先将fa文件转换为phy文件，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;all.fa&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> fin:</span><br><span class="line">    sequences = [(m.group(<span class="number">1</span>), <span class="string">&#x27;&#x27;</span>.join(m.group(<span class="number">2</span>).split()))</span><br><span class="line">    <span class="keyword">for</span> m <span class="keyword">in</span> re.finditer(<span class="string">r&#x27;(?m)^&gt;([^ \n]+)[^\n]*([^&gt;]*)&#x27;</span>, fin.read())]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;all.phy&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> fout:</span><br><span class="line">    fout.write(<span class="string">&#x27;%d %d\n&#x27;</span> % (<span class="built_in">len</span>(sequences), <span class="built_in">len</span>(sequences[<span class="number">0</span>][<span class="number">1</span>])))</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> sequences:</span><br><span class="line">        fout.write(<span class="string">&#x27;%-20s %s\n&#x27;</span> % item)</span><br></pre></td></tr></table></figure>
+
+<p>从[]官网上](<a target="_blank" rel="noopener" href="https://www.softpedia.com/dyn-postdownload.php/cc45406e35260b47bfa4132e67f8c446/5f13ff63/286c7/4/1)%E4%B8%8B%E8%BD%BDprottest">https://www.softpedia.com/dyn-postdownload.php/cc45406e35260b47bfa4132e67f8c446/5f13ff63/286c7/4/1)下载prottest</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxf prottest-3.4-20140123.tar.gz</span><br><span class="line"><span class="variable">$java</span> -jar /opt/biosoft/prottest-3.4-20140123/prottest-3.4.jar -i all.phy -all-distributions -F -AIC -BIC -tc 0.5 -threads 24 -o prottest.out</span><br></pre></td></tr></table></figure>
+
+<p>在prottest.out中可以看到最佳模型</p>
+<p><img src="/2020/07/18/2020-07-18-orthofinder/img/posts/7.17/image-20200719152326478.png" alt="image-20200719152326478"></p>
+<h3 id="5-5-构建系统发育树"><a href="#5-5-构建系统发育树" class="headerlink" title="5.5.构建系统发育树"></a>5.5.构建系统发育树</h3><p>使用raxml构建系统发育树</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$wget</span> https://github.com/stamatak/standard-RAxML/archive/master.zip</span><br><span class="line"><span class="variable">$unzip</span> master.zip</span><br><span class="line"><span class="variable">$cd</span> standard-RAxML</span><br><span class="line"><span class="variable">$make</span> -f Makefile.SSE3.gcc</span><br><span class="line"><span class="variable">$make</span> -f Makefile.SSE3.PTHREADS.gcc</span><br><span class="line"><span class="variable">$make</span> -f Makefile.SSE3.MPI.gcc</span><br><span class="line"><span class="variable">$make</span> -f Makefile.SSE3.HYBRID.gcc</span><br><span class="line">添加至环境变量</span><br></pre></td></tr></table></figure>
+
+<p>选择JTT+I+G+F模型构建发育树，外群选择江南卷柏和小立碗藓</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nohup</span> raxmlHPC-PTHREADS-SSE3 -T 16 -f a -x 123 -p 123 -N 1000 -m PROTGAMMAJTT -k -O -o Smoellendorffii,Ppatens /</span><br><span class="line">       -n all.tre -s all.fa &amp;</span><br></pre></td></tr></table></figure>
+
+<p>运行结束后使用figtree打开RAxML_bipartitions.all.tre，对进化树进行修改。</p>
+<p><img src="/img/posts/7.17/image-20200719153712016.png" alt="tree"></p>
+<p>至此，利用单拷贝基因构建系统进化已经完成</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/16e0bbb2ba19">https://www.jianshu.com/p/16e0bbb2ba19</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=2217">http://www.chenlianfu.com/?p=2217</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/stamatak/standard-RAxML">https://github.com/stamatak/standard-RAxML</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/davidemms/OrthoFinder">https://github.com/davidemms/OrthoFinder</a></p>
+<p>转载请注明<a href="www.zhouxiaozao.cn">周小钊的博客</a>&gt;&gt;<a href="www.zhouxiaozhao.cn/2020/07/18/orthofinder/">利用orthofinder寻找单拷贝基因构建系统发育树</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

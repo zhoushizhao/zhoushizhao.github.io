@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>单细胞实战(1)：原始测序数据下载 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="前言目前的课题是10X单细胞测序(植物方面)，之前已经把所有的流程基本走过一遍，现在就将自己的学习过程整理成笔记给大家分享一下，我在学习单细胞分析的时候主要跟着单细胞天地的公众号和jimmy老师在B,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="单细胞实战(1)：原始测序数据下载 - Zhz Blog"/>
+    <meta name="twitter:description" content="前言目前的课题是10X单细胞测序(植物方面)，之前已经把所有的流程基本走过一遍，现在就将自己的学习过程整理成笔记给大家分享一下，我在学习单细胞分析的时候主要跟着单细胞天地的公众号和jimmy老师在B,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="单细胞实战(1)：原始测序数据下载 - Zhz Blog"/>
+    <meta property="og:description" content="前言目前的课题是10X单细胞测序(植物方面)，之前已经把所有的流程基本走过一遍，现在就将自己的学习过程整理成笔记给大家分享一下，我在学习单细胞分析的时候主要跟着单细胞天地的公众号和jimmy老师在B,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">单细胞实战(1)：原始测序数据下载</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">单细胞实战(1)：原始测序数据下载</h1>
+        <div class="stuff">
+            <span>九月 29, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前的课题是10X单细胞测序(植物方面)，之前已经把所有的流程基本走过一遍，现在就将自己的学习过程整理成笔记给大家分享一下，我在学习单细胞分析的时候主要跟着单细胞天地的公众号和jimmy老师在B站上上传的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xD4y1S74P">单细胞分析视频</a>进行学习的，在前期的数据下载过程中也参考了<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PoqArKLtIslN2cJtXZTzOg">刘小泽</a>的文章，希望对大家能有所帮助。</p>
+<p>数据来源：<a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41467-018-06300-3">《Acquired cancer resistance to combination immunotherapy from transcriptional loss of class I HLA》</a>文章中的部分数据</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Description</th>
+<th>SRR_ID</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GSM3330559</td>
+<td>Tumor Disc Pre</td>
+<td>SRR7722937</td>
+</tr>
+<tr>
+<td>GSM3330560</td>
+<td>Tumor Disc AR</td>
+<td>SRR7722938</td>
+</tr>
+<tr>
+<td>GSM3330561</td>
+<td>PBMC Pre</td>
+<td>SRR7722939</td>
+</tr>
+<tr>
+<td>GSM3330562</td>
+<td>PBMC Disc Early</td>
+<td>SRR7722940</td>
+</tr>
+<tr>
+<td>GSM3330563</td>
+<td>PBMC Disc Resp</td>
+<td>SRR7722941</td>
+</tr>
+<tr>
+<td>GSM3330564</td>
+<td>PBMC Disc AR</td>
+<td>SRR7722942</td>
+</tr>
+</tbody></table>
+<h2 id="数据下载"><a href="#数据下载" class="headerlink" title="数据下载"></a>数据下载</h2><p>两种方法</p>
+<p>1.使用sratools</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">conda install -c daler sratoolkit</span><br><span class="line"></span><br><span class="line">##sra数据下载加速</span><br><span class="line">wget https://download.asperasoft.com/download/sw/connect/3.8.1/ibm-aspera-connect-3.8.1.161274-linux-g2.12-64.tar.gz</span><br><span class="line"># 小心版本号有变动，不要直接复制上面的命令</span><br><span class="line">tar zxvf ibm-aspera-connect-3.8.1.161274-linux-g2.12-64.tar.gz</span><br><span class="line">bash ibm-aspera-connect-3.8.1.161274-linux-g2.12-64.sh</span><br><span class="line"># 默认安装路径 /home/user/.aspera</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt;SRR_Acc_List-2586-4.txt</span><br><span class="line">SRR7722937</span><br><span class="line">SRR7722938</span><br><span class="line">SRR7722939</span><br><span class="line">SRR7722940</span><br><span class="line">SRR7722941</span><br><span class="line">SRR7722942</span><br><span class="line"></span><br><span class="line">cat SRR_Acc_List-2586-4.txt |while read i</span><br><span class="line">do prefetch $i -O `pwd` &amp;&amp; echo &quot;** $&#123;i&#125;.sra done **&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>2.利用ascp由ftp.ncbi下载测序数据</p>
+<p>第一种情况下有的数据可能无法下载，也可以直接利用ascp下载，速度也很快</p>
+<p>在EBI上搜索想要的SRR号，复制连接地址<img src="/img/posts/2020.9.29/image-20201005133339417.png" alt="image-20201005133339417"></p>
+<p><a href="ftp://ftp.sra.ebi.ac.uk/vol1/srr/SRR772/007/SRR7722937">ftp://ftp.sra.ebi.ac.uk/vol1/srr/SRR772/007/SRR7722937</a></p>
+<p>然后将地址按照如下格式修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/007/SRR7722937 ./</span><br><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/008/SRR7722938 ./</span><br><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/009/SRR7722939 ./</span><br><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/000/SRR7722940 ./</span><br><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/001/SRR7722941 ./</span><br><span class="line">ascp -QT -l 300m -i ~/.aspera/connect/etc/asperaweb_id_dsa.openssh era-fasp@fasp.sra.ebi.ac.uk:vol1/srr/SRR772/002/SRR7722942 ./</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PoqArKLtIslN2cJtXZTzOg">单细胞实战(一)：数据下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xD4y1S74P">【生信技能树】使用10X单细胞转录组数据探索免疫治疗</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>基因结构注释（4）：整合预测结果 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="参考链接如何对基因组进行注释
+从头预测，同源注释和转录组整合都会得到一个预测结果，相当于收集了大量证据，下一步就是通过这些证据定义出更加可靠的基因结构，这一步可以通过人工排查，也可以使用EViden,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="基因结构注释（4）：整合预测结果 - Zhz Blog"/>
+    <meta name="twitter:description" content="参考链接如何对基因组进行注释
+从头预测，同源注释和转录组整合都会得到一个预测结果，相当于收集了大量证据，下一步就是通过这些证据定义出更加可靠的基因结构，这一步可以通过人工排查，也可以使用EViden,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="基因结构注释（4）：整合预测结果 - Zhz Blog"/>
+    <meta property="og:description" content="参考链接如何对基因组进行注释
+从头预测，同源注释和转录组整合都会得到一个预测结果，相当于收集了大量证据，下一步就是通过这些证据定义出更加可靠的基因结构，这一步可以通过人工排查，也可以使用EViden,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">基因结构注释（4）：整合预测结果</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">基因结构注释（4）：整合预测结果</h1>
+        <div class="stuff">
+            <span>十一月 26, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/gene-annotion/" rel="tag">gene_annotion</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/931e9821c45a">如何对基因组进行注释</a></p>
+<p>从头预测，同源注释和转录组整合都会得到一个预测结果，相当于收集了大量证据，下一步就是通过这些证据定义出更加可靠的基因结构，这一步可以通过人工排查，也可以使用EVidenceModeler(EVM).</p>
+<p>EVM对<code>gene_prediction.gff3</code>有特殊的要求，就是GFF文件需要反映出一个基因的结构，gene-&gt;(mRNA -&gt; (exon-&gt;cds(?))(+))(+), 表示一个基因可以有多个mRNA，即基因的可变剪接, 一个mRNA都可以由一个或者多个exon(外显子), 外显子可以是非翻译区(UTR),也可以是编码区(CDS). 而GlimmerHMM, SNAP等</p>
+<p>这三类根据人为经验来确定其可信度，从直觉上就是用PASA根据mRNA得到的结果高于从头预测。</p>
+<p>软件下载：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -4 https://github.com/EVidenceModeler/EVidenceModeler/archive/v1.1.1.tar.gz</span><br><span class="line">tar xf v1.1.1.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="权重文件创建"><a href="#权重文件创建" class="headerlink" title="权重文件创建"></a>权重文件创建</h2><p>首先将EVM文件夹下的<code>simple_example/weights.txt</code>复制到自己的目录</p>
+<p>第一列是来源类型(ABINITIO_PREDICTION, PROTEIN, TRANSCRIPT), 第二列对应着GFF3文件的第二列，第三列则是权重.</p>
+<p><img src="/img/posts/2020.11.26/image-20201215134257484.png" alt="image-20201215134257484"></p>
+<p>根据需要修改成自己的,用制表符分割</p>
+<p><img src="/img/posts/2020.11.26/image-20201215134654664.png" alt="image-20201215134654664"></p>
+<h2 id="EVM运行"><a href="#EVM运行" class="headerlink" title="EVM运行"></a>EVM运行</h2><p>准备好权重文件后，可以运行EVM了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat augustus.gff genemark.gff &gt; denovo.gff</span><br><span class="line">evidence_modeler.pl --genome genome.fa --weights weights.txt \</span><br><span class="line">                    --gene_predictions denovo.gff \</span><br><span class="line">                    --protein_alignments proteinprediction.gff \</span><br><span class="line">                    --transcript_alignments \</span><br><span class="line">                    transcripts.fasta.transdecoder.genome.gff3 \</span><br><span class="line">                    &gt;evm.out</span><br></pre></td></tr></table></figure>
+<p>最后生成的文件为evm.out,转为gff3格式</p>
+<h2 id="并行EVM"><a href="#并行EVM" class="headerlink" title="并行EVM"></a>并行EVM</h2><p>主要是为了让整合结果更快一点</p>
+<p>分割原始数据, 用于后续并行.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">EvmUtils/partition_EVM_inputs.pl --genome genome.fa \</span><br><span class="line">        --gene_predictions denovo.gff3 \</span><br><span class="line">        --protein_alignments proteinprediction.gff \</span><br><span class="line">        --transcript_alignments transcripts.fasta.transdecoder.genome.gff3 \</span><br><span class="line">        --segmentSize 100000 --overlapSize 10000 \</span><br><span class="line">        --partition_listing partitions_list.out</span><br></pre></td></tr></table></figure>
+
+<p>创建并行运算命令并执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EvmUtils/write_EVM_commands.pl --genome genome.fa --weights `pwd`/weights.txt \</span><br><span class="line">      --gene_predictions denovo.gff3 \</span><br><span class="line">      --protein_alignments proteinprediction.gff \</span><br><span class="line">      --transcript_alignments transcripts.fasta.transdecoder.genome.gff3 \</span><br><span class="line">      --output_file_name evm.out  \</span><br><span class="line">      --partitions partitions_list.out &gt;  commands.list</span><br><span class="line">parallel --jobs 10 &lt; commands.list</span><br></pre></td></tr></table></figure>
+
+<p>合并运行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EvmUtils/recombine_EVM_partial_outputs.pl --partitions partitions_list.out \</span><br><span class="line">         --output_file_name evm.out</span><br></pre></td></tr></table></figure>
+
+<p>结果转成gff3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EvmUtils/convert_EVM_outputs_to_GFF3.pl  --partitions partitions_list.out</span><br><span class="line">         --output evm.out  --genome genome.fa</span><br><span class="line">find . -regex &quot;.*evm.out.gff3&quot; -exec cat &#123;&#125; \; | bedtools sort -i - &gt; EVM.all.gff</span><br></pre></td></tr></table></figure>
+
+<h2 id="基因过滤与命名"><a href="#基因过滤与命名" class="headerlink" title="基因过滤与命名"></a>基因过滤与命名</h2><p><strong>注释过滤</strong>：对于初步预测得到的基因，还可以稍微优化一下，例如剔除编码少于50个AA的预测结果，将转座子单独放到一个文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gffread EVM.all.gff -g input/genome.fa -y tr_cds.fa</span><br><span class="line">bioawk -c fastx &#x27;$seq &lt; 50 &#123;print $comment&#125;&#x27; tr_cds.fa | cut -d &#x27;=&#x27; -f 2 &gt; short_aa_gene_list.txt</span><br><span class="line">grep -v -w -f short_aa_gene_list.txt EvM.all.gff &gt; filter.gff</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.11.26/image-20201215140246554.png" alt="image-20201215140246554"></p>
+<p>可以看到这个顺序还是不对，需要再排序，gene-&gt;mRNA-&gt;exon-&gt;CDS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">vi sort_EVM.py</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">import re</span><br><span class="line">fout = open(sys.argv[3],&#x27;w&#x27;)</span><br><span class="line"></span><br><span class="line">ref_dict=&#123;&#125;</span><br><span class="line">with open(sys.argv[1]) as gene_a:</span><br><span class="line">        for line in gene_a:</span><br><span class="line">                line_s = line.strip().split(&#x27;\t&#x27;)</span><br><span class="line">                info = re.split(&#x27;=|;&#x27;,line_s[8])</span><br><span class="line">                ID = info[1]</span><br><span class="line">                ref_set = []</span><br><span class="line">                for n in range(0,8):</span><br><span class="line">                        ref_set.append(line_s[n])</span><br><span class="line">                ref_dict.setdefault(ID,[]).append(ref_set)</span><br><span class="line">                ref_dict.setdefault(ID,[]).append(info[3])</span><br><span class="line"></span><br><span class="line">with open(sys.argv[2]) as mrna:</span><br><span class="line">        for eachline in mrna:</span><br><span class="line">                i = eachline.strip().split(&#x27;\t&#x27;)</span><br><span class="line">                info1 = re.split(&#x27;=|;&#x27;,i[8])</span><br><span class="line">                parent = info1[3]</span><br><span class="line">                mrna_n = info1[1]</span><br><span class="line">                ref_set1 = []</span><br><span class="line">                for a in range(0,8):</span><br><span class="line">                        ref_set1.append(i[a])</span><br><span class="line">                mrna_h = &#x27;\t&#x27;.join(ref_set1)</span><br><span class="line">                if parent in ref_dict:</span><br><span class="line">                        vs = ref_dict[parent]</span><br><span class="line">                        head = &#x27;\t&#x27;.join(vs[0])</span><br><span class="line">                        fout.write(&#x27;%s\tID=%s;Name=%s\n&#x27;%(head,parent,vs[1]))</span><br><span class="line">                        fout.write(&#x27;%s\tID=%s;Parent=%s;Name=%s\n&#x27;%(mrna_h,mrna_n,parent,vs[1]))</span><br><span class="line"></span><br><span class="line">fout.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">phthon3 sort_EVM.py filter.gff filter.gff EVM_sort.gff</span><br></pre></td></tr></table></figure>
+
+<p>接下来进行重命名</p>
+<p>对每个基因实现编号，形如ABCD000010的效果，方便后续分析。如下代码是基于EVM_sort.gff</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">vi rename.py</span><br><span class="line"></span><br><span class="line">#!/usr/bin/env python3</span><br><span class="line">import re</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">if len(sys.argv) &lt; 3:</span><br><span class="line">    sys.exit()</span><br><span class="line"></span><br><span class="line">gff = open(sys.argv[1])</span><br><span class="line">prf = sys.argv[2]</span><br><span class="line"></span><br><span class="line">count = 0</span><br><span class="line">mRNA  = 0</span><br><span class="line">cds   = 0</span><br><span class="line">exon  = 0</span><br><span class="line"></span><br><span class="line">print(&quot;##gff-version 3.2.1&quot;)</span><br><span class="line">for line in gff:</span><br><span class="line">    if not line.startswith(&quot;\n&quot;):</span><br><span class="line">        records = line.split(&quot;\t&quot;)</span><br><span class="line">        records[1] = &quot;.&quot;</span><br><span class="line">    if re.search(r&quot;\tgene\t&quot;, line):</span><br><span class="line">        count = count + 10</span><br><span class="line">        mRNA  = 0</span><br><span class="line">        gene_id = prf + str(count).zfill(6)</span><br><span class="line">        records[8] = &quot;ID=&#123;&#125;&quot;.format(gene_id)</span><br><span class="line">    elif re.search(r&quot;\tmRNA\t&quot;, line):</span><br><span class="line">        cds   = 0</span><br><span class="line">        exon  = 0</span><br><span class="line">        mRNA  = mRNA + 1</span><br><span class="line">        mRNA_id    = gene_id + &quot;.&quot; + str(mRNA)</span><br><span class="line">        records[8] = &quot;ID=&#123;&#125;;Parent=&#123;&#125;&quot;.format(mRNA_id, gene_id)</span><br><span class="line">    elif re.search(r&quot;\texon\t&quot;, line):</span><br><span class="line">        exon     = exon + 1</span><br><span class="line">        exon_id  = mRNA_id + &quot;_exon_&quot; + str(exon)</span><br><span class="line">        records[8] = &quot;ID=&#123;&#125;;Parent=&#123;&#125;&quot;.format(exon_id, mRNA_id)</span><br><span class="line">    elif re.search(r&quot;\tCDS\t&quot;, line):</span><br><span class="line">        cds     = cds + 1</span><br><span class="line">        cds_id  = mRNA_id + &quot;_cds_&quot; + str(cds)</span><br><span class="line">        records[8] = &quot;ID=&#123;&#125;;Parent=&#123;&#125;&quot;.format(cds_id, mRNA_id)</span><br><span class="line">    else:</span><br><span class="line">        continue</span><br><span class="line"></span><br><span class="line">    print(&quot;\t&quot;.join(records))</span><br><span class="line"></span><br><span class="line">gff.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gffrename.py EVM_sort.gff LH &gt; renamed.gff</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/posts/2020.11.26/image-20201215140853074.png" alt="image-20201215140853074"></p>
+<p>完美成功</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>接下来我将进行功能注释，目前想到的是用Nr库、Swiss-Prot（也可以用TrEMBL，但sp要更可靠）、interproscan（包含了Pfam以及GO）、KEGG这四个基本的注释，对于真菌基因组，可能会再加上COG、CAZyme、病毒相关因子(PHI数据库)、次生代谢基因(AntiSMASH)。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RNA速率：软件下载与loom文件准备 - Zhz Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="zhoushizhao,"> 
+    <meta name="description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Zhz Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="RNA速率：软件下载与loom文件准备 - Zhz Blog"/>
+    <meta name="twitter:description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Zhz Blog"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="RNA速率：软件下载与loom文件准备 - Zhz Blog"/>
+    <meta property="og:description" content="参考链接:https://github.com/velocyto-team/velocyto.R
+http://velocyto.org/velocyto.py/index.html
+http://,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Zhz Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">RNA速率：软件下载与loom文件准备</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">RNA速率：软件下载与loom文件准备</h1>
+        <div class="stuff">
+            <span>十一月 10, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/RNA-velocity/" rel="tag">RNA_velocity</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/ScRNAseq/" rel="tag">ScRNAseq</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/bioinformatics/" rel="tag">bioinformatics</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>参考链接:<br><a target="_blank" rel="noopener" href="https://github.com/velocyto-team/velocyto.R">https://github.com/velocyto-team/velocyto.R</a></p>
+<p><a target="_blank" rel="noopener" href="http://velocyto.org/velocyto.py/index.html">http://velocyto.org/velocyto.py/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://pklab.med.harvard.edu/velocyto/notebooks/R/chromaffin2.nb.html">http://pklab.med.harvard.edu/velocyto/notebooks/R/chromaffin2.nb.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://htmlpreview.github.io/?https://github.com/satijalab/seurat-wrappers/blob/master/docs/velocity.html">https://htmlpreview.github.io/?https://github.com/satijalab/seurat-wrappers/blob/master/docs/velocity.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/velocyto-team/velocyto.R/issues/16">https://github.com/velocyto-team/velocyto.R/issues/16</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bce19672879e">https://www.jianshu.com/p/bce19672879e</a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/10/RNAvelocity(1)/">RNA速率:软件下载与loom文件准备</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/12/RNAvelocity(2)/">RNA速率：数据读入</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhouxiaozhao.cn/2020/11/14/RNAvelocity(3)/">RNA速率：使用Seurat的结果做RNA velocity</a></p>
+<h2 id="velocyto下载"><a href="#velocyto下载" class="headerlink" title="velocyto下载"></a>velocyto下载</h2><p>首先是下载velocyto生成loom文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">## 1. 创建python&gt;3.6的环境</span><br><span class="line">conda create -n velocyto python=3.6</span><br><span class="line">## 2. 安装前置软件</span><br><span class="line">conda install numpy scipy cython numba matplotlib scikit-learn h5py click</span><br><span class="line">pip install pysam</span><br><span class="line">## 3. 安装velocyto</span><br><span class="line">pip install velocyto</span><br><span class="line">## 4. 测试</span><br><span class="line">velocyto --help</span><br><span class="line">Usage: velocyto [OPTIONS] COMMAND [ARGS]...</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --version  Show the version and exit.</span><br><span class="line">  --help     Show this message and exit.</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">  run            Runs the velocity analysis outputting a loom file</span><br><span class="line">  run10x         Runs the velocity analysis for a Chromium Sample</span><br><span class="line">  run-dropest    Runs the velocity analysis on DropEst preprocessed data</span><br><span class="line">  run-smartseq2  Runs the velocity analysis on SmartSeq2 data (independent bam file per cell)</span><br><span class="line">  tools          helper tools for velocyto</span><br></pre></td></tr></table></figure>
+
+<h2 id="repeat-masker-gtf生成"><a href="#repeat-masker-gtf生成" class="headerlink" title="repeat_masker.gtf生成"></a>repeat_masker.gtf生成</h2><p>运行velocyto需要准备三个文件，单细胞数据分析的结果文件，基因组注释文件，重复序列注释文件，其中前两个在单细胞分析时就会得到，关键是这个repeat_masker.gtf</p>
+<p>本人是做植物的，所以本次教程主要关注植物类repeat_masker.gtf的获得，人和小鼠的重复序列文件比较好得到，植物类首先可以看一下Phtozome数据库上想要研究的物种的注释文件夹下有没有reapeat.gtf，没有就要我们自己生成了</p>
+<p><img src="/img/posts/2020.11.10/image-20201124191831469.png" alt="image-20201124191831469"></p>
+<p>重复序列的注释文件我们一直没怎么关注过，对于做过基因组注释的童鞋来说，大家都忽略了一步，其实repeatmasker就可以生成重复序列的注释文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RepeatMasker -e ncbi -species arabidopsis -pa 40 -gff  TAIR10.fa</span><br></pre></td></tr></table></figure>
+
+<p>生成gff文件后，可以看到重复序列的点位以及属性，velocyto主要使用的就是位点</p>
+<p><img src="/img/posts/2020.11.10/image-20201124191648003.png" alt="image-20201124191648003"></p>
+<h2 id="loom文件生成"><a href="#loom文件生成" class="headerlink" title="loom文件生成"></a>loom文件生成</h2><p>接下来是生成loom文件，运行velocyto需要准备三个文件，基因组注释文件(gtf)，repeat_masker.gtf(重复序列注释文件)，cellranger的结果文件夹(以样本名WT_1为例，里面包含cell matrix和bam文件)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">velocyto -m TAIR10_masked.gtf WANG/ TAIR10.gtf</span><br></pre></td></tr></table></figure>
+
+<p>运行结束后会在WANG文件夹下生成velocyto文件夹，里面有velocyto.loom的文件，可以用于下一步的分析</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
